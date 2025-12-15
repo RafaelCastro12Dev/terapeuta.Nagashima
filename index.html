@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Pré-atendimento | Nagashima Terapia</title>
+  <link rel="icon" type="image/png" href="fotos/fav-2.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 
   <style>
@@ -941,14 +942,15 @@
         .from("agendamentos")
         .insert([dados]);
 
-      if (error) {
-        console.error("Erro Supabase:", error);
-        throw error;
-      }
+    if (error) {
+  console.error("Erro Supabase detalhado:", JSON.stringify(error, null, 2));
+  throw error;
+}
+
     }
 
     // WhatsApp do profissional
-    const WHATSAPP_PRO = "5521995600274";
+    const WHATSAPP_PRO = "5519994526993";
 
     // Navegação entre telas
     function irParaForm() {
@@ -1319,7 +1321,7 @@ Termos: ${termosCheck.checked ? "Aceitos" : "Não aceitos"}
           resultado_ajuda: resultadoAjuda,
           tem_alergia: temAlergia,
           detalhe_alergia: detalheAlergia,
-          comorbidades: comorbidadesMarcadas.join(", "),
+          comorbidades: comorbidadesMarcadas.length ? comorbidadesMarcadas : null,
           comorbidade_outra: comorbidadeOutra,
           historico_lesao: historicoLesao,
           usa_protese: usaProtese,
