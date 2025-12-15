@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pré-atendimento | Nagashima Terapia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      color: #f5f5f5;
+      background: #050814;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(124, 77, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(0, 184, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(0, 255, 148, 0.20), transparent 60%),
+        radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.08), transparent 55%);
+      background-color: #050814;
+      pointer-events: none;
+      z-index: -2;
+      animation: float-bg 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes float-bg {
+      0% {
+        transform: translateY(0px);
+        filter: blur(0px);
+      }
+      100% {
+        transform: translateY(-40px);
+        filter: blur(2px);
+      }
+    }
+
+    .outer {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 920px;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(80,250,255,0.04), transparent 60%),
+                  rgba(7, 11, 30, 0.92);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow:
+        0 24px 80px rgba(0,0,0,0.70),
+        0 0 0 1px rgba(255,255,255,0.02);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      opacity: 0.4;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(125, 103, 255, 0.28), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(70, 194, 255, 0.24), transparent 55%);
+      z-index: -1;
+      transform: translate3d(0, 60px, 0);
+      filter: blur(4px);
+    }
+
+    .city {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9ba3ff;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .title-block h1 {
+      font-size: 26px;
+      line-height: 1.3;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #f5f5ff;
+      text-shadow: 0 0 18px rgba(111, 162, 255, 0.35);
+    }
+
+    .title-block h1 + h1 {
+      margin-top: 6px;
+    }
+
+    .intro-text {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #c6caef;
+    }
+
+    .bio-text {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #d4d7ff;
+    }
+
+    .bio-list b {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .photo-wrapper {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .photo-wrapper img {
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      border: 3px solid rgba(255,255,255,0.35);
+      box-shadow:
+        0 14px 40px rgba(0,0,0,0.55),
+        0 0 32px rgba(90, 158, 255, 0.60);
+      object-fit: cover;
+      background: #02030a;
+    }
+
+    .intro-button {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #7d67ff, #46c2ff);
+      color: #050814;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.55);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      min-width: 200px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.70);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.60);
+    }
+
+    #screen-form {
+      display: none;
+      animation: fade-in 0.3s ease-out;
+    }
+
+    .form-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #f5f5ff;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      color: #c1c5f5;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .form-box {
+      background: rgba(5, 8, 28, 0.85);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 28px 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-block {
+      border-radius: 14px;
+      padding: 20px 18px;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.02), transparent 60%),
+                  rgba(9, 14, 40, 0.90);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #f5f5ff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .field-group {
+      margin-bottom: 16px;
+    }
+
+    .field-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #e2e4ff;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(5, 7, 24, 0.95);
+      color: #f5f5ff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-family: inherit;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #9094c7;
+      font-size: 13px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #7d67ff;
+      box-shadow: 0 0 0 2px rgba(125,103,255,0.35);
+      background: rgba(6, 10, 36, 0.98);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #7d67ff 50%),
+        linear-gradient(135deg, #7d67ff 50%, transparent 50%);
+      background-position:
+        calc(100% - 16px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    .helper {
+      font-size: 12px;
+      color: #b4b7e5;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .row.inline-options {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .row.inline-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .row.inline-options input[type="radio"],
+    .row.inline-options input[type="checkbox"] {
+      width: auto;
+      accent-color: #7d67ff;
+      cursor: pointer;
+    }
+
+    .chips-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(16, 22, 60, 0.95);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 13px;
+      color: #e3e5ff;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip:hover {
+      background: rgba(20, 28, 70, 0.95);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .chip input {
+      width: auto;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .chip span {
+      font-size: 13px;
+    }
+
+    .error {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255, 87, 115, 0.16);
+      border: 1px solid rgba(255, 87, 115, 0.60);
+      font-size: 13px;
+      color: #ffd7de;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .success {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(76, 217, 149, 0.18);
+      border: 1px solid rgba(76, 217, 149, 0.7);
+      font-size: 13px;
+      color: #c4ffde;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .back-link {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #b3b4d8;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-align: center;
+      transition: color 0.15s ease;
+    }
+
+    .back-link:hover {
+      color: #d4d5f5;
+    }
+
+    .form-btn {
+      margin-top: 8px;
+      width: 100%;
+      background: linear-gradient(135deg, #7d67ff, #46c2ff);
+    }
+
+    #signatureContainer {
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: #f5f5f5;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    #assinaturaCanvas {
+      width: 100%;
+      height: 220px;
+      display: block;
+      background: #ffffff;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .btn-clear {
+      margin-top: 10px;
+      background: #444;
+      color: #fff;
+      font-size: 13px;
+      padding: 10px 18px;
+    }
+
+    .btn-clear:hover {
+      background: #555;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==================== RESPONSIVIDADE MOBILE ==================== */
+    @media (max-width: 768px) {
+      .outer {
+        padding: 24px 12px;
+      }
+
+      .card {
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+
+      .title-block h1 {
+        font-size: 22px;
+        line-height: 1.3;
+      }
+
+      .intro-text,
+      .bio-text {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .photo-wrapper img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 100%;
+        padding: 14px 24px;
+      }
+
+      .form-title {
+        font-size: 20px;
+      }
+
+      .form-subtitle {
+        font-size: 13px;
+      }
+
+      .form-box {
+        padding: 20px 16px;
+      }
+
+      .section-block {
+        padding: 16px 14px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .row.inline-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .chips-grid {
+        gap: 6px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      #assinaturaCanvas {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .outer {
+        padding: 20px 10px;
+      }
+
+      .card {
+        padding: 20px 16px;
+        border-radius: 18px;
+      }
+
+      .title-block h1 {
+        font-size: 18px;
+        line-height: 1.3;
+      }
+
+      .photo-wrapper img {
+        width: 180px;
+        height: 180px;
+      }
+
+      .intro-text,
+      .bio-text {
+        font-size: 13px;
+      }
+
+      .form-title {
+        font-size: 18px;
+      }
+
+      .form-box {
+        padding: 18px 14px;
+      }
+
+      .section-block {
+        padding: 14px 12px;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 16px; /* Previne zoom no iOS */
+        padding: 13px;
+      }
+
+      .field-group {
+        margin-bottom: 14px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 13px 20px;
+      }
+
+      #assinaturaCanvas {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+
+  <div class="outer">
+    <div class="card">
+
+      <!-- ====================== TELA INTRO ====================== -->
+      <section id="screen-intro">
+        <div class="city">PEDREIRA - SP</div>
+
+        <div class="title-block">
+          <h1>SEJA MUITO BEM VINDO AO LINK</h1>
+          <h1>DE PRÉ-ATENDIMENTO DO</h1>
+          <h1>NAGASHIMA TERAPIA.</h1>
+        </div>
+
+        <p class="intro-text">
+          Estamos aqui para ajudar a aliviar e tratar sua dor crônica e melhorar sua performance no
+          esporte ou treino. Para que possamos oferecer o tratamento mais adequado, suas respostas
+          sinceras são essenciais. Vamos trabalhar juntos para encontrar o melhor tratamento e
+          procedimento para você.
+        </p>
+
+        <div class="photo-wrapper">
+          <img src="/fotos/perfil,paulo.png" alt="Paulo Nagashima" />
+        </div>
+
+        <p class="bio-text">
+          Paulo Nagashima é profissional formado e atuante nas áreas de:
+          <span class="bio-list"><br>
+            • <b>Liberação Miofascial manual e instrumental</b><br>
+            • <b>Terapia Manual com ênfase em Quiropraxia</b><br>
+            • <b>Thai massagem</b><br>
+            • <b>Massagem Desportiva</b><br>
+            • <b>Ventosa terapia</b>
+          </span>
+        </p>
+
+        <div class="intro-button">
+          <button class="btn" onclick="irParaForm()">Começar</button>
+        </div>
+      </section>
+
+      <!-- ====================== TELA FORM ====================== -->
+      <section id="screen-form">
+        <h2 class="form-title">Formulário de pré-atendimento</h2>
+        <p class="form-subtitle">
+          Preencha seus dados e escolha um horário disponível. Após o envio, entraremos em contato
+          para confirmar seu atendimento.
+        </p>
+
+        <div class="form-box">
+          <form id="preForm" class="form-section" autocomplete="off">
+            <!-- DADOS PESSOAIS -->
+            <div class="section-block">
+              <div class="section-title">Dados pessoais</div>
+
+              <div class="field-group">
+                <label for="nome">Nome completo *</label>
+                <input id="nome" name="nome" required />
+              </div>
+
+              <div class="row">
+                <div class="field-group">
+                  <label for="nascimento">Data de nascimento *</label>
+                  <input id="nascimento" name="nascimento" type="date" required />
+                </div>
+
+                <div class="field-group">
+                  <label for="cidade">Cidade onde você mora *</label>
+                  <input id="cidade" name="cidade" required />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="field-group">
+                  <label for="whatsapp">WhatsApp / telefone *</label>
+                  <input id="whatsapp" name="whatsapp" placeholder="(99) 99999-9999" required />
+                  <div class="helper">Use o número que você mais utiliza.</div>
+                </div>
+
+                <div class="field-group">
+                  <label for="email">E-mail (opcional)</label>
+                  <input id="email" name="email" type="email" placeholder="voce@exemplo.com" />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="instagram">Perfil do Instagram (opcional)</label>
+                <input id="instagram" name="instagram" placeholder="@seuusuario" />
+              </div>
+            </div>
+
+            <!-- PROCEDIMENTO -->
+            <div class="section-block">
+              <div class="section-title">Procedimento desejado</div>
+
+              <div class="field-group">
+                <label for="procedimento">Qual procedimento desejado? *</label>
+                <select id="procedimento" name="procedimento" required>
+                  <option value="">Selecione</option>
+                  <option value="Ajuste articular + tratamento terapêutico">
+                    Ajuste articular + tratamento terapêutico
+                  </option>
+                  <option value="Liberação Miofascial Básica">
+                    Liberação Miofascial Básica
+                  </option>
+                  <option value="Massagem Desportiva">
+                    Massagem Desportiva
+                  </option>
+                  <option value="Liberação Miofascial + Ajuste Articular (Protocolo Atletas)">
+                    Liberação Miofascial + Ajuste Articular (Protocolo Atletas)
+                  </option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="toleranciaPressao">Qual sua tolerância à pressão da mão? *</label>
+                <select id="toleranciaPressao" name="toleranciaPressao" required>
+                  <option value="">Selecione</option>
+                  <option value="Forte/profundo">Forte / profundo</option>
+                  <option value="Moderada">Moderada</option>
+                  <option value="Leve">Leve</option>
+                  <option value="Não sei">Não sei</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="queixa">Qual a queixa principal? Partes do corpo onde sente dores? *</label>
+                <textarea id="queixa" name="queixa" required></textarea>
+              </div>
+
+              <div class="field-group">
+                <label for="tempoDor">Há quanto tempo sente essa dor? *</label>
+                <textarea id="tempoDor" name="tempoDor" required></textarea>
+              </div>
+
+              <div class="field-group">
+                <label for="historico">
+                  Alguma informação adicional que julga importante sobre sua dor ou histórico?
+                </label>
+                <textarea id="historico" name="historico"></textarea>
+              </div>
+            </div>
+
+            <!-- HISTÓRICO DE TRATAMENTO -->
+            <div class="section-block">
+              <div class="section-title">Histórico de tratamento</div>
+
+              <div class="field-group">
+                <label>Já buscou ajuda profissional? *</label>
+                <div class="row inline-options">
+                  <label><input type="radio" name="ajudaProfissional" value="Sim" required /> Sim</label>
+                  <label><input type="radio" name="ajudaProfissional" value="Não" /> Não</label>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="resultadoAjuda">Se já buscou, qual foi o resultado?</label>
+                <textarea id="resultadoAjuda" name="resultadoAjuda"></textarea>
+              </div>
+            </div>
+
+            <!-- ALERGIAS -->
+            <div class="section-block">
+              <div class="section-title">Alergias</div>
+
+              <div class="field-group">
+                <label>Tem alergia a óleos, loções ou aromas/cheiros? *</label>
+                <div class="row inline-options">
+                  <label><input type="radio" name="temAlergia" value="Sim" required /> Sim</label>
+                  <label><input type="radio" name="temAlergia" value="Não" /> Não</label>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="detalheAlergia">Se sim, descreva:</label>
+                <textarea id="detalheAlergia" name="detalheAlergia"></textarea>
+              </div>
+            </div>
+
+            <!-- SAÚDE / COMORBIDADES -->
+            <div class="section-block">
+              <div class="section-title">Saúde e comorbidades</div>
+
+              <div class="field-group">
+                <label>Possui ou já teve alguma dessas condições?</label>
+                <div class="chips-grid">
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Pressão alta" />
+                    <span>Pressão alta</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Coração" />
+                    <span>Coração</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Hepatite" />
+                    <span>Hepatite</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Diabete" />
+                    <span>Diabete</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Pele" />
+                    <span>Pele</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Câncer" />
+                    <span>Câncer</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Outra" />
+                    <span>Outra</span>
+                  </label>
+                  <label class="chip">
+                    <input type="checkbox" name="comorbidades" value="Não tenho" />
+                    <span>Não tenho</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="comorbidadeOutra">Se marcou "Outra", qual?</label>
+                <textarea id="comorbidadeOutra" name="comorbidadeOutra"></textarea>
+              </div>
+
+              <div class="field-group">
+                <label for="historicoLesao">
+                  Histórico de acidente, doença ou lesão que tenha lhe afetado
+                </label>
+                <textarea id="historicoLesao" name="historicoLesao"></textarea>
+              </div>
+
+              <div class="field-group">
+                <label>Faz uso de alguma prótese ou aparelho?</label>
+                <div class="row inline-options">
+                  <label><input type="radio" name="usaProtese" value="Sim" /> Sim</label>
+                  <label><input type="radio" name="usaProtese" value="Não" /> Não</label>
+                </div>
+                <textarea id="detalheProtese" name="detalheProtese" placeholder="Descreva, se sim."></textarea>
+              </div>
+
+              <div class="field-group">
+                <label>Faz uso de algum medicamento de uso diário?</label>
+                <div class="row inline-options">
+                  <label><input type="radio" name="usaMedicacao" value="Sim" /> Sim</label>
+                  <label><input type="radio" name="usaMedicacao" value="Não" /> Não</label>
+                </div>
+                <textarea id="detalheMedicacao" name="detalheMedicacao" placeholder="Qual medicamento?"></textarea>
+              </div>
+            </div>
+
+            <!-- ORIENTAÇÕES / TERMOS -->
+            <div class="section-block">
+              <div class="section-title">Orientações, valores e termos</div>
+
+              <div class="field-group">
+                <div class="helper" style="line-height: 1.7; font-size: 13px;">
+                  <b>Vestuário recomendado:</b><br><br>
+                  <b>Terapêutico ou Ajuste Articular</b><br>
+                  • Homem: short ou sunga de banho<br>
+                  • Mulher: short curto tipo academia e parte de cima de biquíni ou biquíni completo<br><br>
+
+                  <b>Liberação Miofascial, Massagem Desportiva e Relaxante</b><br>
+                  • Homem: cueca ou sunga de banho<br>
+                  • Mulher: biquíni completo<br><br>
+
+                  <b>Valor:</b> R$ 180,00 por procedimento<br>
+                  Pagamento em PIX ou dinheiro. Cartão de crédito ou débito com juros da máquina acrescido.<br><br>
+
+                  <b>Endereço:</b> Rua José Aparecido Marchi, 330 B - Vale Verde 1 - Pedreira/SP.
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                  <input type="checkbox" id="termos" style="margin-top: 3px;" />
+                  <span>Eu li e concordo com as orientações, termos e condições do atendimento.</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- AGENDAMENTO -->
+            <div class="section-block">
+              <div class="section-title">Agendamento</div>
+
+              <div class="row">
+                <div class="field-group">
+                  <label for="data">Data desejada *</label>
+                  <select id="data" required></select>
+                  <div class="helper">Apenas dias com vaga aparecerão aqui.</div>
+                </div>
+
+                <div class="field-group">
+                  <label for="hora">Horário *</label>
+                  <select id="hora" required>
+                    <option value="">Escolha uma data primeiro</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ASSINATURA -->
+            <div class="section-block">
+              <div class="section-title">Assinatura</div>
+
+              <div class="field-group">
+                <label for="assinaturaCanvas">Assinatura digital *</label>
+                <div id="signatureContainer">
+                  <canvas id="assinaturaCanvas"></canvas>
+                </div>
+                <button type="button" class="btn btn-clear" onclick="clearSignature()">
+                  Limpar assinatura
+                </button>
+                <div class="helper">Assine com o dedo (no celular) ou com o mouse (no computador).</div>
+              </div>
+            </div>
+
+            <!-- BOTÃO E MENSAGENS -->
+            <button type="submit" class="btn form-btn">Confirmar pré-agendamento</button>
+
+            <div id="formError" class="error">
+              Preencha todos os campos obrigatórios, escolha data/horário, aceite os termos e assine.
+            </div>
+            <div id="successMsg" class="success">
+              Pré-agendamento enviado! Você será contatado para confirmação final do horário.
+            </div>
+          </form>
+        </div>
+
+        <div class="back-link" onclick="voltarIntro()">
+          ← Voltar para a tela inicial
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- SUPABASE CLIENT -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://qqxlmvmksgptjjnbzjtn.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function salvarAgendamentoNoSupabase(dados) {
+      const { error } = await supabase
+        .from("agendamentos")
+        .insert([dados]);
+
+      if (error) {
+        console.error("Erro Supabase:", error);
+        throw error;
+      }
+    }
+
+    // WhatsApp do profissional
+    const WHATSAPP_PRO = "5521995600274";
+
+    // Navegação entre telas
+    function irParaForm() {
+      document.getElementById("screen-intro").style.display = "none";
+      document.getElementById("screen-form").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function voltarIntro() {
+      document.getElementById("screen-form").style.display = "none";
+      document.getElementById("screen-intro").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function formatarRotuloData(iso) {
+      if (!iso) return "";
+      const dias = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+      const d = new Date(iso + "T12:00:00");
+      if (isNaN(d.getTime())) return iso;
+      const dia = String(d.getDate()).padStart(2, "0");
+      const mes = String(d.getMonth() + 1).padStart(2, "0");
+      const ano = d.getFullYear();
+      const nomeDia = dias[d.getDay()] || "";
+      return `${dia}/${mes}/${ano} (${nomeDia})`;
+    }
+
+    async function construirAgendaAPartirDoSupabase() {
+      const { data, error } = await supabase
+        .from("horarios_disponiveis")
+        .select("data, hora")
+        .eq("ativo", true)
+        .order("data", { ascending: true })
+        .order("hora", { ascending: true });
+
+      if (error) {
+        console.error("Erro ao buscar horários:", error);
+        return [];
+      }
+
+      const porData = {};
+
+      data.forEach(item => {
+        if (!porData[item.data]) {
+          porData[item.data] = {
+            dataISO: item.data,
+            rotuloData: formatarRotuloData(item.data),
+            horarios: []
+          };
+        }
+
+        if (!porData[item.data].horarios.includes(item.hora)) {
+          porData[item.data].horarios.push(item.hora);
+        }
+      });
+
+      return Object.values(porData);
+    }
+
+    let agenda = [];
+    const dataSelect = document.getElementById("data");
+    const horaSelect = document.getElementById("hora");
+    const form = document.getElementById("preForm");
+    const successMsg = document.getElementById("successMsg");
+    const formError = document.getElementById("formError");
+
+    async function preencherDatas() {
+      agenda = await construirAgendaAPartirDoSupabase();
+      dataSelect.innerHTML = "";
+      horaSelect.innerHTML = "<option value=''>Escolha uma data primeiro</option>";
+
+      const datasComVaga = agenda.filter(item => item.horarios.length > 0);
+
+      if (!datasComVaga.length) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Sem horários disponíveis no momento";
+        dataSelect.appendChild(opt);
+        dataSelect.disabled = true;
+        horaSelect.disabled = true;
+        return;
+      }
+
+      const optDefault = document.createElement("option");
+      optDefault.value = "";
+      optDefault.textContent = "Selecione uma data";
+      dataSelect.appendChild(optDefault);
+
+      datasComVaga.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.dataISO;
+        opt.textContent = item.rotuloData;
+        dataSelect.appendChild(opt);
+      });
+
+      dataSelect.disabled = false;
+      horaSelect.disabled = false;
+    }
+
+    function atualizarHorarios() {
+      const dataSelecionada = dataSelect.value;
+      horaSelect.innerHTML = "";
+
+      if (!dataSelecionada) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Escolha uma data primeiro";
+        horaSelect.appendChild(opt);
+        return;
+      }
+
+      const item = agenda.find(a => a.dataISO === dataSelecionada);
+      if (!item || !item.horarios.length) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Sem horários disponíveis nesta data";
+        horaSelect.appendChild(opt);
+        return;
+      }
+
+      const optDefault = document.createElement("option");
+      optDefault.value = "";
+      optDefault.textContent = "Selecione um horário";
+      horaSelect.appendChild(optDefault);
+
+      item.horarios.forEach(h => {
+        const opt = document.createElement("option");
+        opt.value = h;
+        opt.textContent = h;
+        horaSelect.appendChild(opt);
+      });
+    }
+
+    dataSelect.addEventListener("change", atualizarHorarios);
+
+    // Assinatura Canvas
+    let canvas, ctx, drawing = false, lastX = 0, lastY = 0;
+
+    function initSignature() {
+      canvas = document.getElementById("assinaturaCanvas");
+      if (!canvas) return;
+      ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const width = rect.width || 300;
+        const height = 220;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        if (e.touches && e.touches.length > 0) {
+          return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+          };
+        } else {
+          return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+          };
+        }
+      }
+
+      function startDraw(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function endDraw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        drawing = false;
+      }
+
+      canvas.addEventListener("mousedown", startDraw);
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mouseup", endDraw);
+      canvas.addEventListener("mouseleave", endDraw);
+
+      canvas.addEventListener("touchstart", startDraw, { passive: false });
+      canvas.addEventListener("touchmove", draw, { passive: false });
+      canvas.addEventListener("touchend", endDraw, { passive: false });
+      canvas.addEventListener("touchcancel", endDraw, { passive: false });
+    }
+
+    function clearSignature() {
+      if (!canvas || !ctx) return;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function assinaturaEstaVazia() {
+      if (!canvas || !ctx) return true;
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const r = pixels[i];
+        const g = pixels[i+1];
+        const b = pixels[i+2];
+        if (!(r === 255 && g === 255 && b === 255)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function getAssinaturaDataUrl() {
+      if (!canvas) return null;
+      return canvas.toDataURL("image/png");
+    }
+
+    // Envio do formulário
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      formError.style.display = "none";
+      successMsg.style.display = "none";
+
+      const nome = document.getElementById("nome").value.trim();
+      const nascimento = document.getElementById("nascimento").value.trim();
+      const cidade = document.getElementById("cidade").value.trim();
+      const whatsapp = document.getElementById("whatsapp").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const instagram = document.getElementById("instagram").value.trim();
+
+      const procedimento = document.getElementById("procedimento").value;
+      const toleranciaPressao = document.getElementById("toleranciaPressao").value;
+      const queixa = document.getElementById("queixa").value.trim();
+      const tempoDor = document.getElementById("tempoDor").value.trim();
+      const historico = document.getElementById("historico").value.trim();
+
+      const ajudaProfissional = (document.querySelector('input[name="ajudaProfissional"]:checked') || {}).value || "";
+      const resultadoAjuda = document.getElementById("resultadoAjuda").value.trim();
+
+      const temAlergia = (document.querySelector('input[name="temAlergia"]:checked') || {}).value || "";
+      const detalheAlergia = document.getElementById("detalheAlergia").value.trim();
+
+      const comorbidadesMarcadas = Array.from(document.querySelectorAll('input[name="comorbidades"]:checked'))
+        .map(c => c.value);
+      const comorbidadeOutra = document.getElementById("comorbidadeOutra").value.trim();
+
+      const historicoLesao = document.getElementById("historicoLesao").value.trim();
+
+      const usaProtese = (document.querySelector('input[name="usaProtese"]:checked') || {}).value || "";
+      const detalheProtese = document.getElementById("detalheProtese").value.trim();
+
+      const usaMedicacao = (document.querySelector('input[name="usaMedicacao"]:checked') || {}).value || "";
+      const detalheMedicacao = document.getElementById("detalheMedicacao").value.trim();
+
+      const termosCheck = document.getElementById("termos");
+
+      const dataSelecionada = dataSelect.value;
+      const horaSelecionada = horaSelect.value;
+
+      if (
+        !nome ||
+        !nascimento ||
+        !cidade ||
+        !whatsapp ||
+        !queixa ||
+        !tempoDor ||
+        !procedimento ||
+        !toleranciaPressao ||
+        !ajudaProfissional ||
+        !temAlergia ||
+        !dataSelecionada ||
+        !horaSelecionada ||
+        !termosCheck.checked
+      ) {
+        formError.textContent = "Preencha todos os campos obrigatórios (*), escolha data/horário e aceite os termos.";
+        formError.style.display = "block";
+        return;
+      }
+
+      if (assinaturaEstaVazia()) {
+        formError.textContent = "Por favor, assine no campo de assinatura antes de enviar.";
+        formError.style.display = "block";
+        return;
+      }
+
+      const itemAgenda = agenda.find(a => a.dataISO === dataSelecionada);
+      const dataLabel = itemAgenda ? itemAgenda.rotuloData : dataSelecionada;
+      const assinaturaDataUrl = getAssinaturaDataUrl();
+
+      const msg = `
+Novo pré-agendamento recebido:
+
+*DADOS PESSOAIS*
+Nome: ${nome}
+Data de nascimento: ${nascimento || "não informado"}
+Cidade: ${cidade || "não informada"}
+WhatsApp/telefone: ${whatsapp}
+E-mail: ${email || "não informado"}
+Instagram: ${instagram || "não informado"}
+
+*PROCEDIMENTO*
+Procedimento: ${procedimento}
+Tolerância à pressão: ${toleranciaPressao}
+Queixa principal: ${queixa}
+Tempo de dor: ${tempoDor}
+Histórico adicional: ${historico || "não informado"}
+
+*HISTÓRICO DE TRATAMENTO*
+Buscou ajuda profissional?: ${ajudaProfissional}
+Resultado: ${resultadoAjuda || "não informado"}
+
+*SAÚDE E CONDIÇÕES*
+Alergia?: ${temAlergia}
+Detalhes: ${detalheAlergia || "não informado"}
+Comorbidades: ${comorbidadesMarcadas.length ? comorbidadesMarcadas.join(", ") : "nenhuma"}
+Outras: ${comorbidadeOutra || "nenhuma"}
+Histórico lesão: ${historicoLesao || "não informado"}
+Prótese?: ${usaProtese}
+Detalhes: ${detalheProtese || "não informado"}
+Medicação?: ${usaMedicacao}
+Medicamentos: ${detalheMedicacao || "não informado"}
+
+*AGENDAMENTO*
+Data: ${dataLabel}
+Horário: ${horaSelecionada}
+
+Termos: ${termosCheck.checked ? "Aceitos" : "Não aceitos"}
+      `.trim();
+
+      const urlWhats = `https://api.whatsapp.com/send?phone=${WHATSAPP_PRO}&text=${encodeURIComponent(msg)}`;
+
+      try {
+        await salvarAgendamentoNoSupabase({
+          nome,
+          nascimento,
+          cidade,
+          whatsapp,
+          email,
+          instagram,
+          procedimento,
+          tolerancia_pressao: toleranciaPressao,
+          queixa,
+          tempo_dor: tempoDor,
+          historico,
+          ajuda_profissional: ajudaProfissional,
+          resultado_ajuda: resultadoAjuda,
+          tem_alergia: temAlergia,
+          detalhe_alergia: detalheAlergia,
+          comorbidades: comorbidadesMarcadas.join(", "),
+          comorbidade_outra: comorbidadeOutra,
+          historico_lesao: historicoLesao,
+          usa_protese: usaProtese,
+          detalhe_protese: detalheProtese,
+          usa_medicacao: usaMedicacao,
+          detalhe_medicacao: detalheMedicacao,
+          data_escolhida: dataSelecionada,
+          hora_escolhida: horaSelecionada,
+          assinatura: assinaturaDataUrl
+        });
+
+        successMsg.style.display = "block";
+        form.reset();
+        clearSignature();
+
+        setTimeout(() => {
+          window.open(urlWhats, "_blank");
+        }, 800);
+
+      } catch (err) {
+        formError.textContent = "Erro ao salvar no banco de dados. Tente novamente.";
+        formError.style.display = "block";
+      }
+    });
+
+    // Init
+    window.addEventListener("load", () => {
+      preencherDatas();
+      initSignature();
+    });
+  </script>
+
+</body>
+</html>

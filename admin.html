@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel Administrativo | Nagashima Terapia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+      --bg-main:#050814;
+      --bg-card:rgba(10,14,32,.92);
+      --bg-soft:rgba(15,20,45,.92);
+      --accent:#7d67ff;
+      --accent-soft:#46c2ff;
+      --text:#f5f5ff;
+      --muted:#a3a6c7;
+      --border-soft:rgba(255,255,255,.08);
+      --danger:#ff5e7a;
+      --success:#36d399;
+      --warn:#ffd36a;
+    }
+
+    html,body{ height:100%; }
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Inter",sans-serif;
+      background:var(--bg-main);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    .bg{
+      position:fixed; inset:0;
+      background:radial-gradient(circle at 30% -10%, #21325b 0%, #0b1123 45%, #050814 90%);
+      z-index:-3; overflow:hidden;
+    }
+    .bg::before{
+      content:""; position:absolute; inset:-300px;
+      background-image:
+        radial-gradient(1.2px 1.2px at 20% 30%, rgba(255,255,255,0.9) 60%, transparent 60%),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.8) 60%, transparent 60%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.6) 60%, transparent 60%),
+        radial-gradient(0.8px 0.8px at 10% 50%, rgba(255,255,255,0.5) 60%, transparent 60%);
+      background-size:350px 350px;
+      opacity:.55;
+      animation:admStars1 140s linear infinite;
+    }
+    .bg::after{
+      content:""; position:absolute; inset:-400px;
+      background-image:
+        radial-gradient(2px 2px at 80% 20%, rgba(255,255,255,0.9) 70%, transparent 60%),
+        radial-gradient(1.7px 1.7px at 30% 40%, rgba(255,255,255,0.7) 70%, transparent 60%),
+        radial-gradient(2.2px 2.2px at 50% 90%, rgba(255,255,255,0.9) 70%, transparent 60%);
+      background-size:600px 600px;
+      opacity:.3;
+      animation:admStars2 200s linear infinite reverse;
+    }
+    @keyframes admStars1{ to{ transform:translate(-250px,-200px);} }
+    @keyframes admStars2{ to{ transform:translate(-350px,-300px);} }
+
+    .admin-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .login-card{
+      width:100%;
+      max-width:420px;
+      background:var(--bg-card);
+      border-radius:18px;
+      padding:26px 22px 22px;
+      border:1px solid var(--border-soft);
+      box-shadow:0 18px 40px rgba(0,0,0,.6);
+      animation:fade-in .3s ease-out;
+    }
+    .login-title{ font-size:20px; margin-bottom:6px; }
+    .login-subtitle{ font-size:14px; color:var(--muted); margin-bottom:18px; }
+
+    .field-group{ margin-bottom:16px; text-align:left; }
+    label{ display:block; font-size:13px; margin-bottom:6px; color:#e6e7ff; font-weight: 500; }
+
+    input, textarea, select{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.18);
+      background:#050814;
+      color:#f5f5ff;
+      font-size:15px;
+      outline:none;
+      transition:border .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    input:focus, textarea:focus, select:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 2px rgba(125,103,255,.25);
+      background:#090d24;
+    }
+    textarea{ min-height:90px; resize:vertical; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:13px 22px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-size:15px;
+      font-weight:600;
+      background:linear-gradient(135deg,var(--accent),var(--accent-soft));
+      color:#fff;
+      box-shadow:0 10px 24px rgba(0,0,0,.7);
+      transition:transform .13s ease, box-shadow .13s ease, filter .13s ease;
+      width: 100%;
+    }
+    .btn:hover{ transform:translateY(-2px); filter:brightness(1.05); box-shadow:0 14px 30px rgba(0,0,0,.85); }
+    .btn:active{ transform:translateY(0); }
+    .btn-secondary{ background:#323545; box-shadow:none; }
+    .error{ margin-top:8px; font-size:13px; color:#ff9b9b; display:none; }
+
+    .admin-layout {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 4px;
+    }
+
+    .admin-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap: wrap;
+    }
+    .admin-header-left h1{
+      font-size:22px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .admin-header-left p{ font-size:14px; color:var(--muted); margin-top:4px; }
+
+    .admin-user{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      background:rgba(15,20,45,.85);
+      border-radius:999px;
+      border:1px solid var(--border-soft);
+    }
+    .admin-user-avatar{
+      width:36px; height:36px; border-radius:999px;
+      background:linear-gradient(135deg,#7d67ff,#46c2ff);
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; font-weight:700;
+      flex-shrink: 0;
+    }
+    .admin-user-info{ font-size:13px; line-height:1.4; }
+    .admin-user-info span{ display:block; }
+    .admin-user-info .name{ font-weight:600; }
+    .admin-user-info .role{ color:var(--muted); font-size: 12px; }
+
+    .admin-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+      gap:16px;
+      margin-top:10px;
+      margin-bottom:4px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 24px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .card h2{
+      font-size:16px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .overview-metrics{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+    .metric{
+      background:var(--bg-soft);
+      border-radius:12px;
+      padding:16px 14px;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .metric-label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .metric-value{ font-size:22px; font-weight:600; line-height: 1.2; }
+    .metric-sub{ font-size:12px; margin-top:4px; color:var(--muted); }
+
+    .howto-list{ list-style:decimal; padding-left:20px; font-size:14px; color:var(--muted); line-height: 1.6; }
+    .howto-list li{ margin-bottom:8px; }
+    .howto-highlight{
+      margin-top:12px;
+      font-size:13px;
+      background:rgba(70,194,255,0.08);
+      border-radius:10px;
+      padding:12px;
+      border:1px solid rgba(70,194,255,0.35);
+      line-height: 1.5;
+    }
+
+    .admin-sections{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+      gap:16px;
+      margin-top:4px;
+    }
+    .section-title{
+      font-size:15px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:14px;
+    }
+
+    .field-row{ 
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .table{
+      width:100%;
+      min-width: 600px;
+      border-collapse:collapse;
+      font-size:13px;
+    }
+    .table th,.table td{
+      padding:12px 10px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      text-align:left;
+      vertical-align:top;
+    }
+    .table th{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      background: var(--bg-soft);
+      font-weight: 600;
+    }
+    .table tbody tr:hover{
+      background: rgba(255,255,255,0.02);
+    }
+
+    .tag{
+      display:inline-flex;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:11px;
+      background:rgba(255,255,255,0.06);
+      margin-right:4px;
+      margin-bottom:4px;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.10);
+    }
+
+    .small-text{ 
+      font-size:12px; 
+      color:var(--muted); 
+      margin-top:10px;
+      line-height: 1.5;
+    }
+
+    .actions-row{ 
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .btn-sm{
+      padding:10px 16px;
+      font-size:13px;
+      border-radius:999px;
+      border:1px solid transparent;
+      cursor:pointer;
+      background:rgba(255,255,255,0.06);
+      color:var(--text);
+      font-weight: 500;
+      transition: all .15s ease;
+    }
+    .btn-sm:hover{ 
+      filter:brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .btn-sm:active{ transform: translateY(0); }
+    .btn-danger{
+      background:#3a1016;
+      color:#ffb4c0;
+      border:1px solid rgba(255,94,122,0.6);
+    }
+    .btn-outline{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.35);
+      color:var(--text);
+    }
+    .btn-warn{
+      background:rgba(255,211,106,0.10);
+      border:1px solid rgba(255,211,106,0.45);
+      color:#ffe2a6;
+    }
+
+    .status-bar{ margin-top:12px; font-size:13px; color:var(--muted); padding-top: 12px; border-top: 1px solid var(--border-soft); }
+    .status-ok{ color:var(--success); }
+    .status-warn{ color:var(--warn); }
+    .status-bad{ color:var(--danger); }
+
+    @keyframes fade-in{
+      from{opacity:0; transform:translateY(12px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    .modal-backdrop{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,0.7);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:999;
+      backdrop-filter: blur(4px);
+    }
+    .modal{
+      width:100%;
+      max-width:600px;
+      background:var(--bg-card);
+      border:1px solid var(--border-soft);
+      border-radius:18px;
+      box-shadow:0 18px 50px rgba(0,0,0,0.75);
+      padding:24px;
+      animation:fade-in .18s ease-out;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .modal-title{
+      font-size:16px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight: 600;
+    }
+    .modal-close{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.25);
+      color:var(--text);
+      border-radius:999px;
+      padding:8px 14px;
+      cursor:pointer;
+      font-size:13px;
+      transition: all .15s ease;
+      flex-shrink: 0;
+    }
+    .modal-close:hover{
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .modal-footer{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+      margin-top:20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 15px;
+      }
+
+      .admin-shell {
+        align-items: flex-start;
+        padding: 12px;
+      }
+
+      .login-card {
+        padding: 24px 18px;
+      }
+
+      .login-title {
+        font-size: 18px;
+      }
+
+      .admin-layout {
+        gap: 14px;
+        padding: 0;
+      }
+
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .admin-header-left h1 {
+        font-size: 18px;
+      }
+
+      .admin-header-left p {
+        font-size: 13px;
+      }
+
+      .admin-user {
+        width: 100%;
+        padding: 12px 14px;
+      }
+
+      .admin-grid,
+      .admin-sections {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card {
+        padding: 18px 16px;
+        border-radius: 14px;
+      }
+
+      .card h2 {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+
+      .overview-metrics {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .metric {
+        padding: 14px 12px;
+      }
+
+      .metric-value {
+        font-size: 20px;
+      }
+
+      .howto-list {
+        font-size: 13px;
+        padding-left: 18px;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .actions-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .btn,
+      .btn-sm {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .table-wrapper {
+        border-radius: 8px;
+      }
+
+      .table {
+        font-size: 12px;
+        min-width: 550px;
+      }
+
+      .table th,
+      .table td {
+        padding: 10px 8px;
+      }
+
+      .small-text {
+        font-size: 12px;
+      }
+
+      .modal {
+        padding: 20px 16px;
+        max-height: 85vh;
+      }
+
+      .modal-title {
+        font-size: 14px;
+      }
+
+      .modal-footer {
+        flex-direction: column-reverse;
+        gap: 8px;
+      }
+
+      .modal-footer .btn-sm {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .admin-shell {
+        padding: 8px;
+      }
+
+      .admin-header-left h1 {
+        font-size: 16px;
+      }
+
+      .card {
+        padding: 16px 14px;
+      }
+
+      input,
+      textarea,
+      select {
+        font-size: 16px;
+        padding: 13px;
+      }
+
+      .table {
+        min-width: 500px;
+        font-size: 11px;
+      }
+
+      .overview-metrics {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+
+  <div class="admin-shell">
+
+    <div id="loginView" class="login-card">
+      <h1 class="login-title">Painel do Terapeuta</h1>
+      <p class="login-subtitle">
+        Acesse para gerenciar horários disponíveis e visualizar os agendamentos feitos pelo site.
+      </p>
+
+      <div class="field-group">
+        <label for="loginUser">Usuário</label>
+        <input id="loginUser" placeholder="ex: paulo" />
+      </div>
+
+      <div class="field-group">
+        <label for="loginPass">Senha</label>
+        <input id="loginPass" type="password" placeholder="Senha do painel" />
+      </div>
+
+      <button class="btn" onclick="doLogin()">Entrar no painel</button>
+      <div id="loginError" class="error">Usuário ou senha incorretos.</div>
+
+      <p class="small-text" style="margin-top:16px;">
+        <b>Acesso restrito.</b><br>
+        Usuário e senha são definidos pelo administrador do sistema.
+      </p>
+    </div>
+
+    <div id="adminView" class="admin-layout">
+
+      <header class="admin-header">
+        <div class="admin-header-left">
+          <h1>Painel Administrativo</h1>
+          <p>Gerencie horários, acompanhe agendamentos e mantenha o fluxo sempre organizado.</p>
+        </div>
+        <div class="admin-header-right">
+          <div class="admin-user">
+            <div class="admin-user-avatar">P</div>
+            <div class="admin-user-info">
+              <span class="name">Paulo Nagashima</span>
+              <span class="role">Fisioterapeuta / Terapeuta Manual</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="admin-grid">
+        <div class="card">
+          <h2>Visão geral de hoje</h2>
+          <div class="overview-metrics">
+            <div class="metric">
+              <div class="metric-label">Horários disponíveis</div>
+              <div id="mSlots" class="metric-value">0</div>
+              <div class="metric-sub">slots livres na agenda</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Agendamentos</div>
+              <div id="mAgendamentos" class="metric-value">0</div>
+              <div class="metric-sub">recebidos pelo site</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Próximo atendimento</div>
+              <div id="mNextSlot" class="metric-value">-</div>
+              <div class="metric-sub">data + horário mais próximos</div>
+            </div>
+          </div>
+          <div class="status-bar">
+            Status do painel: <span id="statusPainel" class="status-ok">conectado</span>
+            <span class="tag" id="syncTag" style="margin-left:8px;">Realtime: aguardando...</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Como usar este painel</h2>
+          <ol class="howto-list">
+            <li>Em <b>Horários disponíveis</b>, cadastre os dias e horários que deseja abrir.</li>
+            <li>O site usa esses horários para montar as opções de data/hora para o paciente.</li>
+            <li>Quando o paciente finalizar o formulário, ele aparece em <b>Agendamentos recebidos</b>.</li>
+            <li>Você pode <b>editar</b> (ex.: data/hora escolhida) e <b>excluir</b> um agendamento.</li>
+          </ol>
+          <div class="howto-highlight">
+            <b>Importante:</b> nesta versão, os dados são sincronizados pelo <b>Supabase</b>.
+            Se o Realtime estiver ativo, a lista atualiza automaticamente (sem F5).
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-sections">
+        <div class="card">
+          <h2 class="section-title">Horários disponíveis</h2>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="slotDate">Data</label>
+              <input id="slotDate" type="date">
+            </div>
+            <div class="field-group">
+              <label for="slotTime">Horário</label>
+              <input id="slotTime" type="time">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="slotNote">Observação (opcional)</label>
+            <textarea id="slotNote" placeholder="Ex: ajuste articular, atleta, retorno, etc."></textarea>
+          </div>
+
+          <div class="actions-row">
+            <button class="btn-sm btn-outline" onclick="addSlot()">Adicionar horário</button>
+            <button class="btn-sm btn-secondary" onclick="clearSlots()">Desativar todos</button>
+            <button class="btn-sm btn-warn" onclick="refreshAll()">Recarregar agora</button>
+          </div>
+
+          <p class="small-text">
+            Remover aqui desativa (ativo=false). Assim você não perde histórico de slots.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="table" id="slotsTable">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Hora</th>
+                  <th>Obs.</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Agendamentos recebidos</h2>
+
+          <p class="small-text">
+            Estes dados vêm da tabela <code>agendamentos</code> (formulário completo). O painel lista só os campos principais
+            para ficar leve.
+          </p>
+
+          <div class="actions-row">
+            <button class="btn-sm btn-warn" onclick="refreshAppointments()">Atualizar lista</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="table" id="appTable">
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Contato</th>
+                  <th>Data/Hora</th>
+                  <th>Procedimento</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <p class="small-text" style="margin-top:12px;">
+            Dica: editar aqui altera os campos <code>data_escolhida</code>, <code>hora_escolhida</code>, <code>nome</code>, <code>whatsapp</code> e <code>procedimento</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Segurança do painel</h2>
+        
+        <div class="field-row">
+          <div class="field-group">
+            <label for="oldPass">Senha atual</label>
+            <input id="oldPass" type="password" placeholder="Digite sua senha atual" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="newPass">Nova senha</label>
+            <input id="newPass" type="password" placeholder="Mínimo 6 caracteres" />
+          </div>
+          <div class="field-group">
+            <label for="confirmPass">Confirmar nova senha</label>
+            <input id="confirmPass" type="password" placeholder="Digite a nova senha novamente" />
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-sm btn-outline" onclick="changePassword()">Atualizar senha</button>
+        </div>
+
+        <div id="passMsg" class="small-text" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="small-text" style="margin-top:10px; text-align:right;">
+        Painel · Supabase · Realtime opcional (se habilitado no projeto).
+      </div>
+    </div>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop" onclick="if(event.target===this) closeModal()">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Editar agendamento</div>
+          <div class="small-text" id="modalSubtitle"></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="editNome">Nome</label>
+          <input id="editNome" />
+        </div>
+        <div class="field-group">
+          <label for="editWhatsapp">WhatsApp</label>
+          <input id="editWhatsapp" inputmode="numeric" placeholder="ex: 21999999999" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="editData">Data escolhida</label>
+          <input id="editData" type="date" />
+        </div>
+        <div class="field-group">
+          <label for="editHora">Hora escolhida</label>
+          <input id="editHora" type="time" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="editProcedimento">Procedimento</label>
+        <input id="editProcedimento" placeholder="Ex: Ajuste articular + tratamento terapêutico" />
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-sm btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button class="btn-sm btn-outline" onclick="saveAppointmentEdits()">Salvar alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const loginView  = document.getElementById("loginView");
+    const adminView  = document.getElementById("adminView");
+    const loginError = document.getElementById("loginError");
+
+    async function doLogin() {
+      const user = document.getElementById("loginUser").value.trim();
+      const pass = document.getElementById("loginPass").value.trim();
+      const errorBox = document.getElementById("loginError");
+
+      errorBox.style.display = "none";
+
+      if (!user || !pass) {
+        errorBox.textContent = "Preencha usuário e senha.";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      const { data, error } = await supabase.rpc("login_admin", {
+        p_username: user,
+        p_password: pass
+      });
+
+      if (error) {
+        console.error("Erro RPC:", error);
+        errorBox.textContent = "Erro ao validar login.";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      if (data === true) {
+        sessionStorage.setItem("adminLogged", "true");
+        sessionStorage.setItem("adminUser", user);
+
+        document.getElementById("loginView").style.display = "none";
+        document.getElementById("adminView").style.display = "flex";
+
+        initDashboard();
+      } else {
+        errorBox.textContent = "Usuário ou senha incorretos.";
+        errorBox.style.display = "block";
+      }
+    }
+
+    async function changePassword() {
+      const oldPass = document.getElementById("oldPass").value.trim();
+      const newPass = document.getElementById("newPass").value.trim();
+      const confirmPass = document.getElementById("confirmPass").value.trim();
+      const msgEl = document.getElementById("passMsg");
+
+      msgEl.textContent = "";
+      msgEl.style.color = "var(--muted)";
+
+      if (!oldPass || !newPass || !confirmPass) {
+        msgEl.textContent = "Preencha todos os campos.";
+        msgEl.style.color = "var(--danger)";
+        return;
+      }
+
+      if (newPass.length < 6) {
+        msgEl.textContent = "A nova senha deve ter no mínimo 6 caracteres.";
+        msgEl.style.color = "var(--danger)";
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        msgEl.textContent = "As senhas não coincidem.";
+        msgEl.style.color = "var(--danger)";
+        return;
+      }
+
+      const adminUser = sessionStorage.getItem("adminUser");
+      if (!adminUser) {
+        msgEl.textContent = "Usuário não identificado. Faça login novamente.";
+        msgEl.style.color = "var(--danger)";
+        return;
+      }
+
+      const { data, error } = await supabase.rpc("update_admin_password", {
+        p_username: adminUser,
+        p_old_password: oldPass,
+        p_new_password: newPass
+      });
+
+      if (error) {
+        console.error("Erro RPC:", error);
+        msgEl.textContent = "Erro ao atualizar senha. Verifique o console.";
+        msgEl.style.color = "var(--danger)";
+        return;
+      }
+
+      if (data === true) {
+        msgEl.textContent = "Senha atualizada com sucesso!";
+        msgEl.style.color = "var(--success)";
+        document.getElementById("oldPass").value = "";
+        document.getElementById("newPass").value = "";
+        document.getElementById("confirmPass").value = "";
+      } else {
+        msgEl.textContent = "Senha atual incorreta.";
+        msgEl.style.color = "var(--danger)";
+      }
+    }
+
+    function fmtDateBR(dateStr) {
+      if (!dateStr) return "-";
+      return new Date(dateStr + "T00:00:00").toLocaleDateString("pt-BR");
+    }
+    function safeText(v) { return (v === null || v === undefined || v === "") ? "-" : String(v); }
+
+    const supabase = window.supabase.createClient(
+      "https://qqxlmvmksgptjjnbzjtn.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
+    );
+
+    const SLOTS_TABLE = "horarios_disponiveis";
+    const APPOINTMENTS_TABLE = "agendamentos";
+
+    async function addSlot() {
+      const date = document.getElementById("slotDate").value;
+      const time = document.getElementById("slotTime").value;
+      const note = document.getElementById("slotNote").value.trim();
+
+      if (!date || !time) {
+        alert("Preencha data e horário para adicionar um slot.");
+        return;
+      }
+
+      const { error } = await supabase
+        .from(SLOTS_TABLE)
+        .insert([{ data: date, hora: time, observacao: note, ativo: true }]);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao salvar horário. Veja o console.");
+        return;
+      }
+
+      document.getElementById("slotTime").value = "";
+      document.getElementById("slotNote").value = "";
+      await renderSlots();
+    }
+
+    async function deleteSlot(id) {
+      if (!confirm("Remover (desativar) este horário?")) return;
+
+      const { error } = await supabase
+        .from(SLOTS_TABLE)
+        .update({ ativo: false })
+        .eq("id", id);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao remover. Veja o console.");
+        return;
+      }
+
+      await renderSlots();
+    }
+
+    async function reactivateSlot(id) {
+      const { error } = await supabase
+        .from(SLOTS_TABLE)
+        .update({ ativo: true })
+        .eq("id", id);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao reativar. Veja o console.");
+        return;
+      }
+
+      await renderSlots();
+    }
+
+    async function clearSlots() {
+      if (!confirm("Tem certeza que deseja DESATIVAR TODOS os horários ativos?")) return;
+
+      const { error } = await supabase
+        .from(SLOTS_TABLE)
+        .update({ ativo: false })
+        .eq("ativo", true);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao desativar. Veja o console.");
+        return;
+      }
+
+      await renderSlots();
+    }
+
+    async function renderSlots() {
+      const tbody = document.querySelector("#slotsTable tbody");
+      tbody.innerHTML = "";
+
+      const { data, error } = await supabase
+        .from(SLOTS_TABLE)
+        .select("id,data,hora,observacao,ativo,criado_em")
+        .order("data", { ascending: true })
+        .order("hora", { ascending: true });
+
+      if (error) {
+        console.error(error);
+        tbody.innerHTML = `<tr><td colspan="4" style="color:#a3a6c7;font-size:12px;text-align:center;padding:20px;">Erro ao carregar horários.</td></tr>`;
+        updateOverview([], null);
+        return;
+      }
+
+      if (!data || !data.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="color:#a3a6c7;font-size:12px;text-align:center;padding:20px;">Nenhum horário cadastrado.</td></tr>`;
+        updateOverview([], null);
+        return;
+      }
+
+      data.forEach(slot => {
+        const tr = document.createElement("tr");
+
+        const tdDate = document.createElement("td");
+        const tdTime = document.createElement("td");
+        const tdNote = document.createElement("td");
+        const tdActions = document.createElement("td");
+
+        tdDate.textContent = fmtDateBR(slot.data);
+        tdTime.textContent = slot.hora || "-";
+        tdNote.textContent = slot.observacao || "-";
+
+        if (slot.ativo) {
+          const btnDel = document.createElement("button");
+          btnDel.textContent = "Remover";
+          btnDel.className = "btn-sm btn-danger";
+          btnDel.onclick = () => deleteSlot(slot.id);
+          tdActions.appendChild(btnDel);
+        } else {
+          const btnRe = document.createElement("button");
+          btnRe.textContent = "Reativar";
+          btnRe.className = "btn-sm btn-outline";
+          btnRe.onclick = () => reactivateSlot(slot.id);
+          tdActions.appendChild(btnRe);
+        }
+
+        tr.appendChild(tdDate);
+        tr.appendChild(tdTime);
+        tr.appendChild(tdNote);
+        tr.appendChild(tdActions);
+        tbody.appendChild(tr);
+      });
+
+      updateOverview(data, null);
+    }
+
+    let cachedAppointments = [];
+    let editingAppointmentId = null;
+
+    async function renderAppointments() {
+      const tbody = document.querySelector("#appTable tbody");
+      tbody.innerHTML = "";
+
+      const { data, error } = await supabase
+        .from(APPOINTMENTS_TABLE)
+        .select("id,nome,whatsapp,procedimento,data_escolhida,hora_escolhida,criado_em,email,cidade")
+        .order("criado_em", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        tbody.innerHTML = `<tr><td colspan="5" style="color:#a3a6c7;font-size:12px;text-align:center;padding:20px;">Erro ao carregar agendamentos (ver console).</td></tr>`;
+        updateOverview(null, []);
+        return;
+      }
+
+      cachedAppointments = Array.isArray(data) ? data : [];
+
+      if (!cachedAppointments.length) {
+        tbody.innerHTML = `<tr><td colspan="5" style="color:#a3a6c7;font-size:12px;text-align:center;padding:20px;">Nenhum agendamento recebido ainda.</td></tr>`;
+        updateOverview(null, []);
+        return;
+      }
+
+      cachedAppointments.forEach(item => {
+        const tr = document.createElement("tr");
+
+        const tdNome = document.createElement("td");
+        const tdContato = document.createElement("td");
+        const tdData = document.createElement("td");
+        const tdProc = document.createElement("td");
+        const tdActions = document.createElement("td");
+
+        tdNome.innerHTML = `
+          <div style="font-weight:600;margin-bottom:4px;">${safeText(item.nome)}</div>
+          <div class="small-text">${safeText(item.cidade)} · ${safeText(item.email)}</div>
+        `;
+
+        tdContato.textContent = safeText(item.whatsapp);
+
+        const dataHora = `${safeText(item.data_escolhida)} ${safeText(item.hora_escolhida)}`.trim();
+        tdData.innerHTML = `
+          <div style="font-weight:600;margin-bottom:4px;">${dataHora === "-" ? "-" : dataHora}</div>
+          <div class="small-text">Criado: ${item.criado_em ? new Date(item.criado_em).toLocaleString("pt-BR") : "-"}</div>
+        `;
+
+        tdProc.textContent = safeText(item.procedimento);
+
+        const wrap = document.createElement("div");
+        wrap.className = "actions-row";
+        wrap.style.marginTop = "0";
+
+        const btnEdit = document.createElement("button");
+        btnEdit.className = "btn-sm btn-outline";
+        btnEdit.textContent = "Editar";
+        btnEdit.onclick = () => openEditModal(item.id);
+
+        const btnDel = document.createElement("button");
+        btnDel.className = "btn-sm btn-danger";
+        btnDel.textContent = "Excluir";
+        btnDel.onclick = () => deleteAppointment(item.id);
+
+        wrap.appendChild(btnEdit);
+        wrap.appendChild(btnDel);
+        tdActions.appendChild(wrap);
+
+        tr.appendChild(tdNome);
+        tr.appendChild(tdContato);
+        tr.appendChild(tdData);
+        tr.appendChild(tdProc);
+        tr.appendChild(tdActions);
+        tbody.appendChild(tr);
+      });
+
+      updateOverview(null, cachedAppointments);
+    }
+
+    async function deleteAppointment(id) {
+      if (!confirm("Tem certeza que deseja EXCLUIR este agendamento? Essa ação não pode ser desfeita.")) return;
+
+      const { error } = await supabase
+        .from(APPOINTMENTS_TABLE)
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao excluir agendamento. Veja o console.");
+        return;
+      }
+
+      await renderAppointments();
+    }
+
+    function openEditModal(id) {
+      const item = cachedAppointments.find(a => a.id === id);
+      if (!item) {
+        alert("Não foi possível abrir este agendamento (não encontrado no cache). Atualize a lista.");
+        return;
+      }
+
+      editingAppointmentId = id;
+
+      document.getElementById("editNome").value = item.nome || "";
+      document.getElementById("editWhatsapp").value = item.whatsapp || "";
+      document.getElementById("editProcedimento").value = item.procedimento || "";
+
+      document.getElementById("editData").value = (item.data_escolhida && /^\d{4}-\d{2}-\d{2}$/.test(item.data_escolhida)) ? item.data_escolhida : "";
+      document.getElementById("editHora").value = (item.hora_escolhida && /^\d{2}:\d{2}/.test(item.hora_escolhida)) ? item.hora_escolhida : "";
+
+      const subtitle = `${safeText(item.nome)} · ${safeText(item.data_escolhida)} ${safeText(item.hora_escolhida)}`.trim();
+      document.getElementById("modalSubtitle").textContent = subtitle === "-" ? "" : subtitle;
+
+      document.getElementById("modalBackdrop").style.display = "flex";
+    }
+
+    function closeModal() {
+      editingAppointmentId = null;
+      document.getElementById("modalBackdrop").style.display = "none";
+    }
+
+    async function saveAppointmentEdits() {
+      if (!editingAppointmentId) return;
+
+      const nome = document.getElementById("editNome").value.trim();
+      const whatsapp = document.getElementById("editWhatsapp").value.trim();
+      const procedimento = document.getElementById("editProcedimento").value.trim();
+      const data_escolhida = document.getElementById("editData").value.trim();
+      const hora_escolhida = document.getElementById("editHora").value.trim();
+
+      if (!nome) { alert("Nome não pode ficar vazio."); return; }
+
+      const payload = {
+        nome,
+        whatsapp,
+        procedimento,
+        data_escolhida: data_escolhida || null,
+        hora_escolhida: hora_escolhida || null
+      };
+
+      const { error } = await supabase
+        .from(APPOINTMENTS_TABLE)
+        .update(payload)
+        .eq("id", editingAppointmentId);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao salvar alterações. Veja o console.");
+        return;
+      }
+
+      closeModal();
+      await renderAppointments();
+    }
+
+    function updateOverview(slotsMaybe, appsMaybe) {
+      if (Array.isArray(slotsMaybe)) {
+        const ativos = slotsMaybe.filter(s => s.ativo);
+        document.getElementById("mSlots").textContent = ativos.length;
+
+        if (ativos.length) {
+          const next = [...ativos].sort((a,b) => (a.data + (a.hora||"")).localeCompare(b.data + (b.hora||"")))[0];
+          document.getElementById("mNextSlot").textContent = `${fmtDateBR(next.data)} ${next.hora || ""}`.trim();
+        } else {
+          document.getElementById("mNextSlot").textContent = "-";
+        }
+      }
+
+      if (Array.isArray(appsMaybe)) {
+        document.getElementById("mAgendamentos").textContent = appsMaybe.length;
+      }
+    }
+
+    let realtimeSub = null;
+
+    async function setupRealtime() {
+      const tag = document.getElementById("syncTag");
+      try {
+        if (realtimeSub) {
+          await supabase.removeChannel(realtimeSub);
+          realtimeSub = null;
+        }
+
+        realtimeSub = supabase
+          .channel("admin-realtime")
+          .on("postgres_changes", { event: "*", schema: "public", table: SLOTS_TABLE }, async () => {
+            await renderSlots();
+          })
+          .on("postgres_changes", { event: "*", schema: "public", table: APPOINTMENTS_TABLE }, async () => {
+            await renderAppointments();
+          });
+
+        const { error } = await realtimeSub.subscribe((status) => {
+          if (status === "SUBSCRIBED") {
+            tag.textContent = "Realtime: ativo";
+            tag.style.borderColor = "rgba(54,211,153,0.40)";
+            tag.style.color = "rgba(54,211,153,0.95)";
+          } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+            tag.textContent = "Realtime: falhou";
+            tag.style.borderColor = "rgba(255,94,122,0.55)";
+            tag.style.color = "rgba(255,180,192,0.95)";
+          } else {
+            tag.textContent = "Realtime: " + status;
+            tag.style.color = "var(--muted)";
+          }
+        });
+
+        if (error) {
+          console.warn("Realtime subscribe error:", error);
+          tag.textContent = "Realtime: indisponível";
+          tag.style.color = "var(--muted)";
+        }
+      } catch (e) {
+        console.warn("Realtime exception:", e);
+        const tag2 = document.getElementById("syncTag");
+        tag2.textContent = "Realtime: indisponível";
+        tag2.style.color = "var(--muted)";
+      }
+    }
+
+    async function refreshAppointments() {
+      await renderAppointments();
+    }
+    async function refreshAll() {
+      await renderSlots();
+      await renderAppointments();
+    }
+
+    async function initDashboard() {
+      await renderSlots();
+      await renderAppointments();
+      await setupRealtime();
+
+      const status = document.getElementById("statusPainel");
+      status.textContent = "operando normalmente";
+      status.classList.remove("status-warn","status-bad");
+      status.classList.add("status-ok");
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    (function protectAdmin() {
+      const logged = sessionStorage.getItem("adminLogged");
+
+      if (logged === "true") {
+        document.getElementById("loginView").style.display = "none";
+        document.getElementById("adminView").style.display = "flex";
+        window.addEventListener("load", initDashboard);
+      } else {
+        document.getElementById("loginView").style.display = "block";
+        document.getElementById("adminView").style.display = "none";
+      }
+    })();
+  </script>
+
+</body>
+</html>
