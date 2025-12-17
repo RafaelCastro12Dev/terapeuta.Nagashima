@@ -1465,8 +1465,13 @@ PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
 
 
         const urlWhats = `https://wa.me/${WHATSAPP_PRO}?text=${encodeURIComponent(msg)}`;
-        window.open(urlWhats, "_blank");
-
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  // Celular → abre direto
+  window.location.href = urlWhats;
+} else {
+  // Computador → nova aba
+  window.open(urlWhats, "_blank");
+}
         // Mostrar sucesso
         successMsg.textContent = "✅ Pré-agendamento enviado com sucesso! Você será contatado para confirmação.";
         successMsg.style.display = "block";
