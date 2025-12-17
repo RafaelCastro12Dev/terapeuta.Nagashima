@@ -184,6 +184,38 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.60);
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* TELA SELEÇÃO HORÁRIO */
+    #screen-schedule {
+      display: none;
+      animation: fade-in 0.3s ease-out;
+    }
+
+    .schedule-box {
+      background: rgba(5, 8, 28, 0.85);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 28px 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .alert-info {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(100, 150, 255, 0.15);
+      border: 1px solid rgba(100, 150, 255, 0.5);
+      font-size: 13px;
+      color: #d4e0ff;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* TELA FORMULÁRIO */
     #screen-form {
       display: none;
       animation: fade-in 0.3s ease-out;
@@ -277,6 +309,12 @@
       border-color: #7d67ff;
       box-shadow: 0 0 0 2px rgba(125,103,255,0.35);
       background: rgba(6, 10, 36, 0.98);
+    }
+
+    input:disabled,
+    select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     textarea {
@@ -454,136 +492,38 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ==================== RESPONSIVIDADE MOBILE ==================== */
+    /* RESPONSIVIDADE */
     @media (max-width: 768px) {
-      .outer {
-        padding: 24px 12px;
-      }
-
-      .card {
-        padding: 24px 20px;
-        border-radius: 20px;
-      }
-
-      .title-block h1 {
-        font-size: 22px;
-        line-height: 1.3;
-      }
-
-      .intro-text,
-      .bio-text {
-        font-size: 14px;
-        line-height: 1.6;
-      }
-
-      .photo-wrapper img {
-        width: 200px;
-        height: 200px;
-      }
-
-      .btn {
-        width: 100%;
-        max-width: 100%;
-        padding: 14px 24px;
-      }
-
-      .form-title {
-        font-size: 20px;
-      }
-
-      .form-subtitle {
-        font-size: 13px;
-      }
-
-      .form-box {
-        padding: 20px 16px;
-      }
-
-      .section-block {
-        padding: 16px 14px;
-      }
-
-      .row {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .row.inline-options {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .chips-grid {
-        gap: 6px;
-      }
-
-      .chip {
-        padding: 8px 12px;
-        font-size: 12px;
-      }
-
-      #assinaturaCanvas {
-        height: 200px;
-      }
+      .outer { padding: 24px 12px; }
+      .card { padding: 24px 20px; border-radius: 20px; }
+      .title-block h1 { font-size: 22px; line-height: 1.3; }
+      .intro-text, .bio-text { font-size: 14px; line-height: 1.6; }
+      .photo-wrapper img { width: 200px; height: 200px; }
+      .btn { width: 100%; max-width: 100%; padding: 14px 24px; }
+      .form-title { font-size: 20px; }
+      .form-subtitle { font-size: 13px; }
+      .form-box { padding: 20px 16px; }
+      .section-block { padding: 16px 14px; }
+      .row { grid-template-columns: 1fr; gap: 14px; }
+      .row.inline-options { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .chips-grid { gap: 6px; }
+      .chip { padding: 8px 12px; font-size: 12px; }
+      #assinaturaCanvas { height: 200px; }
     }
 
     @media (max-width: 480px) {
-      .outer {
-        padding: 20px 10px;
-      }
-
-      .card {
-        padding: 20px 16px;
-        border-radius: 18px;
-      }
-
-      .title-block h1 {
-        font-size: 18px;
-        line-height: 1.3;
-      }
-
-      .photo-wrapper img {
-        width: 180px;
-        height: 180px;
-      }
-
-      .intro-text,
-      .bio-text {
-        font-size: 13px;
-      }
-
-      .form-title {
-        font-size: 18px;
-      }
-
-      .form-box {
-        padding: 18px 14px;
-      }
-
-      .section-block {
-        padding: 14px 12px;
-      }
-
-      input,
-      select,
-      textarea {
-        font-size: 16px; /* Previne zoom no iOS */
-        padding: 13px;
-      }
-
-      .field-group {
-        margin-bottom: 14px;
-      }
-
-      .btn {
-        font-size: 14px;
-        padding: 13px 20px;
-      }
-
-      #assinaturaCanvas {
-        height: 180px;
-      }
+      .outer { padding: 20px 10px; }
+      .card { padding: 20px 16px; border-radius: 18px; }
+      .title-block h1 { font-size: 18px; line-height: 1.3; }
+      .photo-wrapper img { width: 180px; height: 180px; }
+      .intro-text, .bio-text { font-size: 13px; }
+      .form-title { font-size: 18px; }
+      .form-box { padding: 18px 14px; }
+      .section-block { padding: 14px 12px; }
+      input, select, textarea { font-size: 16px; padding: 13px; }
+      .field-group { margin-bottom: 14px; }
+      .btn { font-size: 14px; padding: 13px 20px; }
+      #assinaturaCanvas { height: 180px; }
     }
   </style>
 </head>
@@ -612,7 +552,7 @@
         </p>
 
         <div class="photo-wrapper">
-          <img src="/fotos/perfil,paulo.png" alt="Paulo Nagashima" />
+          <img src="fotos/perfil,paulo.png" alt="Paulo Nagashima" />
         </div>
 
         <p class="bio-text">
@@ -627,20 +567,67 @@
         </p>
 
         <div class="intro-button">
-          <button class="btn" onclick="irParaForm()">Começar</button>
+          <button class="btn" onclick="irParaSchedule()">Começar</button>
         </div>
       </section>
 
-      <!-- ====================== TELA FORM ====================== -->
-      <section id="screen-form">
-        <h2 class="form-title">Formulário de pré-atendimento</h2>
+      <!-- ====================== TELA SELEÇÃO HORÁRIO ====================== -->
+      <section id="screen-schedule">
+        <h2 class="form-title">📅 Escolha seu horário</h2>
         <p class="form-subtitle">
           Preencha seus dados e escolha um horário disponível. Após o envio, entraremos em contato
           para confirmar seu atendimento.
         </p>
 
+        <div class="schedule-box">
+          <div class="alert-info">
+            💡 <strong>Mostrando apenas horários disponíveis.</strong> Horários já agendados ou passados não aparecem na lista.
+          </div>
+
+          <div class="section-block">
+            <div class="section-title">📆 Escolha seu horário</div>
+
+            <div class="row">
+              <div class="field-group">
+                <label for="dataSchedule">Data desejada *</label>
+                <select id="dataSchedule" required>
+                  <option value="">Carregando datas...</option>
+                </select>
+                <div class="helper">Apenas datas futuras com vagas aparecem.</div>
+              </div>
+
+              <div class="field-group">
+                <label for="horaSchedule">Horário *</label>
+                <select id="horaSchedule" required disabled>
+                  <option value="">Escolha uma data primeiro</option>
+                </select>
+                <div class="helper">Horários já ocupados não aparecem.</div>
+              </div>
+            </div>
+
+            <button id="btnContinuar" class="btn form-btn" onclick="irParaForm()" disabled>
+              Continuar para o formulário →
+            </button>
+
+            <div id="scheduleError" class="error"></div>
+          </div>
+        </div>
+
+        <div class="back-link" onclick="voltarIntro()">
+          ← Voltar para a tela inicial
+        </div>
+      </section>
+
+      <!-- ====================== TELA FORMULÁRIO COMPLETO ====================== -->
+      <section id="screen-form">
+        <h2 class="form-title">📝 Formulário de pré-atendimento</h2>
+        <p class="form-subtitle">
+          Complete seus dados abaixo. Seu horário escolhido: <strong id="horarioEscolhidoDisplay"></strong>
+        </p>
+
         <div class="form-box">
           <form id="preForm" class="form-section" autocomplete="off">
+            
             <!-- DADOS PESSOAIS -->
             <div class="section-block">
               <div class="section-title">Dados pessoais</div>
@@ -872,26 +859,6 @@
               </div>
             </div>
 
-            <!-- AGENDAMENTO -->
-            <div class="section-block">
-              <div class="section-title">Agendamento</div>
-
-              <div class="row">
-                <div class="field-group">
-                  <label for="data">Data desejada *</label>
-                  <select id="data" required></select>
-                  <div class="helper">Apenas dias com vaga aparecerão aqui.</div>
-                </div>
-
-                <div class="field-group">
-                  <label for="hora">Horário *</label>
-                  <select id="hora" required>
-                    <option value="">Escolha uma data primeiro</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
             <!-- ASSINATURA -->
             <div class="section-block">
               <div class="section-title">Assinatura</div>
@@ -908,20 +875,20 @@
               </div>
             </div>
 
-            <!-- BOTÃO E MENSAGENS -->
-            <button type="submit" class="btn form-btn">Confirmar pré-agendamento</button>
+            <!-- CAMPOS HIDDEN PARA DATA/HORA -->
+            <input type="hidden" id="data_escolhida_hidden" />
+            <input type="hidden" id="hora_escolhida_hidden" />
 
-            <div id="formError" class="error">
-              Preencha todos os campos obrigatórios, escolha data/horário, aceite os termos e assine.
-            </div>
-            <div id="successMsg" class="success">
-              Pré-agendamento enviado! Você será contatado para confirmação final do horário.
-            </div>
+            <!-- BOTÃO E MENSAGENS -->
+            <button type="submit" class="btn form-btn" id="btnSubmit">Confirmar pré-agendamento</button>
+
+            <div id="formError" class="error"></div>
+            <div id="successMsg" class="success"></div>
           </form>
         </div>
 
-        <div class="back-link" onclick="voltarIntro()">
-          ← Voltar para a tela inicial
+        <div class="back-link" onclick="voltarSchedule()">
+          ← Voltar para seleção de horário
         </div>
       </section>
 
@@ -932,39 +899,69 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
+    // ==================== CONFIGURAÇÃO SUPABASE ====================
     const SUPABASE_URL = "https://qqxlmvmksgptjjnbzjtn.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU";
-
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    async function salvarAgendamentoNoSupabase(dados) {
-      const { error } = await supabase
-        .from("agendamentos")
-        .insert([dados]);
+    const WHATSAPP_PRO = "5521995600274";
 
-    if (error) {
-  console.error("Erro Supabase detalhado:", JSON.stringify(error, null, 2));
-  throw error;
-}
+    // ==================== VARIÁVEIS GLOBAIS ====================
+    let agendaDisponivel = [];
+    let dataSelecionada = "";
+    let horaSelecionada = "";
 
-    }
-
-    // WhatsApp do profissional
-    const WHATSAPP_PRO = "5519994526993";
-
-    // Navegação entre telas
-    function irParaForm() {
+    // ==================== NAVEGAÇÃO ENTRE TELAS ====================
+    function irParaSchedule() {
       document.getElementById("screen-intro").style.display = "none";
-      document.getElementById("screen-form").style.display = "block";
+      document.getElementById("screen-schedule").style.display = "block";
+      document.getElementById("screen-form").style.display = "none";
       window.scrollTo({ top: 0, behavior: "smooth" });
+      carregarHorariosDisponiveis();
     }
 
     function voltarIntro() {
-      document.getElementById("screen-form").style.display = "none";
       document.getElementById("screen-intro").style.display = "block";
+      document.getElementById("screen-schedule").style.display = "none";
+      document.getElementById("screen-form").style.display = "none";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    function irParaForm() {
+      const dataScheduleEl = document.getElementById("dataSchedule");
+      const horaScheduleEl = document.getElementById("horaSchedule");
+      
+      dataSelecionada = dataScheduleEl.value;
+      horaSelecionada = horaScheduleEl.value;
+
+      if (!dataSelecionada || !horaSelecionada) {
+        document.getElementById("scheduleError").textContent = "Por favor, escolha data e horário.";
+        document.getElementById("scheduleError").style.display = "block";
+        return;
+      }
+
+      // Preencher campos hidden
+      document.getElementById("data_escolhida_hidden").value = dataSelecionada;
+      document.getElementById("hora_escolhida_hidden").value = horaSelecionada;
+
+      // Exibir horário escolhido
+      const rotuloData = formatarRotuloData(dataSelecionada);
+      document.getElementById("horarioEscolhidoDisplay").textContent = `${rotuloData} às ${horaSelecionada}`;
+
+      document.getElementById("screen-schedule").style.display = "none";
+      document.getElementById("screen-form").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      
+      initSignature();
+    }
+
+    function voltarSchedule() {
+      document.getElementById("screen-form").style.display = "none";
+      document.getElementById("screen-schedule").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ==================== FORMATAÇÃO DE DATA ====================
     function formatarRotuloData(iso) {
       if (!iso) return "";
       const dias = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -977,115 +974,183 @@
       return `${dia}/${mes}/${ano} (${nomeDia})`;
     }
 
-    async function construirAgendaAPartirDoSupabase() {
-      const { data, error } = await supabase
-        .from("horarios_disponiveis")
-        .select("data, hora")
-        .eq("ativo", true)
-        .order("data", { ascending: true })
-        .order("hora", { ascending: true });
+    // ==================== CARREGAMENTO DE HORÁRIOS ====================
+    async function carregarHorariosDisponiveis() {
+      const dataScheduleEl = document.getElementById("dataSchedule");
+      const horaScheduleEl = document.getElementById("horaSchedule");
+      const btnContinuar = document.getElementById("btnContinuar");
 
-      if (error) {
-        console.error("Erro ao buscar horários:", error);
-        return [];
+      dataScheduleEl.innerHTML = "<option value=''>Carregando...</option>";
+      dataScheduleEl.disabled = true;
+      horaScheduleEl.disabled = true;
+      btnContinuar.disabled = true;
+
+      try {
+        // 1) Buscar horários disponíveis ativos
+        const { data: disponiveis, error: errDisp } = await supabase
+          .from("horarios_disponiveis")
+          .select("data, hora")
+          .eq("ativo", true)
+          .order("data", { ascending: true })
+          .order("hora", { ascending: true });
+
+        if (errDisp) throw errDisp;
+
+        // 2) Buscar horários já agendados
+        const { data: agendados, error: errAgend } = await supabase
+          .from("agendamentos")
+          .select("data_escolhida, hora_escolhida");
+
+        if (errAgend) throw errAgend;
+
+        // 3) Filtrar datas passadas e horários ocupados
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
+        const agora = new Date();
+        const horaAtual = agora.getHours();
+        const minutoAtual = agora.getMinutes();
+
+        const dispLivres = disponiveis.filter(d => {
+          const dataItem = new Date(d.data + "T12:00:00");
+          if (dataItem < hoje) return false;
+
+          // Se for hoje, verificar se horário já passou
+          if (dataItem.getTime() === hoje.getTime()) {
+            const [h, m] = d.hora.split(":").map(Number);
+            if (h < horaAtual || (h === horaAtual && m <= minutoAtual)) {
+              return false;
+            }
+          }
+
+          // Verificar se já está agendado
+          const ocupado = agendados.some(a => 
+            a.data_escolhida === d.data && a.hora_escolhida === d.hora
+          );
+          return !ocupado;
+        });
+
+        // 4) Organizar por data
+        const porData = {};
+        dispLivres.forEach(item => {
+          if (!porData[item.data]) {
+            porData[item.data] = {
+              dataISO: item.data,
+              rotuloData: formatarRotuloData(item.data),
+              horarios: []
+            };
+          }
+          if (!porData[item.data].horarios.includes(item.hora)) {
+            porData[item.data].horarios.push(item.hora);
+          }
+        });
+
+        agendaDisponivel = Object.values(porData);
+
+        // 5) Preencher select de datas
+        dataScheduleEl.innerHTML = "";
+        
+        if (agendaDisponivel.length === 0) {
+          dataScheduleEl.innerHTML = "<option value=''>Sem horários disponíveis</option>";
+          dataScheduleEl.disabled = true;
+          horaScheduleEl.innerHTML = "<option value=''>Sem horários</option>";
+          horaScheduleEl.disabled = true;
+          return;
+        }
+
+        const optDefault = document.createElement("option");
+        optDefault.value = "";
+        optDefault.textContent = "Selecione uma data";
+        dataScheduleEl.appendChild(optDefault);
+
+        agendaDisponivel.forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item.dataISO;
+          opt.textContent = item.rotuloData;
+          dataScheduleEl.appendChild(opt);
+        });
+
+        dataScheduleEl.disabled = false;
+
+      } catch (error) {
+        console.error("Erro ao carregar horários:", error);
+        dataScheduleEl.innerHTML = "<option value=''>Erro ao carregar</option>";
       }
-
-      const porData = {};
-
-      data.forEach(item => {
-        if (!porData[item.data]) {
-          porData[item.data] = {
-            dataISO: item.data,
-            rotuloData: formatarRotuloData(item.data),
-            horarios: []
-          };
-        }
-
-        if (!porData[item.data].horarios.includes(item.hora)) {
-          porData[item.data].horarios.push(item.hora);
-        }
-      });
-
-      return Object.values(porData);
     }
 
-    let agenda = [];
-    const dataSelect = document.getElementById("data");
-    const horaSelect = document.getElementById("hora");
-    const form = document.getElementById("preForm");
-    const successMsg = document.getElementById("successMsg");
-    const formError = document.getElementById("formError");
+    // ==================== ATUALIZAÇÃO DE HORÁRIOS ====================
+    function atualizarHorariosSchedule() {
+      const dataScheduleEl = document.getElementById("dataSchedule");
+      const horaScheduleEl = document.getElementById("horaSchedule");
+      const btnContinuar = document.getElementById("btnContinuar");
 
-    async function preencherDatas() {
-      agenda = await construirAgendaAPartirDoSupabase();
-      dataSelect.innerHTML = "";
-      horaSelect.innerHTML = "<option value=''>Escolha uma data primeiro</option>";
+      const dataSel = dataScheduleEl.value;
+      horaScheduleEl.innerHTML = "";
+      btnContinuar.disabled = true;
 
-      const datasComVaga = agenda.filter(item => item.horarios.length > 0);
-
-      if (!datasComVaga.length) {
-        const opt = document.createElement("option");
-        opt.value = "";
-        opt.textContent = "Sem horários disponíveis no momento";
-        dataSelect.appendChild(opt);
-        dataSelect.disabled = true;
-        horaSelect.disabled = true;
+      if (!dataSel) {
+        horaScheduleEl.innerHTML = "<option value=''>Escolha uma data primeiro</option>";
+        horaScheduleEl.disabled = true;
         return;
       }
 
-      const optDefault = document.createElement("option");
-      optDefault.value = "";
-      optDefault.textContent = "Selecione uma data";
-      dataSelect.appendChild(optDefault);
-
-      datasComVaga.forEach(item => {
-        const opt = document.createElement("option");
-        opt.value = item.dataISO;
-        opt.textContent = item.rotuloData;
-        dataSelect.appendChild(opt);
-      });
-
-      dataSelect.disabled = false;
-      horaSelect.disabled = false;
-    }
-
-    function atualizarHorarios() {
-      const dataSelecionada = dataSelect.value;
-      horaSelect.innerHTML = "";
-
-      if (!dataSelecionada) {
-        const opt = document.createElement("option");
-        opt.value = "";
-        opt.textContent = "Escolha uma data primeiro";
-        horaSelect.appendChild(opt);
-        return;
-      }
-
-      const item = agenda.find(a => a.dataISO === dataSelecionada);
-      if (!item || !item.horarios.length) {
-        const opt = document.createElement("option");
-        opt.value = "";
-        opt.textContent = "Sem horários disponíveis nesta data";
-        horaSelect.appendChild(opt);
+      const item = agendaDisponivel.find(a => a.dataISO === dataSel);
+      if (!item || item.horarios.length === 0) {
+        horaScheduleEl.innerHTML = "<option value=''>Sem horários disponíveis</option>";
+        horaScheduleEl.disabled = true;
         return;
       }
 
       const optDefault = document.createElement("option");
       optDefault.value = "";
       optDefault.textContent = "Selecione um horário";
-      horaSelect.appendChild(optDefault);
+      horaScheduleEl.appendChild(optDefault);
 
       item.horarios.forEach(h => {
         const opt = document.createElement("option");
         opt.value = h;
         opt.textContent = h;
-        horaSelect.appendChild(opt);
+        horaScheduleEl.appendChild(opt);
       });
+
+      horaScheduleEl.disabled = false;
     }
 
-    dataSelect.addEventListener("change", atualizarHorarios);
+    function verificarHorarioSelecionado() {
+      const dataScheduleEl = document.getElementById("dataSchedule");
+      const horaScheduleEl = document.getElementById("horaSchedule");
+      const btnContinuar = document.getElementById("btnContinuar");
 
-    // Assinatura Canvas
+      if (dataScheduleEl.value && horaScheduleEl.value) {
+        btnContinuar.disabled = false;
+        document.getElementById("scheduleError").style.display = "none";
+      } else {
+        btnContinuar.disabled = true;
+      }
+    }
+
+    // Event listeners
+    document.getElementById("dataSchedule").addEventListener("change", () => {
+      atualizarHorariosSchedule();
+      verificarHorarioSelecionado();
+    });
+
+    document.getElementById("horaSchedule").addEventListener("change", verificarHorarioSelecionado);
+
+    // ==================== SINCRONIZAÇÃO TEMPO REAL ====================
+    supabase
+      .channel("agendamentos_realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "agendamentos" },
+        () => {
+          console.log("Novo agendamento detectado, recarregando...");
+          carregarHorariosDisponiveis();
+        }
+      )
+      .subscribe();
+
+    // ==================== ASSINATURA CANVAS ====================
     let canvas, ctx, drawing = false, lastX = 0, lastY = 0;
 
     function initSignature() {
@@ -1097,10 +1162,8 @@
         const rect = canvas.getBoundingClientRect();
         const width = rect.width || 300;
         const height = 220;
-
         canvas.width = width;
         canvas.height = height;
-
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
@@ -1138,12 +1201,10 @@
         ctx.strokeStyle = "#000000";
         ctx.lineWidth = 2;
         ctx.lineCap = "round";
-
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
-
         lastX = pos.x;
         lastY = pos.y;
       }
@@ -1158,7 +1219,6 @@
       canvas.addEventListener("mousemove", draw);
       canvas.addEventListener("mouseup", endDraw);
       canvas.addEventListener("mouseleave", endDraw);
-
       canvas.addEventListener("touchstart", startDraw, { passive: false });
       canvas.addEventListener("touchmove", draw, { passive: false });
       canvas.addEventListener("touchend", endDraw, { passive: false });
@@ -1190,64 +1250,42 @@
       return canvas.toDataURL("image/png");
     }
 
-    // Envio do formulário
-    form.addEventListener("submit", async function (e) {
+    // ==================== ENVIO DO FORMULÁRIO ====================
+    document.getElementById("preForm").addEventListener("submit", async function (e) {
       e.preventDefault();
+      
+      const formError = document.getElementById("formError");
+      const successMsg = document.getElementById("successMsg");
+      const btnSubmit = document.getElementById("btnSubmit");
+
       formError.style.display = "none";
       successMsg.style.display = "none";
 
+      // Validações básicas
       const nome = document.getElementById("nome").value.trim();
       const nascimento = document.getElementById("nascimento").value.trim();
       const cidade = document.getElementById("cidade").value.trim();
       const whatsapp = document.getElementById("whatsapp").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const instagram = document.getElementById("instagram").value.trim();
-
       const procedimento = document.getElementById("procedimento").value;
       const toleranciaPressao = document.getElementById("toleranciaPressao").value;
       const queixa = document.getElementById("queixa").value.trim();
       const tempoDor = document.getElementById("tempoDor").value.trim();
-      const historico = document.getElementById("historico").value.trim();
-
       const ajudaProfissional = (document.querySelector('input[name="ajudaProfissional"]:checked') || {}).value || "";
-      const resultadoAjuda = document.getElementById("resultadoAjuda").value.trim();
-
       const temAlergia = (document.querySelector('input[name="temAlergia"]:checked') || {}).value || "";
-      const detalheAlergia = document.getElementById("detalheAlergia").value.trim();
-
-      const comorbidadesMarcadas = Array.from(document.querySelectorAll('input[name="comorbidades"]:checked'))
-        .map(c => c.value);
-      const comorbidadeOutra = document.getElementById("comorbidadeOutra").value.trim();
-
-      const historicoLesao = document.getElementById("historicoLesao").value.trim();
-
-      const usaProtese = (document.querySelector('input[name="usaProtese"]:checked') || {}).value || "";
-      const detalheProtese = document.getElementById("detalheProtese").value.trim();
-
-      const usaMedicacao = (document.querySelector('input[name="usaMedicacao"]:checked') || {}).value || "";
-      const detalheMedicacao = document.getElementById("detalheMedicacao").value.trim();
-
       const termosCheck = document.getElementById("termos");
 
-      const dataSelecionada = dataSelect.value;
-      const horaSelecionada = horaSelect.value;
+      const dataEscolhida = document.getElementById("data_escolhida_hidden").value;
+      const horaEscolhida = document.getElementById("hora_escolhida_hidden").value;
 
       if (
-        !nome ||
-        !nascimento ||
-        !cidade ||
-        !whatsapp ||
-        !queixa ||
-        !tempoDor ||
-        !procedimento ||
-        !toleranciaPressao ||
-        !ajudaProfissional ||
-        !temAlergia ||
-        !dataSelecionada ||
-        !horaSelecionada ||
+        !nome || !nascimento || !cidade || !whatsapp ||
+        !procedimento || !toleranciaPressao ||
+        !queixa || !tempoDor ||
+        !ajudaProfissional || !temAlergia ||
+        !dataEscolhida || !horaEscolhida ||
         !termosCheck.checked
       ) {
-        formError.textContent = "Preencha todos os campos obrigatórios (*), escolha data/horário e aceite os termos.";
+        formError.textContent = "Preencha todos os campos obrigatórios (*), escolha horário e aceite os termos.";
         formError.style.display = "block";
         return;
       }
@@ -1258,54 +1296,51 @@
         return;
       }
 
-      const itemAgenda = agenda.find(a => a.dataISO === dataSelecionada);
-      const dataLabel = itemAgenda ? itemAgenda.rotuloData : dataSelecionada;
-      const assinaturaDataUrl = getAssinaturaDataUrl();
-
-      const msg = `
-Novo pré-agendamento recebido:
-
-*DADOS PESSOAIS*
-Nome: ${nome}
-Data de nascimento: ${nascimento || "não informado"}
-Cidade: ${cidade || "não informada"}
-WhatsApp/telefone: ${whatsapp}
-E-mail: ${email || "não informado"}
-Instagram: ${instagram || "não informado"}
-
-*PROCEDIMENTO*
-Procedimento: ${procedimento}
-Tolerância à pressão: ${toleranciaPressao}
-Queixa principal: ${queixa}
-Tempo de dor: ${tempoDor}
-Histórico adicional: ${historico || "não informado"}
-
-*HISTÓRICO DE TRATAMENTO*
-Buscou ajuda profissional?: ${ajudaProfissional}
-Resultado: ${resultadoAjuda || "não informado"}
-
-*SAÚDE E CONDIÇÕES*
-Alergia?: ${temAlergia}
-Detalhes: ${detalheAlergia || "não informado"}
-Comorbidades: ${comorbidadesMarcadas.length ? comorbidadesMarcadas.join(", ") : "nenhuma"}
-Outras: ${comorbidadeOutra || "nenhuma"}
-Histórico lesão: ${historicoLesao || "não informado"}
-Prótese?: ${usaProtese}
-Detalhes: ${detalheProtese || "não informado"}
-Medicação?: ${usaMedicacao}
-Medicamentos: ${detalheMedicacao || "não informado"}
-
-*AGENDAMENTO*
-Data: ${dataLabel}
-Horário: ${horaSelecionada}
-
-Termos: ${termosCheck.checked ? "Aceitos" : "Não aceitos"}
-      `.trim();
-
-      const urlWhats = `https://api.whatsapp.com/send?phone=${WHATSAPP_PRO}&text=${encodeURIComponent(msg)}`;
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = "Enviando...";
 
       try {
-        await salvarAgendamentoNoSupabase({
+        // VERIFICAÇÃO FINAL: checar se horário ainda está disponível
+        const { data: verificacao, error: errVerif } = await supabase
+          .from("agendamentos")
+          .select("id")
+          .eq("data_escolhida", dataEscolhida)
+          .eq("hora_escolhida", horaEscolhida);
+
+        if (errVerif) throw errVerif;
+
+        if (verificacao && verificacao.length > 0) {
+          formError.textContent = "❌ Este horário acabou de ser agendado por outra pessoa. Escolha outro horário.";
+          formError.style.display = "block";
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = "Confirmar pré-agendamento";
+          
+          setTimeout(() => {
+            voltarSchedule();
+            carregarHorariosDisponiveis();
+          }, 2000);
+          return;
+        }
+
+        // Coletar todos os dados
+        const email = document.getElementById("email").value.trim();
+        const instagram = document.getElementById("instagram").value.trim();
+        const historico = document.getElementById("historico").value.trim();
+        const resultadoAjuda = document.getElementById("resultadoAjuda").value.trim();
+        const detalheAlergia = document.getElementById("detalheAlergia").value.trim();
+
+        const comorbidadesMarcadas = Array.from(document.querySelectorAll('input[name="comorbidades"]:checked'))
+          .map(c => c.value);
+        const comorbidadeOutra = document.getElementById("comorbidadeOutra").value.trim();
+        const historicoLesao = document.getElementById("historicoLesao").value.trim();
+        const usaProtese = (document.querySelector('input[name="usaProtese"]:checked') || {}).value || "";
+        const detalheProtese = document.getElementById("detalheProtese").value.trim();
+        const usaMedicacao = (document.querySelector('input[name="usaMedicacao"]:checked') || {}).value || "";
+        const detalheMedicacao = document.getElementById("detalheMedicacao").value.trim();
+
+        const assinaturaBase64 = getAssinaturaDataUrl();
+
+        const dados = {
           nome,
           nascimento,
           cidade,
@@ -1321,37 +1356,139 @@ Termos: ${termosCheck.checked ? "Aceitos" : "Não aceitos"}
           resultado_ajuda: resultadoAjuda,
           tem_alergia: temAlergia,
           detalhe_alergia: detalheAlergia,
-          comorbidades: comorbidadesMarcadas.length ? comorbidadesMarcadas : null,
+          comorbidades: comorbidadesMarcadas,
           comorbidade_outra: comorbidadeOutra,
           historico_lesao: historicoLesao,
           usa_protese: usaProtese,
           detalhe_protese: detalheProtese,
           usa_medicacao: usaMedicacao,
           detalhe_medicacao: detalheMedicacao,
-          data_escolhida: dataSelecionada,
-          hora_escolhida: horaSelecionada,
-          assinatura: assinaturaDataUrl
-        });
+          data_escolhida: dataEscolhida,
+          hora_escolhida: horaEscolhida,
+          assinatura: assinaturaBase64
+        };
 
+        // Salvar no Supabase
+        const { error: errInsert } = await supabase
+          .from("agendamentos")
+          .insert([dados]);
+
+        if (errInsert) throw errInsert;
+
+        // Enviar WhatsApp
+        const rotuloData = formatarRotuloData(dataEscolhida);
+const msg = `
+NOVO PRÉ-AGENDAMENTO
+
+================================
+
+DADOS DO PACIENTE
+NOME: ${nome}
+DATA DE NASCIMENTO: ${nascimento}
+CIDADE: ${cidade}
+WHATSAPP: ${whatsapp}
+E-MAIL: ${email || "NÃO INFORMADO"}
+INSTAGRAM: ${instagram || "NÃO INFORMADO"}
+
+--------------------------------
+
+AGENDAMENTO
+DATA: ${rotuloData}
+HORÁRIO: ${horaEscolhida}
+PROCEDIMENTO: ${procedimento}
+TOLERÂNCIA À PRESSÃO: ${toleranciaPressao}
+
+--------------------------------
+
+QUEIXA PRINCIPAL
+${queixa}
+
+--------------------------------
+
+TEMPO DE DOR
+${tempoDor}
+
+--------------------------------
+
+HISTÓRICO ADICIONAL
+${historico || "NÃO INFORMADO"}
+
+--------------------------------
+
+HISTÓRICO DE TRATAMENTO
+BUSCOU AJUDA PROFISSIONAL: ${ajudaProfissional}
+RESULTADO: ${resultadoAjuda || "NÃO INFORMADO"}
+
+--------------------------------
+
+ALERGIAS
+POSSUI ALERGIA: ${temAlergia}
+DETALHES: ${detalheAlergia || "NÃO INFORMADO"}
+
+--------------------------------
+
+COMORBIDADES
+${comorbidadesMarcadas.length
+  ? comorbidadesMarcadas.join(", ")
+  : "NENHUMA RELATADA"}
+
+OUTRAS COMORBIDADES:
+${comorbidadeOutra || "NÃO INFORMADO"}
+
+--------------------------------
+
+HISTÓRICO DE LESÃO
+${historicoLesao || "NÃO INFORMADO"}
+
+--------------------------------
+
+PRÓTESE OU APARELHO
+UTILIZA: ${usaProtese}
+DETALHES: ${detalheProtese || "NÃO INFORMADO"}
+
+--------------------------------
+
+MEDICAÇÃO DE USO CONTÍNUO
+UTILIZA: ${usaMedicacao}
+DETALHES: ${detalheMedicacao || "NÃO INFORMADO"}
+
+--------------------------------
+
+TERMOS
+ACEITOS: SIM
+
+--------------------------------
+
+IMPORTANTE
+PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
+`.trim();
+
+
+        const urlWhats = `https://wa.me/${WHATSAPP_PRO}?text=${encodeURIComponent(msg)}`;
+        window.open(urlWhats, "_blank");
+
+        // Mostrar sucesso
+        successMsg.textContent = "✅ Pré-agendamento enviado com sucesso! Você será contatado para confirmação.";
         successMsg.style.display = "block";
-        form.reset();
-        clearSignature();
 
+        // Resetar formulário e voltar
         setTimeout(() => {
-          window.open(urlWhats, "_blank");
-        }, 800);
+          document.getElementById("preForm").reset();
+          clearSignature();
+          voltarIntro();
+          successMsg.style.display = "none";
+        }, 3000);
 
-      } catch (err) {
-        formError.textContent = "Erro ao salvar no banco de dados. Tente novamente.";
+      } catch (error) {
+        console.error("Erro ao enviar agendamento:", error);
+        formError.textContent = "❌ Erro ao enviar. Tente novamente.";
         formError.style.display = "block";
+      } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = "Confirmar pré-agendamento";
       }
     });
 
-    // Init
-    window.addEventListener("load", () => {
-      preencherDatas();
-      initSignature();
-    });
   </script>
 
 </body>

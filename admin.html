@@ -340,6 +340,11 @@
       border:1px solid rgba(255,211,106,0.45);
       color:#ffe2a6;
     }
+    .btn-success{
+      background:rgba(54,211,153,0.10);
+      border:1px solid rgba(54,211,153,0.45);
+      color:#a8ffd4;
+    }
 
     .status-bar{ margin-top:12px; font-size:13px; color:var(--muted); padding-top: 12px; border-top: 1px solid var(--border-soft); }
     .status-ok{ color:var(--success); }
@@ -414,164 +419,42 @@
     }
 
     @media (max-width: 768px) {
-      body {
-        font-size: 15px;
-      }
-
-      .admin-shell {
-        align-items: flex-start;
-        padding: 12px;
-      }
-
-      .login-card {
-        padding: 24px 18px;
-      }
-
-      .login-title {
-        font-size: 18px;
-      }
-
-      .admin-layout {
-        gap: 14px;
-        padding: 0;
-      }
-
-      .admin-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      .admin-header-left h1 {
-        font-size: 18px;
-      }
-
-      .admin-header-left p {
-        font-size: 13px;
-      }
-
-      .admin-user {
-        width: 100%;
-        padding: 12px 14px;
-      }
-
-      .admin-grid,
-      .admin-sections {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card {
-        padding: 18px 16px;
-        border-radius: 14px;
-      }
-
-      .card h2 {
-        font-size: 14px;
-        margin-bottom: 12px;
-      }
-
-      .overview-metrics {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .metric {
-        padding: 14px 12px;
-      }
-
-      .metric-value {
-        font-size: 20px;
-      }
-
-      .howto-list {
-        font-size: 13px;
-        padding-left: 18px;
-      }
-
-      .field-row {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .actions-row {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .btn,
-      .btn-sm {
-        width: 100%;
-        justify-content: center;
-        padding: 12px;
-        font-size: 14px;
-      }
-
-      .table-wrapper {
-        border-radius: 8px;
-      }
-
-      .table {
-        font-size: 12px;
-        min-width: 550px;
-      }
-
-      .table th,
-      .table td {
-        padding: 10px 8px;
-      }
-
-      .small-text {
-        font-size: 12px;
-      }
-
-      .modal {
-        padding: 20px 16px;
-        max-height: 85vh;
-      }
-
-      .modal-title {
-        font-size: 14px;
-      }
-
-      .modal-footer {
-        flex-direction: column-reverse;
-        gap: 8px;
-      }
-
-      .modal-footer .btn-sm {
-        width: 100%;
-      }
+      body { font-size: 15px; }
+      .admin-shell { align-items: flex-start; padding: 12px; }
+      .login-card { padding: 24px 18px; }
+      .login-title { font-size: 18px; }
+      .admin-layout { gap: 14px; padding: 0; }
+      .admin-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .admin-header-left h1 { font-size: 18px; }
+      .admin-header-left p { font-size: 13px; }
+      .admin-user { width: 100%; padding: 12px 14px; }
+      .admin-grid, .admin-sections { grid-template-columns: 1fr; gap: 14px; }
+      .card { padding: 18px 16px; border-radius: 14px; }
+      .card h2 { font-size: 14px; margin-bottom: 12px; }
+      .overview-metrics { grid-template-columns: 1fr; gap: 10px; }
+      .metric { padding: 14px 12px; }
+      .metric-value { font-size: 20px; }
+      .howto-list { font-size: 13px; padding-left: 18px; }
+      .field-row { grid-template-columns: 1fr; gap: 12px; }
+      .actions-row { flex-direction: column; gap: 8px; }
+      .btn, .btn-sm { width: 100%; justify-content: center; padding: 12px; font-size: 14px; }
+      .table-wrapper { border-radius: 8px; }
+      .table { font-size: 12px; min-width: 550px; }
+      .table th, .table td { padding: 10px 8px; }
+      .small-text { font-size: 12px; }
+      .modal { padding: 20px 16px; max-height: 85vh; }
+      .modal-title { font-size: 14px; }
+      .modal-footer { flex-direction: column-reverse; gap: 8px; }
+      .modal-footer .btn-sm { width: 100%; }
     }
 
     @media (max-width: 480px) {
-      .admin-shell {
-        padding: 8px;
-      }
-
-      .admin-header-left h1 {
-        font-size: 16px;
-      }
-
-      .card {
-        padding: 16px 14px;
-      }
-
-      input,
-      textarea,
-      select {
-        font-size: 16px;
-        padding: 13px;
-      }
-
-      .table {
-        min-width: 500px;
-        font-size: 11px;
-      }
-
-      .overview-metrics {
-        gap: 8px;
-      }
+      .admin-shell { padding: 8px; }
+      .admin-header-left h1 { font-size: 16px; }
+      .card { padding: 16px 14px; }
+      input, textarea, select { font-size: 16px; padding: 13px; }
+      .table { min-width: 500px; font-size: 11px; }
+      .overview-metrics { gap: 8px; }
     }
   </style>
 </head>
@@ -656,7 +539,7 @@
             <li>Em <b>Horários disponíveis</b>, cadastre os dias e horários que deseja abrir.</li>
             <li>O site usa esses horários para montar as opções de data/hora para o paciente.</li>
             <li>Quando o paciente finalizar o formulário, ele aparece em <b>Agendamentos recebidos</b>.</li>
-            <li>Você pode <b>editar</b> (ex.: data/hora escolhida) e <b>excluir</b> um agendamento.</li>
+            <li>Você pode <b>editar</b> ou <b>excluir</b> horários e agendamentos.</li>
           </ol>
           <div class="howto-highlight">
             <b>Importante:</b> nesta versão, os dados são sincronizados pelo <b>Supabase</b>.
@@ -667,7 +550,7 @@
 
       <div class="admin-sections">
         <div class="card">
-          <h2 class="section-title">Horários disponíveis</h2>
+          <h2 class="section-title">⏰ Horários disponíveis</h2>
 
           <div class="field-row">
             <div class="field-group">
@@ -686,13 +569,13 @@
           </div>
 
           <div class="actions-row">
-            <button class="btn-sm btn-outline" onclick="addSlot()">Adicionar horário</button>
-            <button class="btn-sm btn-secondary" onclick="clearSlots()">Desativar todos</button>
-            <button class="btn-sm btn-warn" onclick="refreshAll()">Recarregar agora</button>
+            <button class="btn-sm btn-success" onclick="addSlot()">➕ Adicionar horário</button>
+            <button class="btn-sm btn-warn" onclick="refreshAll()">🔄 Recarregar agora</button>
+            <button class="btn-sm btn-danger" onclick="clearSlots()">🗑️ Desativar todos</button>
           </div>
 
           <p class="small-text">
-            Remover aqui desativa (ativo=false). Assim você não perde histórico de slots.
+            💡 <b>Remover</b> desativa o horário (ativo=false). <b>Editar</b> permite alterar data/hora/obs. <b>Excluir</b> apaga permanentemente do banco.
           </p>
 
           <div class="table-wrapper">
@@ -711,7 +594,7 @@
         </div>
 
         <div class="card">
-          <h2 class="section-title">Agendamentos recebidos</h2>
+          <h2 class="section-title">📋 Agendamentos recebidos</h2>
 
           <p class="small-text">
             Estes dados vêm da tabela <code>agendamentos</code> (formulário completo). O painel lista só os campos principais
@@ -719,7 +602,7 @@
           </p>
 
           <div class="actions-row">
-            <button class="btn-sm btn-warn" onclick="refreshAppointments()">Atualizar lista</button>
+            <button class="btn-sm btn-warn" onclick="refreshAppointments()">🔄 Atualizar lista</button>
           </div>
 
           <div class="table-wrapper">
@@ -738,13 +621,13 @@
           </div>
 
           <p class="small-text" style="margin-top:12px;">
-            Dica: editar aqui altera os campos <code>data_escolhida</code>, <code>hora_escolhida</code>, <code>nome</code>, <code>whatsapp</code> e <code>procedimento</code>.
+            💡 Editar aqui altera os campos principais. Excluir remove permanentemente do banco.
           </p>
         </div>
       </div>
 
       <div class="card">
-        <h2>Segurança do painel</h2>
+        <h2>🔒 Segurança do painel</h2>
         
         <div class="field-row">
           <div class="field-group">
@@ -765,23 +648,58 @@
         </div>
 
         <div class="actions-row">
-          <button class="btn-sm btn-outline" onclick="changePassword()">Atualizar senha</button>
+          <button class="btn-sm btn-outline" onclick="changePassword()">🔑 Atualizar senha</button>
         </div>
 
         <div id="passMsg" class="small-text" style="margin-top:12px;"></div>
       </div>
 
       <div class="small-text" style="margin-top:10px; text-align:right;">
-        Painel · Supabase · Realtime opcional (se habilitado no projeto).
+        Painel → Supabase → Realtime opcional (se habilitado no projeto).
       </div>
     </div>
   </div>
 
-  <div id="modalBackdrop" class="modal-backdrop" onclick="if(event.target===this) closeModal()">
-    <div class="modal" role="dialog" aria-modal="true">
+  <!-- Modal Editar Horário -->
+  <div id="modalSlotBackdrop" class="modal-backdrop" onclick="if(event.target===this) closeSlotModal()">
+    <div class="modal">
       <div class="modal-header">
         <div>
-          <div class="modal-title">Editar agendamento</div>
+          <div class="modal-title">✏️ Editar Horário Disponível</div>
+          <div class="small-text" id="slotModalSubtitle"></div>
+        </div>
+        <button class="modal-close" onclick="closeSlotModal()">✕</button>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="editSlotDate">Data</label>
+          <input id="editSlotDate" type="date" />
+        </div>
+        <div class="field-group">
+          <label for="editSlotTime">Horário</label>
+          <input id="editSlotTime" type="time" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="editSlotNote">Observação</label>
+        <textarea id="editSlotNote" placeholder="Ex: ajuste articular"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-sm btn-secondary" onclick="closeSlotModal()">Cancelar</button>
+        <button class="btn-sm btn-success" onclick="saveSlotEdits()">💾 Salvar alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Agendamento -->
+  <div id="modalBackdrop" class="modal-backdrop" onclick="if(event.target===this) closeModal()">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">✏️ Editar Agendamento</div>
           <div class="small-text" id="modalSubtitle"></div>
         </div>
         <button class="modal-close" onclick="closeModal()">✕</button>
@@ -816,7 +734,7 @@
 
       <div class="modal-footer">
         <button class="btn-sm btn-secondary" onclick="closeModal()">Cancelar</button>
-        <button class="btn-sm btn-outline" onclick="saveAppointmentEdits()">Salvar alterações</button>
+        <button class="btn-sm btn-success" onclick="saveAppointmentEdits()">💾 Salvar alterações</button>
       </div>
     </div>
   </div>
@@ -827,6 +745,14 @@
     const loginView  = document.getElementById("loginView");
     const adminView  = document.getElementById("adminView");
     const loginError = document.getElementById("loginError");
+
+    const supabase = window.supabase.createClient(
+      "https://qqxlmvmksgptjjnbzjtn.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
+    );
+
+    const SLOTS_TABLE = "horarios_disponiveis";
+    const APPOINTMENTS_TABLE = "agendamentos";
 
     async function doLogin() {
       const user = document.getElementById("loginUser").value.trim();
@@ -915,7 +841,7 @@
       }
 
       if (data === true) {
-        msgEl.textContent = "Senha atualizada com sucesso!";
+        msgEl.textContent = "✅ Senha atualizada com sucesso!";
         msgEl.style.color = "var(--success)";
         document.getElementById("oldPass").value = "";
         document.getElementById("newPass").value = "";
@@ -932,13 +858,9 @@
     }
     function safeText(v) { return (v === null || v === undefined || v === "") ? "-" : String(v); }
 
-    const supabase = window.supabase.createClient(
-      "https://qqxlmvmksgptjjnbzjtn.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
-    );
-
-    const SLOTS_TABLE = "horarios_disponiveis";
-    const APPOINTMENTS_TABLE = "agendamentos";
+    // ==================== HORÁRIOS DISPONÍVEIS ====================
+    let cachedSlots = [];
+    let editingSlotId = null;
 
     async function addSlot() {
       const date = document.getElementById("slotDate").value;
@@ -966,7 +888,7 @@
     }
 
     async function deleteSlot(id) {
-      if (!confirm("Remover (desativar) este horário?")) return;
+      if (!confirm("❌ Desativar este horário? (ativo=false)")) return;
 
       const { error } = await supabase
         .from(SLOTS_TABLE)
@@ -975,7 +897,24 @@
 
       if (error) {
         console.error(error);
-        alert("Erro ao remover. Veja o console.");
+        alert("Erro ao desativar. Veja o console.");
+        return;
+      }
+
+      await renderSlots();
+    }
+
+    async function permanentDeleteSlot(id) {
+      if (!confirm("🗑️ EXCLUIR PERMANENTEMENTE este horário do banco? Esta ação NÃO pode ser desfeita!")) return;
+
+      const { error } = await supabase
+        .from(SLOTS_TABLE)
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao excluir. Veja o console.");
         return;
       }
 
@@ -998,7 +937,7 @@
     }
 
     async function clearSlots() {
-      if (!confirm("Tem certeza que deseja DESATIVAR TODOS os horários ativos?")) return;
+      if (!confirm("⚠️ Tem certeza que deseja DESATIVAR TODOS os horários ativos?")) return;
 
       const { error } = await supabase
         .from(SLOTS_TABLE)
@@ -1011,6 +950,59 @@
         return;
       }
 
+      await renderSlots();
+    }
+
+    function openSlotModal(id) {
+      const slot = cachedSlots.find(s => s.id === id);
+      if (!slot) {
+        alert("Horário não encontrado no cache. Atualize a lista.");
+        return;
+      }
+
+      editingSlotId = id;
+
+      document.getElementById("editSlotDate").value = slot.data || "";
+      document.getElementById("editSlotTime").value = slot.hora || "";
+      document.getElementById("editSlotNote").value = slot.observacao || "";
+
+      const subtitle = `${fmtDateBR(slot.data)} ${slot.hora || ""}`.trim();
+      document.getElementById("slotModalSubtitle").textContent = subtitle === "-" ? "" : subtitle;
+
+      document.getElementById("modalSlotBackdrop").style.display = "flex";
+    }
+
+    function closeSlotModal() {
+      editingSlotId = null;
+      document.getElementById("modalSlotBackdrop").style.display = "none";
+    }
+
+    async function saveSlotEdits() {
+      if (!editingSlotId) return;
+
+      const data = document.getElementById("editSlotDate").value.trim();
+      const hora = document.getElementById("editSlotTime").value.trim();
+      const observacao = document.getElementById("editSlotNote").value.trim();
+
+      if (!data || !hora) {
+        alert("Data e horário são obrigatórios.");
+        return;
+      }
+
+      const payload = { data, hora, observacao };
+
+      const { error } = await supabase
+        .from(SLOTS_TABLE)
+        .update(payload)
+        .eq("id", editingSlotId);
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao salvar alterações. Veja o console.");
+        return;
+      }
+
+      closeSlotModal();
       await renderSlots();
     }
 
@@ -1031,13 +1023,15 @@
         return;
       }
 
-      if (!data || !data.length) {
+      cachedSlots = Array.isArray(data) ? data : [];
+
+      if (!cachedSlots.length) {
         tbody.innerHTML = `<tr><td colspan="4" style="color:#a3a6c7;font-size:12px;text-align:center;padding:20px;">Nenhum horário cadastrado.</td></tr>`;
         updateOverview([], null);
         return;
       }
 
-      data.forEach(slot => {
+      cachedSlots.forEach(slot => {
         const tr = document.createElement("tr");
 
         const tdDate = document.createElement("td");
@@ -1049,19 +1043,38 @@
         tdTime.textContent = slot.hora || "-";
         tdNote.textContent = slot.observacao || "-";
 
+        const wrap = document.createElement("div");
+        wrap.className = "actions-row";
+        wrap.style.marginTop = "0";
+
         if (slot.ativo) {
+          const btnEdit = document.createElement("button");
+          btnEdit.textContent = "✏️ Editar";
+          btnEdit.className = "btn-sm btn-outline";
+          btnEdit.onclick = () => openSlotModal(slot.id);
+          wrap.appendChild(btnEdit);
+
           const btnDel = document.createElement("button");
-          btnDel.textContent = "Remover";
+          btnDel.textContent = "❌ Remover";
           btnDel.className = "btn-sm btn-danger";
           btnDel.onclick = () => deleteSlot(slot.id);
-          tdActions.appendChild(btnDel);
+          wrap.appendChild(btnDel);
         } else {
           const btnRe = document.createElement("button");
-          btnRe.textContent = "Reativar";
-          btnRe.className = "btn-sm btn-outline";
+          btnRe.textContent = "✅ Reativar";
+          btnRe.className = "btn-sm btn-success";
           btnRe.onclick = () => reactivateSlot(slot.id);
-          tdActions.appendChild(btnRe);
+          wrap.appendChild(btnRe);
         }
+
+        const btnPerm = document.createElement("button");
+        btnPerm.textContent = "🗑️ Excluir";
+        btnPerm.className = "btn-sm btn-danger";
+        btnPerm.style.opacity = "0.7";
+        btnPerm.onclick = () => permanentDeleteSlot(slot.id);
+        wrap.appendChild(btnPerm);
+
+        tdActions.appendChild(wrap);
 
         tr.appendChild(tdDate);
         tr.appendChild(tdTime);
@@ -1070,9 +1083,10 @@
         tbody.appendChild(tr);
       });
 
-      updateOverview(data, null);
+      updateOverview(cachedSlots, null);
     }
 
+    // ==================== AGENDAMENTOS ====================
     let cachedAppointments = [];
     let editingAppointmentId = null;
 
@@ -1111,7 +1125,7 @@
 
         tdNome.innerHTML = `
           <div style="font-weight:600;margin-bottom:4px;">${safeText(item.nome)}</div>
-          <div class="small-text">${safeText(item.cidade)} · ${safeText(item.email)}</div>
+          <div class="small-text">${safeText(item.cidade)} • ${safeText(item.email)}</div>
         `;
 
         tdContato.textContent = safeText(item.whatsapp);
@@ -1130,12 +1144,12 @@
 
         const btnEdit = document.createElement("button");
         btnEdit.className = "btn-sm btn-outline";
-        btnEdit.textContent = "Editar";
+        btnEdit.textContent = "✏️ Editar";
         btnEdit.onclick = () => openEditModal(item.id);
 
         const btnDel = document.createElement("button");
         btnDel.className = "btn-sm btn-danger";
-        btnDel.textContent = "Excluir";
+        btnDel.textContent = "🗑️ Excluir";
         btnDel.onclick = () => deleteAppointment(item.id);
 
         wrap.appendChild(btnEdit);
@@ -1154,7 +1168,7 @@
     }
 
     async function deleteAppointment(id) {
-      if (!confirm("Tem certeza que deseja EXCLUIR este agendamento? Essa ação não pode ser desfeita.")) return;
+      if (!confirm("🗑️ EXCLUIR PERMANENTEMENTE este agendamento? Esta ação NÃO pode ser desfeita!")) return;
 
       const { error } = await supabase
         .from(APPOINTMENTS_TABLE)
@@ -1186,7 +1200,7 @@
       document.getElementById("editData").value = (item.data_escolhida && /^\d{4}-\d{2}-\d{2}$/.test(item.data_escolhida)) ? item.data_escolhida : "";
       document.getElementById("editHora").value = (item.hora_escolhida && /^\d{2}:\d{2}/.test(item.hora_escolhida)) ? item.hora_escolhida : "";
 
-      const subtitle = `${safeText(item.nome)} · ${safeText(item.data_escolhida)} ${safeText(item.hora_escolhida)}`.trim();
+      const subtitle = `${safeText(item.nome)} • ${safeText(item.data_escolhida)} ${safeText(item.hora_escolhida)}`.trim();
       document.getElementById("modalSubtitle").textContent = subtitle === "-" ? "" : subtitle;
 
       document.getElementById("modalBackdrop").style.display = "flex";
@@ -1231,6 +1245,7 @@
       await renderAppointments();
     }
 
+    // ==================== OVERVIEW ====================
     function updateOverview(slotsMaybe, appsMaybe) {
       if (Array.isArray(slotsMaybe)) {
         const ativos = slotsMaybe.filter(s => s.ativo);
@@ -1238,7 +1253,7 @@
 
         if (ativos.length) {
           const next = [...ativos].sort((a,b) => (a.data + (a.hora||"")).localeCompare(b.data + (b.hora||"")))[0];
-          document.getElementById("mNextSlot").textContent = `${fmtDateBR(next.data)} ${next.hora || ""}`.trim();
+          document.getElementById("mNextSlot").textContent = `${fmtDateBR(next.data)} ${next.hora || ""}`;
         } else {
           document.getElementById("mNextSlot").textContent = "-";
         }
@@ -1249,88 +1264,62 @@
       }
     }
 
-    let realtimeSub = null;
+    // ==================== REALTIME ====================
+    function setupRealtime() {
+      const syncTag = document.getElementById("syncTag");
 
-    async function setupRealtime() {
-      const tag = document.getElementById("syncTag");
-      try {
-        if (realtimeSub) {
-          await supabase.removeChannel(realtimeSub);
-          realtimeSub = null;
-        }
-
-        realtimeSub = supabase
-          .channel("admin-realtime")
-          .on("postgres_changes", { event: "*", schema: "public", table: SLOTS_TABLE }, async () => {
-            await renderSlots();
-          })
-          .on("postgres_changes", { event: "*", schema: "public", table: APPOINTMENTS_TABLE }, async () => {
-            await renderAppointments();
-          });
-
-        const { error } = await realtimeSub.subscribe((status) => {
+      supabase
+        .channel("slots_channel")
+        .on("postgres_changes", { event: "*", schema: "public", table: SLOTS_TABLE }, () => {
+          console.log("Horários atualizados via Realtime");
+          renderSlots();
+        })
+        .subscribe((status) => {
           if (status === "SUBSCRIBED") {
-            tag.textContent = "Realtime: ativo";
-            tag.style.borderColor = "rgba(54,211,153,0.40)";
-            tag.style.color = "rgba(54,211,153,0.95)";
-          } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-            tag.textContent = "Realtime: falhou";
-            tag.style.borderColor = "rgba(255,94,122,0.55)";
-            tag.style.color = "rgba(255,180,192,0.95)";
-          } else {
-            tag.textContent = "Realtime: " + status;
-            tag.style.color = "var(--muted)";
+            syncTag.textContent = "Realtime: ✅ slots";
+            syncTag.style.background = "rgba(54,211,153,0.10)";
+            syncTag.style.borderColor = "rgba(54,211,153,0.45)";
+            syncTag.style.color = "#a8ffd4";
           }
         });
 
-        if (error) {
-          console.warn("Realtime subscribe error:", error);
-          tag.textContent = "Realtime: indisponível";
-          tag.style.color = "var(--muted)";
-        }
-      } catch (e) {
-        console.warn("Realtime exception:", e);
-        const tag2 = document.getElementById("syncTag");
-        tag2.textContent = "Realtime: indisponível";
-        tag2.style.color = "var(--muted)";
-      }
+      supabase
+        .channel("apps_channel")
+        .on("postgres_changes", { event: "*", schema: "public", table: APPOINTMENTS_TABLE }, () => {
+          console.log("Agendamentos atualizados via Realtime");
+          renderAppointments();
+        })
+        .subscribe();
     }
 
-    async function refreshAppointments() {
-      await renderAppointments();
-    }
+    // ==================== REFRESH ====================
     async function refreshAll() {
       await renderSlots();
       await renderAppointments();
     }
 
-    async function initDashboard() {
-      await renderSlots();
+    async function refreshAppointments() {
       await renderAppointments();
-      await setupRealtime();
-
-      const status = document.getElementById("statusPainel");
-      status.textContent = "operando normalmente";
-      status.classList.remove("status-warn","status-bad");
-      status.classList.add("status-ok");
     }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
+    // ==================== INIT ====================
+    async function initDashboard() {
+      document.getElementById("statusPainel").textContent = "conectado";
+      document.getElementById("statusPainel").className = "status-ok";
 
-    (function protectAdmin() {
+      await renderSlots();
+      await renderAppointments();
+      setupRealtime();
+    }
+
+    window.onload = function() {
       const logged = sessionStorage.getItem("adminLogged");
-
       if (logged === "true") {
-        document.getElementById("loginView").style.display = "none";
-        document.getElementById("adminView").style.display = "flex";
-        window.addEventListener("load", initDashboard);
-      } else {
-        document.getElementById("loginView").style.display = "block";
-        document.getElementById("adminView").style.display = "none";
+        loginView.style.display = "none";
+        adminView.style.display = "flex";
+        initDashboard();
       }
-    })();
+    };
   </script>
 
 </body>
