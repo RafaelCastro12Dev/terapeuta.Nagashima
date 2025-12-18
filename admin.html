@@ -767,6 +767,8 @@
         return;
       }
 
+
+
       const { data, error } = await supabase.rpc("login_admin", {
         p_username: user,
         p_password: pass
@@ -792,6 +794,7 @@
         errorBox.style.display = "block";
       }
     }
+  window.doLogin = doLogin;
 
     async function changePassword() {
       const oldPass = document.getElementById("oldPass").value.trim();
