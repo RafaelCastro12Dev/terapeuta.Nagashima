@@ -487,32 +487,6 @@
       background: #555;
     }
 
-    input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #7d67ff; /* cor do tema */
-}
-.map-container {
-  margin-top: 16px;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
-}
-
-.map-container iframe {
-  width: 100%;
-  height: 260px;
-  border: 0;
-}
-
-@media (max-width: 768px) {
-  .map-container iframe {
-    height: 220px;
-  }
-}
-
-
     @keyframes fade-in {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
@@ -578,7 +552,7 @@
         </p>
 
         <div class="photo-wrapper">
-          <img src="fotos/perfilpaulo.png" alt="Paulo Nagashima" />
+          <img src="fotos/perfil,paulo.png" alt="Paulo Nagashima" />
         </div>
 
         <p class="bio-text">
@@ -873,7 +847,7 @@
                   <b>Valor:</b> R$ 180,00 por procedimento<br>
                   Pagamento em PIX ou dinheiro. Cartão de crédito ou débito com juros da máquina acrescido.<br><br>
 
-                  
+                  <b>Endereço:</b> Rua José Aparecido Marchi, 330 B - Vale Verde 1 - Pedreira/SP.
                 </div>
               </div>
 
@@ -900,35 +874,6 @@
                 <div class="helper">Assine com o dedo (no celular) ou com o mouse (no computador).</div>
               </div>
             </div>
-            <!-- LOCALIZAÇÃO -->
-<div class="section-block">
-  <div class="section-title">📍 Localização</div>
-
-  <p class="helper">
-    Endereço: Rua José Aparecido Marchi, 330 B – Vale Verde 1 – Pedreira/SP
-  </p>
-
-  <div class="map-container">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.9631425777693!2d-46.90334412490504!3d-22.729611279380112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c8df0d6ba74fbb%3A0x146e1d3b6567e212!2sNagashima%20Terapia!5e0!3m2!1spt-BR!2sbr!4v1765983033440!5m2!1spt-BR!2sbr"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen
-    ></iframe>
-  </div>
-</div>
-<!-- HORÁRIOS DE FUNCIONAMENTO -->
-<div class="section-block">
-  <div class="section-title">⏰ Horários de funcionamento</div>
-
-  <p class="helper">
-    <strong>Segunda a sexta:</strong> 08h às 18h<br>
-    <strong>Sábado:</strong> 08h às 12h<br>
-    <strong>Domingo:</strong> Fechado<br><br>
-    Atendimento realizado somente com horário previamente agendado.
-  </p>
-</div>
-
 
             <!-- CAMPOS HIDDEN PARA DATA/HORA -->
             <input type="hidden" id="data_escolhida_hidden" />
@@ -959,7 +904,7 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const WHATSAPP_PRO = "5519994526993";
+    const WHATSAPP_PRO = "5521995600274";
 
     // ==================== VARIÁVEIS GLOBAIS ====================
     let agendaDisponivel = [];
@@ -1520,13 +1465,8 @@ PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
 
 
         const urlWhats = `https://wa.me/${WHATSAPP_PRO}?text=${encodeURIComponent(msg)}`;
-        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-  // Celular → abre direto
-  window.location.href = urlWhats;
-} else {
-  // Computador → nova aba
-  window.open(urlWhats, "_blank");
-}
+        window.open(urlWhats, "_blank");
+
         // Mostrar sucesso
         successMsg.textContent = "✅ Pré-agendamento enviado com sucesso! Você será contatado para confirmação.";
         successMsg.style.display = "block";
@@ -1553,4 +1493,3 @@ PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
 
 </body>
 </html>
-
