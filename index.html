@@ -905,7 +905,7 @@
    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
-    const WHATSAPP_PRO = "5521995600274";
+    const WHATSAPP_PRO = "5519994526993";
 
     // ==================== VARIÁVEIS GLOBAIS ====================
     let agendaDisponivel = [];
@@ -1311,7 +1311,7 @@
         if (errVerif) throw errVerif;
 
         if (verificacao && verificacao.length > 0) {
-          formError.textContent = "❌ Este horário acabou de ser agendado por outra pessoa. Escolha outro horário.";
+          formError.textContent = "Enquanto você preenchia o formulário, esse horário acabou de ser reservado por outra pessoa.\n\nPor favor, escolha outro horário disponível.";
           formError.style.display = "block";
           btnSubmit.disabled = false;
           btnSubmit.textContent = "Confirmar pré-agendamento";
@@ -1370,11 +1370,29 @@
         };
 
         // Salvar no Supabase
-        const { error: errInsert } = await supabaseClient
-          .from("agendamentos")
-          .insert([dados]);
+     const { error: errInsert } = await supabaseClient
+  .from("agendamentos")
+  .insert([dados]);
 
-        if (errInsert) throw errInsert;
+if (errInsert) {
+  // 🔒 Horário já ocupado (garantia do banco)
+  if (errInsert.code === "23505") {
+    alert(
+      "Enquanto você preenchia o formulário, esse horário acabou de ser reservado por outra pessoa.\n\nPor favor, escolha outro horário disponível."
+    );
+
+    setTimeout(() => {
+      voltarSchedule();
+      carregarHorariosDisponiveis();
+    }, 500);
+
+    return;
+  }
+
+  // Outros erros continuam iguais
+  throw errInsert;
+}
+
 
         // Enviar WhatsApp
         const rotuloData = formatarRotuloData(dataEscolhida);
