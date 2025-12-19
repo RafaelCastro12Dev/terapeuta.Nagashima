@@ -902,7 +902,8 @@
     // ==================== CONFIGURAÇÃO SUPABASE ====================
     const SUPABASE_URL = "https://qqxlmvmksgptjjnbzjtn.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
     const WHATSAPP_PRO = "5521995600274";
 
@@ -987,7 +988,7 @@
 
       try {
         // 1) Buscar horários disponíveis ativos
-        const { data: disponiveis, error: errDisp } = await supabase
+        const { data: disponiveis, error: errDisp } = await supabaseClient
           .from("horarios_disponiveis")
           .select("data, hora")
           .eq("ativo", true)
@@ -997,7 +998,7 @@
         if (errDisp) throw errDisp;
 
         // 2) Buscar horários já agendados
-        const { data: agendados, error: errAgend } = await supabase
+        const { data: agendados, error: errAgend } = await supabaseClient
           .from("agendamentos")
           .select("data_escolhida, hora_escolhida");
 
@@ -1138,7 +1139,7 @@
     document.getElementById("horaSchedule").addEventListener("change", verificarHorarioSelecionado);
 
     // ==================== SINCRONIZAÇÃO TEMPO REAL ====================
-    supabase
+    supabaseClient
       .channel("agendamentos_realtime")
       .on(
         "postgres_changes",
@@ -1301,7 +1302,7 @@
 
       try {
         // VERIFICAÇÃO FINAL: checar se horário ainda está disponível
-        const { data: verificacao, error: errVerif } = await supabase
+        const { data: verificacao, error: errVerif } = await supabaseClient
           .from("agendamentos")
           .select("id")
           .eq("data_escolhida", dataEscolhida)
@@ -1369,7 +1370,7 @@
         };
 
         // Salvar no Supabase
-        const { error: errInsert } = await supabase
+        const { error: errInsert } = await supabaseClient
           .from("agendamentos")
           .insert([dados]);
 

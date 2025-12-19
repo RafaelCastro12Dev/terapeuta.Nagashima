@@ -746,7 +746,7 @@
     const adminView  = document.getElementById("adminView");
     const loginError = document.getElementById("loginError");
 
-    const supabase = window.supabase.createClient(
+    const supabaseClient = window.supabase.createClient(
       "https://qqxlmvmksgptjjnbzjtn.supabase.co",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
     );
@@ -769,7 +769,7 @@
 
 
 
-      const { data, error } = await supabase.rpc("login_admin", {
+      const { data, error } = await  supabaseClient.rpc("login_admin", {
         p_username: user,
         p_password: pass
       });
@@ -830,7 +830,7 @@
         return;
       }
 
-      const { data, error } = await supabase.rpc("update_admin_password", {
+      const { data, error } = await  supabaseClient.rpc("update_admin_password", {
         p_username: adminUser,
         p_old_password: oldPass,
         p_new_password: newPass
@@ -875,7 +875,7 @@
         return;
       }
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(SLOTS_TABLE)
         .insert([{ data: date, hora: time, observacao: note, ativo: true }]);
 
@@ -893,7 +893,7 @@
     async function deleteSlot(id) {
       if (!confirm("❌ Desativar este horário? (ativo=false)")) return;
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(SLOTS_TABLE)
         .update({ ativo: false })
         .eq("id", id);
@@ -910,7 +910,7 @@
     async function permanentDeleteSlot(id) {
       if (!confirm("🗑️ EXCLUIR PERMANENTEMENTE este horário do banco? Esta ação NÃO pode ser desfeita!")) return;
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(SLOTS_TABLE)
         .delete()
         .eq("id", id);
@@ -925,7 +925,7 @@
     }
 
     async function reactivateSlot(id) {
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(SLOTS_TABLE)
         .update({ ativo: true })
         .eq("id", id);
@@ -942,7 +942,7 @@
     async function clearSlots() {
       if (!confirm("⚠️ Tem certeza que deseja DESATIVAR TODOS os horários ativos?")) return;
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(SLOTS_TABLE)
         .update({ ativo: false })
         .eq("ativo", true);
@@ -994,7 +994,7 @@
 
       const payload = { data, hora, observacao };
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(SLOTS_TABLE)
         .update(payload)
         .eq("id", editingSlotId);
@@ -1013,7 +1013,7 @@
       const tbody = document.querySelector("#slotsTable tbody");
       tbody.innerHTML = "";
 
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from(SLOTS_TABLE)
         .select("id,data,hora,observacao,ativo,criado_em")
         .order("data", { ascending: true })
@@ -1097,7 +1097,7 @@
       const tbody = document.querySelector("#appTable tbody");
       tbody.innerHTML = "";
 
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from(APPOINTMENTS_TABLE)
         .select("id,nome,whatsapp,procedimento,data_escolhida,hora_escolhida,criado_em,email,cidade")
         .order("criado_em", { ascending: false });
@@ -1173,7 +1173,7 @@
     async function deleteAppointment(id) {
       if (!confirm("🗑️ EXCLUIR PERMANENTEMENTE este agendamento? Esta ação NÃO pode ser desfeita!")) return;
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(APPOINTMENTS_TABLE)
         .delete()
         .eq("id", id);
@@ -1233,7 +1233,7 @@
         hora_escolhida: hora_escolhida || null
       };
 
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from(APPOINTMENTS_TABLE)
         .update(payload)
         .eq("id", editingAppointmentId);
@@ -1271,7 +1271,7 @@
     function setupRealtime() {
       const syncTag = document.getElementById("syncTag");
 
-      supabase
+      supabaseClient
         .channel("slots_channel")
         .on("postgres_changes", { event: "*", schema: "public", table: SLOTS_TABLE }, () => {
           console.log("Horários atualizados via Realtime");
@@ -1286,7 +1286,7 @@
           }
         });
 
-      supabase
+      supabaseClient
         .channel("apps_channel")
         .on("postgres_changes", { event: "*", schema: "public", table: APPOINTMENTS_TABLE }, () => {
           console.log("Agendamentos atualizados via Realtime");
