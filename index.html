@@ -284,7 +284,9 @@
       font-weight: 500;
     }
 
-    input, select, textarea {
+    input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
       width: 100%;
       padding: 12px 14px;
       border-radius: 10px;
@@ -296,6 +298,14 @@
       transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       font-family: inherit;
     }
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  padding: 0;
+  margin: 0;
+  accent-color: #7d67ff;
+}
+
 
     input::placeholder,
     textarea::placeholder {
