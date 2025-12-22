@@ -1542,7 +1542,7 @@ PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
 
 
         const urlWhats = `https://wa.me/${WHATSAPP_PRO}?text=${encodeURIComponent(msg)}`;
-        window.open(urlWhats, "_blank");
+        window.location.href = urlWhats;
 
         // Mostrar sucesso
         successMsg.textContent = "✅ Pré-agendamento enviado com sucesso! Você será contatado para confirmação.";
