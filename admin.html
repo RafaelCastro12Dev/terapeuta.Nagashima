@@ -575,6 +575,66 @@
             <button class="btn-sm btn-danger" onclick="clearSlots()">🗑️ Desativar todos</button>
           </div>
 
+
+          <details style="margin-top:16px; padding:12px; background:rgba(125,103,255,0.08); border-radius:12px; border:1px solid rgba(125,103,255,0.3);">
+            <summary style="cursor:pointer; font-size:14px; font-weight:600; color:#46c2ff;">
+              ⚡ Criar Múltiplos Horários (Avançado)
+            </summary>
+            <div style="margin-top:12px; padding:12px; background:rgba(15,20,45,.92); border-radius:10px;">
+              <p class="small-text" style="margin-top:0;">
+                Crie vários horários de uma só vez. Ex: todos os dias úteis da semana no mesmo horário.
+              </p>
+
+              <div class="field-row" style="margin-top:12px;">
+                <div class="field-group">
+                  <label for="batchStartDate">Data Inicial</label>
+                  <input id="batchStartDate" type="date">
+                </div>
+                <div class="field-group">
+                  <label for="batchEndDate">Data Final</label>
+                  <input id="batchEndDate" type="date">
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="batchTimes">Horários (um por linha)</label>
+                <textarea id="batchTimes" placeholder="Ex:&#10;09:00&#10;10:00&#10;14:00&#10;15:00" style="min-height:100px;"></textarea>
+              </div>
+
+              <div class="field-group">
+                <label>Dias da semana</label>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekSeg" checked> Segunda
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekTer" checked> Terça
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekQua" checked> Quarta
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekQui" checked> Quinta
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekSex" checked> Sexta
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekSab"> Sábado
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="weekDom"> Domingo
+                  </label>
+                </div>
+              </div>
+
+              <button class="btn-sm btn-success" onclick="criarEmLote()" style="margin-top:8px; width:100%;">
+                ⚡ Criar Horários em Lote
+              </button>
+            </div>
+          </details>
+
+
           <p class="small-text">
             💡 <b>Remover</b> desativa o horário (ativo=false). <b>Editar</b> permite alterar data/hora/obs. <b>Excluir</b> apaga permanentemente do banco.
           </p>
@@ -740,15 +800,9 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="alert('Erro ao carregar biblioteca Supabase. Verifique sua conexão.')"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    // BUG FIX #9: Verificar se Supabase carregou
-    if (typeof window.supabase === 'undefined') {
-      console.error('Supabase não foi carregado!');
-      alert('Erro crítico: Biblioteca do banco de dados não carregou. Recarregue a página.');
-    }
-    
     const loginView  = document.getElementById("loginView");
     const adminView  = document.getElementById("adminView");
     const loginError = document.getElementById("loginError");
@@ -872,9 +926,8 @@
             return d.toLocaleDateString("pt-BR");
           }
         }
-        return dateStr; // Fallback para valor original
+        return dateStr;
       } catch (e) {
-        console.warn("Erro ao formatar data:", e);
         return dateStr;
       }
     }
@@ -891,16 +944,6 @@
 
       if (!date || !time) {
         alert("Preencha data e horário para adicionar um slot.");
-        return;
-      }
-      
-      // BUG FIX #7: Validar data não pode ser no passado
-      const hoje = new Date();
-      hoje.setHours(0, 0, 0, 0);
-      const dataEscolhida = new Date(date + "T00:00:00");
-      
-      if (dataEscolhida < hoje) {
-        alert("⚠️ Não é possível adicionar horários em datas passadas.");
         return;
       }
 
@@ -1035,6 +1078,109 @@
       }
 
       closeSlotModal();
+      await renderSlots();
+    }
+
+
+    // ==================== CRIAR EM LOTE ====================
+    function dateToISO(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    async function criarEmLote() {
+      const startDate = document.getElementById("batchStartDate").value;
+      const endDate = document.getElementById("batchEndDate").value;
+      const timesText = document.getElementById("batchTimes").value.trim();
+
+      if (!startDate || !endDate) {
+        alert("⚠️ Preencha a data inicial e final.");
+        return;
+      }
+
+      if (!timesText) {
+        alert("⚠️ Preencha os horários (um por linha).");
+        return;
+      }
+
+      const times = timesText.split("\n").map(t => t.trim()).filter(t => t);
+
+      if (times.length === 0) {
+        alert("⚠️ Nenhum horário válido encontrado.");
+        return;
+      }
+
+      const weekDays = [];
+      if (document.getElementById("weekDom") && document.getElementById("weekDom").checked) weekDays.push(0);
+      if (document.getElementById("weekSeg") && document.getElementById("weekSeg").checked) weekDays.push(1);
+      if (document.getElementById("weekTer") && document.getElementById("weekTer").checked) weekDays.push(2);
+      if (document.getElementById("weekQua") && document.getElementById("weekQua").checked) weekDays.push(3);
+      if (document.getElementById("weekQui") && document.getElementById("weekQui").checked) weekDays.push(4);
+      if (document.getElementById("weekSex") && document.getElementById("weekSex").checked) weekDays.push(5);
+      if (document.getElementById("weekSab") && document.getElementById("weekSab").checked) weekDays.push(6);
+
+      if (weekDays.length === 0) {
+        alert("⚠️ Selecione pelo menos um dia da semana.");
+        return;
+      }
+
+      const start = new Date(startDate + "T00:00:00");
+      const end = new Date(endDate + "T00:00:00");
+
+      if (start > end) {
+        alert("⚠️ A data inicial deve ser anterior à data final.");
+        return;
+      }
+
+      const slots = [];
+      const current = new Date(start);
+
+      while (current <= end) {
+        const dayOfWeek = current.getDay();
+        
+        if (weekDays.includes(dayOfWeek)) {
+          const dateISO = dateToISO(current);
+          
+          times.forEach(time => {
+            slots.push({
+              data: dateISO,
+              hora: time,
+              observacao: "Criado em lote",
+              ativo: true
+            });
+          });
+        }
+        
+        current.setDate(current.getDate() + 1);
+      }
+
+      if (slots.length === 0) {
+        alert("ℹ️ Nenhum horário gerado com os critérios selecionados.");
+        return;
+      }
+
+      if (!confirm(`⚡ Criar ${slots.length} horários?\n\nDatas: ${startDate} a ${endDate}\nHorários: ${times.length}\nDias: ${weekDays.length} dia(s) da semana`)) {
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from(SLOTS_TABLE)
+        .insert(slots);
+
+      if (error) {
+        console.error(error);
+        alert("❌ Erro ao criar horários em lote. Veja o console.");
+        return;
+      }
+
+      alert(`✅ ${slots.length} horários criados com sucesso!`);
+      
+      document.getElementById("batchStartDate").value = "";
+      document.getElementById("batchEndDate").value = "";
+      document.getElementById("batchTimes").value = "";
+      
       await renderSlots();
     }
 
