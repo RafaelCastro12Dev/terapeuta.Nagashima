@@ -491,6 +491,22 @@
       .table { min-width: 500px; font-size: 11px; }
       .overview-metrics { gap: 8px; }
 
+      /* Fix para campos dentro do criar múltiplos horários */
+      details .field-group,
+      details .field-row {
+        text-align: left;
+      }
+
+      details .field-group label {
+        text-align: left;
+        display: block;
+      }
+
+      details .field-group input[type="date"] {
+        width: 100%;
+        text-align: left;
+      }
+
       /* Fix específico para iPhone - dias da semana em 2 colunas */
       .week-days-grid {
         grid-template-columns: 1fr 1fr;
@@ -637,7 +653,7 @@
                 Crie vários horários de uma só vez. Ex: todos os dias úteis da semana no mesmo horário.
               </p>
 
-              <div class="field-row" style="margin-top:12px;">
+              <div class="field-row" style="margin-top:12px; text-align:left;">
                 <div class="field-group">
                   <label for="batchStartDate">Data Inicial</label>
                   <input id="batchStartDate" type="date">
