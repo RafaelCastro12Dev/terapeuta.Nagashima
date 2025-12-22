@@ -582,7 +582,7 @@ input[type="radio"] {
         </p>
 
         <div class="photo-wrapper">
-          <img src="fotos/perfilpaulo.png" alt="Paulo Nagashima" />
+          <img src="fotos/perfilpaulo.png" alt="Paulo Nagashima" onerror="this.style.display='none'" />
         </div>
 
         <p class="bio-text">
@@ -1013,7 +1013,8 @@ input[type="radio"] {
     function formatarRotuloData(iso) {
       if (!iso) return "";
       const dias = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-      const d = new Date(iso + "T12:00:00");
+      const parts = iso.split('-');
+      const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
       if (isNaN(d.getTime())) return iso;
       const dia = String(d.getDate()).padStart(2, "0");
       const mes = String(d.getMonth() + 1).padStart(2, "0");
@@ -1044,10 +1045,20 @@ input[type="radio"] {
 
         if (errDisp) throw errDisp;
 
-        // 2) Buscar horários já agendados
+        // 2) Buscar horários já agendados (OTIMIZADO: apenas próximos 90 dias)
+        const dataLimite = new Date();
+        dataLimite.setDate(dataLimite.getDate() - 1); // Ontem
+        const dataFinal = new Date();
+        dataFinal.setDate(dataFinal.getDate() + 90); // Próximos 90 dias
+        
+        const dataLimiteStr = dataLimite.toISOString().split('T')[0];
+        const dataFinalStr = dataFinal.toISOString().split('T')[0];
+        
         const { data: agendados, error: errAgend } = await supabaseClient
           .from("agendamentos")
-          .select("data_escolhida, hora_escolhida");
+          .select("data_escolhida, hora_escolhida")
+          .gte("data_escolhida", dataLimiteStr)
+          .lte("data_escolhida", dataFinalStr);
 
         if (errAgend) throw errAgend;
 

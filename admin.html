@@ -740,9 +740,15 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="alert('Erro ao carregar biblioteca Supabase. Verifique sua conexão.')"></script>
 
   <script>
+    // BUG FIX #9: Verificar se Supabase carregou
+    if (typeof window.supabase === 'undefined') {
+      console.error('Supabase não foi carregado!');
+      alert('Erro crítico: Biblioteca do banco de dados não carregou. Recarregue a página.');
+    }
+    
     const loginView  = document.getElementById("loginView");
     const adminView  = document.getElementById("adminView");
     const loginError = document.getElementById("loginError");
@@ -858,7 +864,19 @@
 
     function fmtDateBR(dateStr) {
       if (!dateStr) return "-";
-      return new Date(dateStr + "T00:00:00").toLocaleDateString("pt-BR");
+      try {
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+          const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+          if (!isNaN(d.getTime())) {
+            return d.toLocaleDateString("pt-BR");
+          }
+        }
+        return dateStr; // Fallback para valor original
+      } catch (e) {
+        console.warn("Erro ao formatar data:", e);
+        return dateStr;
+      }
     }
     function safeText(v) { return (v === null || v === undefined || v === "") ? "-" : String(v); }
 
@@ -873,6 +891,16 @@
 
       if (!date || !time) {
         alert("Preencha data e horário para adicionar um slot.");
+        return;
+      }
+      
+      // BUG FIX #7: Validar data não pode ser no passado
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+      const dataEscolhida = new Date(date + "T00:00:00");
+      
+      if (dataEscolhida < hoje) {
+        alert("⚠️ Não é possível adicionar horários em datas passadas.");
         return;
       }
 
