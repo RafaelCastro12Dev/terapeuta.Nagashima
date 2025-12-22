@@ -449,6 +449,40 @@
       .modal-footer .btn-sm { width: 100%; }
     }
 
+    /* Grid para dias da semana - otimizado para iPhone */
+    .week-days-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+    .week-days-grid label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      justify-content: flex-start;
+    }
+
+    .week-days-grid label:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(125,103,255,0.3);
+    }
+
+    .week-days-grid input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
     @media (max-width: 480px) {
       .admin-shell { padding: 8px; }
       .admin-header-left h1 { font-size: 16px; }
@@ -456,6 +490,24 @@
       input, textarea, select { font-size: 16px; padding: 13px; }
       .table { min-width: 500px; font-size: 11px; }
       .overview-metrics { gap: 8px; }
+
+      /* Fix específico para iPhone - dias da semana em 2 colunas */
+      .week-days-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .week-days-grid label {
+        font-size: 14px;
+        padding: 12px 10px;
+        background: rgba(125,103,255,0.08);
+        border: 1px solid rgba(125,103,255,0.2);
+      }
+
+      .week-days-grid input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
     }
   </style>
 </head>
@@ -603,27 +655,27 @@
 
               <div class="field-group">
                 <label>Dias da semana</label>
-                <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekSeg" checked> Segunda
+                <div class="week-days-grid">
+                  <label>
+                    <input type="checkbox" id="weekSeg" checked> <span>Segunda</span>
                   </label>
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekTer" checked> Terça
+                  <label>
+                    <input type="checkbox" id="weekTer" checked> <span>Terça</span>
                   </label>
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekQua" checked> Quarta
+                  <label>
+                    <input type="checkbox" id="weekQua" checked> <span>Quarta</span>
                   </label>
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekQui" checked> Quinta
+                  <label>
+                    <input type="checkbox" id="weekQui" checked> <span>Quinta</span>
                   </label>
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekSex" checked> Sexta
+                  <label>
+                    <input type="checkbox" id="weekSex" checked> <span>Sexta</span>
                   </label>
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekSab"> Sábado
+                  <label>
+                    <input type="checkbox" id="weekSab"> <span>Sábado</span>
                   </label>
-                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                    <input type="checkbox" id="weekDom"> Domingo
+                  <label>
+                    <input type="checkbox" id="weekDom"> <span>Domingo</span>
                   </label>
                 </div>
               </div>
