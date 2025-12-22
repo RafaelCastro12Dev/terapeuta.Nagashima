@@ -760,6 +760,36 @@
         </div>
       </div>
 
+      <!-- SEÇÃO LEMBRETES AUTOMÁTICOS -->
+      <div class="card">
+        <h2 class="section-title">🔔 Lembretes de Confirmação</h2>
+
+        <p class="small-text">
+          Envie lembretes via WhatsApp para pacientes com consulta marcada para amanhã.
+        </p>
+
+        <div class="actions-row">
+          <button class="btn-sm btn-success" onclick="carregarLembretesAmanha()">📅 Buscar agendamentos de amanhã</button>
+        </div>
+
+        <div id="lembretesContainer" style="margin-top:20px; display:none;">
+          <div style="padding:14px; background:rgba(70,194,255,0.08); border-radius:10px; border:1px solid rgba(70,194,255,0.35); margin-bottom:16px;">
+            <div id="lembretesCount" style="font-size:14px; color:#d4e0ff; font-weight:600;"></div>
+          </div>
+
+          <div id="lembretesLista"></div>
+        </div>
+
+        <div class="small-text" style="margin-top:16px; padding:12px; background:rgba(100,150,255,0.10); border-radius:10px; border:1px solid rgba(100,150,255,0.4);">
+          <b>💡 Como usar:</b><br>
+          1. Clique em "Buscar agendamentos de amanhã"<br>
+          2. Veja a lista de pacientes com consulta para amanhã<br>
+          3. Clique em "Enviar Lembrete" no paciente desejado<br>
+          4. O WhatsApp abre automaticamente com a mensagem pronta<br>
+          5. Revise a mensagem e clique em enviar no WhatsApp
+        </div>
+      </div>
+
       <div class="card">
         <h2>🔒 Segurança do painel</h2>
         
@@ -1551,6 +1581,123 @@
 
     async function refreshAppointments() {
       await renderAppointments();
+    }
+
+    // ==================== LEMBRETES AUTOMÁTICOS ====================
+    async function carregarLembretesAmanha() {
+      const container = document.getElementById("lembretesContainer");
+      const lista = document.getElementById("lembretesLista");
+      const count = document.getElementById("lembretesCount");
+
+      // Mostrar loading
+      container.style.display = "block";
+      lista.innerHTML = "<p style='text-align:center; color:#a3a6c7;'>Carregando...</p>";
+
+      try {
+        // Calcular data de amanhã
+        const amanha = new Date();
+        amanha.setDate(amanha.getDate() + 1);
+        const amanhaStr = amanha.toISOString().split('T')[0];
+
+        // Buscar agendamentos de amanhã
+        const { data: agendamentos, error } = await supabaseClient
+          .from(APPOINTMENTS_TABLE)
+          .select("id, nome, whatsapp, data_escolhida, hora_escolhida, procedimento")
+          .eq("data_escolhida", amanhaStr)
+          .order("hora_escolhida", { ascending: true });
+
+        if (error) {
+          console.error(error);
+          lista.innerHTML = "<p style='color:#ff9b9b;'>Erro ao buscar agendamentos. Veja o console.</p>";
+          return;
+        }
+
+        if (!agendamentos || agendamentos.length === 0) {
+          count.innerHTML = "📅 Nenhum agendamento encontrado para amanhã.";
+          lista.innerHTML = "";
+          return;
+        }
+
+        // Mostrar contador
+        count.innerHTML = `📅 Encontrados <strong>${agendamentos.length}</strong> agendamento(s) para amanhã (${fmtDateBR(amanhaStr)})`;
+
+        // Renderizar lista
+        lista.innerHTML = "";
+        
+        agendamentos.forEach(agendamento => {
+          const card = document.createElement("div");
+          card.style.cssText = `
+            background: rgba(9, 14, 40, 0.90);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: grid;
+            gap: 12px;
+          `;
+
+          card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+              <div style="flex:1;">
+                <div style="font-size:15px; font-weight:600; color:#f5f5ff; margin-bottom:4px;">
+                  👤 ${agendamento.nome}
+                </div>
+                <div style="font-size:13px; color:#b4b7e5; margin-bottom:2px;">
+                  📱 ${agendamento.whatsapp}
+                </div>
+                <div style="font-size:13px; color:#b4b7e5;">
+                  ⏰ Horário: <strong style="color:#46c2ff;">${agendamento.hora_escolhida}</strong>
+                </div>
+                <div style="font-size:12px; color:#9094c7; margin-top:4px;">
+                  💉 ${agendamento.procedimento || "Não informado"}
+                </div>
+              </div>
+              <div>
+                <button 
+                  class="btn-sm btn-success" 
+                  onclick="enviarLembrete('${agendamento.nome}', '${agendamento.whatsapp}', '${agendamento.hora_escolhida}')"
+                  style="white-space:nowrap; padding:10px 14px;">
+                  📤 Enviar Lembrete
+                </button>
+              </div>
+            </div>
+          `;
+
+          lista.appendChild(card);
+        });
+
+      } catch (error) {
+        console.error("Erro ao carregar lembretes:", error);
+        lista.innerHTML = "<p style='color:#ff9b9b;'>Erro inesperado. Veja o console.</p>";
+      }
+    }
+
+    function enviarLembrete(nome, whatsapp, hora) {
+      // Limpar número (remover espaços, traços, parênteses)
+      const numeroLimpo = whatsapp.replace(/\D/g, '');
+
+      // Mensagem personalizada
+      const mensagem = `Olá, ${nome}! Tudo bem?
+
+Estou passando para relembrar que sua sessão terapêutica está agendada para *amanhã* às:
+ *${hora}*
+
+Esse horário foi reservado exclusivamente para você, por isso, pedimos gentilmente que chegue no horário combinado — assim garantimos que você aproveite o atendimento com tranquilidade e qualidade.
+
+ Por gentileza, *confirme o recebimento* desta mensagem.
+
+Até amanhã! Será um prazer recebê-lo(a).`;
+
+      // Codificar mensagem para URL
+      const mensagemCodificada = encodeURIComponent(mensagem);
+
+      // Abrir WhatsApp Web
+      const urlWhatsApp = `https://wa.me/${numeroLimpo}?text=${mensagemCodificada}`;
+      
+      window.open(urlWhatsApp, '_blank');
+
+      // Feedback visual
+      alert(`✅ WhatsApp aberto para ${nome}!\n\nRevise a mensagem e clique em enviar.`);
     }
 
     // ==================== INIT ====================
