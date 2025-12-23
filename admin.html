@@ -530,6 +530,33 @@
         height: 20px;
       }
     }
+    /* ===============================
+   AJUSTES ESPECÍFICOS SAFARI iOS
+   =============================== */
+@supports (-webkit-touch-callout: none) {
+
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .bg {
+    position: absolute;
+    animation: none;
+  }
+
+  .card {
+    backdrop-filter: none;
+    background: var(--bg-card);
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;  /* Previne zoom automático no iOS */
+  }
+}
+
   </style>
 </head>
 
@@ -1493,58 +1520,113 @@
     }
 
     async function saveAppointmentEdits() {
-      if (!editingAppointmentId) return;
+  if (!editingAppointmentId) return;
 
-      const nome = document.getElementById("editNome").value.trim();
-      const whatsapp = document.getElementById("editWhatsapp").value.trim();
-      const procedimento = document.getElementById("editProcedimento").value.trim();
-      const data_escolhida = document.getElementById("editData").value.trim();
-      const hora_escolhida = document.getElementById("editHora").value.trim();
+  const antigo = cachedAppointments.find(
+    a => a.id === editingAppointmentId
+  );
 
-      if (!nome) { alert("Nome não pode ficar vazio."); return; }
+  const nome = document.getElementById("editNome").value.trim();
+  const whatsapp = document.getElementById("editWhatsapp").value.trim();
+  const procedimento = document.getElementById("editProcedimento").value.trim();
+  const data_escolhida = document.getElementById("editData").value.trim();
+  const hora_escolhida = document.getElementById("editHora").value.trim();
 
-      const payload = {
-        nome,
-        whatsapp,
-        procedimento,
-        data_escolhida: data_escolhida || null,
-        hora_escolhida: hora_escolhida || null
-      };
+  if (!nome) {
+    alert("Nome não pode ficar vazio.");
+    return;
+  }
 
-      const { error } = await supabaseClient
-        .from(APPOINTMENTS_TABLE)
-        .update(payload)
-        .eq("id", editingAppointmentId);
+  const payload = {
+    nome,
+    whatsapp,
+    procedimento,
+    data_escolhida: data_escolhida || null,
+    hora_escolhida: hora_escolhida || null
+  };
 
-      if (error) {
-        console.error(error);
-        alert("Erro ao salvar alterações. Veja o console.");
-        return;
-      }
+  // 1️⃣ Atualiza o agendamento
+  const { error } = await supabaseClient
+    .from(APPOINTMENTS_TABLE)
+    .update(payload)
+    .eq("id", editingAppointmentId);
 
-      closeModal();
-      await renderAppointments();
-    }
+  // ⛔ SE DER ERRO, PARA TUDO AQUI
+  if (error) {
+    console.error(error);
+    alert("Erro ao salvar alterações. Veja o console.");
+    return;
+  }
+
+  // 2️⃣ Libera horário antigo (se mudou)
+  if (
+    antigo?.data_escolhida &&
+    antigo?.hora_escolhida &&
+    (
+      antigo.data_escolhida !== data_escolhida ||
+      antigo.hora_escolhida !== hora_escolhida
+    )
+  ) {
+    await supabaseClient
+      .from(SLOTS_TABLE)
+      .update({ ativo: true })
+      .eq("data", antigo.data_escolhida)
+      .eq("hora", antigo.hora_escolhida);
+  }
+
+  // 3️⃣ Ocupa novo horário
+  if (data_escolhida && hora_escolhida) {
+    await supabaseClient
+      .from(SLOTS_TABLE)
+      .update({ ativo: false })
+      .eq("data", data_escolhida)
+      .eq("hora", hora_escolhida);
+  }
+
+  // 4️⃣ Atualiza UI corretamente
+  closeModal();
+  await renderAppointments(); // ✅ Recarrega lista de agendamentos
+  await renderSlots();         // ✅ Atualiza horários disponíveis
+
+}
+
 
     // ==================== OVERVIEW ====================
-    function updateOverview(slotsMaybe, appsMaybe) {
-      if (Array.isArray(slotsMaybe)) {
-        const ativos = slotsMaybe.filter(s => s.ativo);
-        document.getElementById("mSlots").textContent = ativos.length;
+  function updateOverview(slotsMaybe, appsMaybe) {
+  if (Array.isArray(slotsMaybe)) {
+    const ativos = slotsMaybe.filter(s => s.ativo);
+    document.getElementById("mSlots").textContent = ativos.length;
+  }
 
-        if (ativos.length) {
-          const next = [...ativos].sort((a,b) => (a.data + (a.hora||"")).localeCompare(b.data + (b.hora||"")))[0];
-          document.getElementById("mNextSlot").textContent = `${fmtDateBR(next.data)} ${next.hora || ""}`;
-        } else {
-          document.getElementById("mNextSlot").textContent = "-";
-        }
-      }
+  // ✅ NOVO: Mostra próximo AGENDAMENTO CONFIRMADO
+  if (Array.isArray(appsMaybe)) {
+    document.getElementById("mAgendamentos").textContent = appsMaybe.length;
 
-      if (Array.isArray(appsMaybe)) {
-        document.getElementById("mAgendamentos").textContent = appsMaybe.length;
-      }
+    // Filtra agendamentos futuros (data >= hoje)
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); // Zera horas para comparar só a data
+
+    const futuros = appsMaybe.filter(app => {
+      if (!app.data_escolhida) return false;
+      const dataApp = new Date(app.data_escolhida + "T00:00:00");
+      return dataApp >= hoje;
+    });
+
+    if (futuros.length > 0) {
+      // Ordena por data + hora e pega o primeiro
+      const proximo = futuros.sort((a, b) => {
+        const dateTimeA = a.data_escolhida + " " + (a.hora_escolhida || "00:00");
+        const dateTimeB = b.data_escolhida + " " + (b.hora_escolhida || "00:00");
+        return dateTimeA.localeCompare(dateTimeB);
+      })[0];
+
+      document.getElementById("mNextSlot").textContent = 
+        `${fmtDateBR(proximo.data_escolhida)} ${proximo.hora_escolhida || ""}`;
+    } else {
+      document.getElementById("mNextSlot").textContent = "-";
     }
-
+  }
+}
     // ==================== REALTIME ====================
     function setupRealtime() {
       const syncTag = document.getElementById("syncTag");

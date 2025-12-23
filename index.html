@@ -522,6 +522,39 @@ input[type="radio"] {
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Toast de notificação */
+    .toast-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .toast-notification {
+        bottom: 80px;
+        right: 16px;
+        left: 16px;
+        text-align: center;
+      }
+    }
+
     /* RESPONSIVIDADE */
     @media (max-width: 768px) {
       .outer { padding: 24px 12px; }
@@ -555,6 +588,36 @@ input[type="radio"] {
       .btn { font-size: 14px; padding: 13px 20px; }
       #assinaturaCanvas { height: 180px; }
     }
+    /* ===============================
+   AJUSTES ESPECÍFICOS SAFARI iOS
+   =============================== */
+@supports (-webkit-touch-callout: none) {
+
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .bg {
+    position: absolute;
+    animation: none;
+  }
+
+  .card {
+    backdrop-filter: none;
+    background: rgba(7, 11, 30, 0.97);
+  }
+
+  .section-block {
+    background: rgba(9, 14, 40, 0.96);
+  }
+   input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
   </style>
 </head>
 
@@ -1196,18 +1259,70 @@ input[type="radio"] {
 
     document.getElementById("horaSchedule").addEventListener("change", verificarHorarioSelecionado);
 
+    // ==================== FUNÇÕES DE NOTIFICAÇÃO ====================
+    function mostrarToast(mensagem) {
+      // Remove toast anterior se existir
+      const toastAntigo = document.querySelector('.toast-notification');
+      if (toastAntigo) {
+        toastAntigo.remove();
+      }
+
+      // Cria novo toast
+      const toast = document.createElement('div');
+      toast.className = 'toast-notification';
+      toast.innerHTML = `🔄 ${mensagem}`;
+      document.body.appendChild(toast);
+
+      // Anima entrada
+      setTimeout(() => toast.classList.add('show'), 100);
+
+      // Remove após 3 segundos
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
     // ==================== SINCRONIZAÇÃO TEMPO REAL ====================
+    // Canal 1: Monitora mudanças nos HORÁRIOS DISPONÍVEIS (edições do admin)
+    supabaseClient
+      .channel("horarios_realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "horarios_disponiveis" },
+        (payload) => {
+          console.log("🔄 Horários atualizados pelo admin! Recarregando calendário...", payload);
+          mostrarToast("Calendário atualizado! Novos horários disponíveis.");
+          carregarHorariosDisponiveis();
+        }
+      )
+      .subscribe((status) => {
+        if (status === "SUBSCRIBED") {
+          console.log("✅ Monitoramento de horários ativado");
+        } else if (status === "CHANNEL_ERROR") {
+          console.error("❌ Erro ao conectar Realtime de horários");
+        }
+      });
+
+    // Canal 2: Monitora NOVOS AGENDAMENTOS (para bloquear horários ocupados)
     supabaseClient
       .channel("agendamentos_realtime")
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "agendamentos" },
-        () => {
-          console.log("Novo agendamento detectado, recarregando...");
+        (payload) => {
+          console.log("📅 Novo agendamento detectado! Atualizando disponibilidade...", payload);
+          mostrarToast("Um horário foi reservado. Atualizando lista...");
           carregarHorariosDisponiveis();
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        if (status === "SUBSCRIBED") {
+          console.log("✅ Monitoramento de agendamentos ativado");
+        } else if (status === "CHANNEL_ERROR") {
+          console.error("❌ Erro ao conectar Realtime de agendamentos");
+        }
+      });
 
     // ==================== ASSINATURA CANVAS ====================
     let canvas, ctx, drawing = false, lastX = 0, lastY = 0;
