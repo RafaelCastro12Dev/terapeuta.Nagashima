@@ -816,6 +816,711 @@
           5. Revise a mensagem e clique em enviar no WhatsApp
         </div>
       </div>
+ 
+<!-- =====================================================
+     SEÇÃO DE GERENCIAMENTO DE CORES E TEMAS
+     Inserir no admin.html após a seção de lembretes
+     ===================================================== -->
+
+<!-- SEÇÃO: GERENCIAR TEMA E CORES -->
+<div class="card">
+  <h2 class="section-title">🎨 Gerenciar Tema e Cores do Site</h2>
+
+  <p class="small-text" style="margin-bottom:20px;">
+    Escolha uma paleta pronta ou personalize cada cor do site. As mudanças aparecem instantaneamente em todas as páginas.
+  </p>
+
+  <!-- PALETAS PRÉ-CONFIGURADAS -->
+  <div style="margin-bottom:24px;">
+    <h3 style="font-size:14px; margin-bottom:12px; color:var(--text); font-weight:600;">📦 Paletas Prontas</h3>
+    <div id="presetsContainer" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:12px;">
+      <!-- Preenchido dinamicamente -->
+    </div>
+  </div>
+
+  <!-- EDITOR PERSONALIZADO -->
+  <details style="margin-top:20px; padding:16px; background:rgba(125,103,255,0.08); border-radius:12px; border:1px solid rgba(125,103,255,0.3);">
+    <summary style="cursor:pointer; font-size:14px; font-weight:600; color:#46c2ff;">
+      🎨 Editor Avançado de Cores (Personalizar)
+    </summary>
+    
+    <div style="margin-top:16px; padding:16px; background:rgba(15,20,45,.92); border-radius:10px;">
+      
+      <!-- CORES DE FUNDO -->
+      <div class="section-block" style="margin-bottom:16px;">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">
+          🖼️ Cores de Fundo
+        </div>
+        
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+          <div class="field-group">
+            <label for="colorBgMain" style="font-size:12px;">Fundo Principal</label>
+            <input type="color" id="colorBgMain" class="color-input">
+            <input type="text" id="colorBgMainText" class="color-text-input" placeholder="#050814">
+          </div>
+
+          <div class="field-group">
+            <label for="colorCardBg" style="font-size:12px;">Fundo dos Cards</label>
+            <input type="color" id="colorCardBg" class="color-input">
+            <input type="text" id="colorCardBgText" class="color-text-input" placeholder="rgba(...)">
+          </div>
+
+          <div class="field-group">
+            <label for="colorGradientStart" style="font-size:12px;">Gradiente Início</label>
+            <input type="color" id="colorGradientStart" class="color-input">
+            <input type="text" id="colorGradientStartText" class="color-text-input">
+          </div>
+
+          <div class="field-group">
+            <label for="colorGradientEnd" style="font-size:12px;">Gradiente Fim</label>
+            <input type="color" id="colorGradientEnd" class="color-input">
+            <input type="text" id="colorGradientEndText" class="color-text-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- CORES DE DESTAQUE -->
+      <div class="section-block" style="margin-bottom:16px;">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">
+          ✨ Cores de Destaque
+        </div>
+        
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+          <div class="field-group">
+            <label for="colorAccent" style="font-size:12px;">Cor Principal</label>
+            <input type="color" id="colorAccent" class="color-input">
+            <input type="text" id="colorAccentText" class="color-text-input" placeholder="#7d67ff">
+          </div>
+
+          <div class="field-group">
+            <label for="colorAccentSoft" style="font-size:12px;">Cor Secundária</label>
+            <input type="color" id="colorAccentSoft" class="color-input">
+            <input type="text" id="colorAccentSoftText" class="color-text-input" placeholder="#46c2ff">
+          </div>
+        </div>
+      </div>
+
+      <!-- CORES DE TEXTO -->
+      <div class="section-block" style="margin-bottom:16px;">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">
+          📝 Cores de Texto
+        </div>
+        
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+          <div class="field-group">
+            <label for="colorTextPrimary" style="font-size:12px;">Texto Principal</label>
+            <input type="color" id="colorTextPrimary" class="color-input">
+            <input type="text" id="colorTextPrimaryText" class="color-text-input" placeholder="#f5f5ff">
+          </div>
+
+          <div class="field-group">
+            <label for="colorTextSecondary" style="font-size:12px;">Texto Secundário</label>
+            <input type="color" id="colorTextSecondary" class="color-input">
+            <input type="text" id="colorTextSecondaryText" class="color-text-input" placeholder="#c6caef">
+          </div>
+
+          <div class="field-group">
+            <label for="colorTextHeading" style="font-size:12px;">Títulos</label>
+            <input type="color" id="colorTextHeading" class="color-input">
+            <input type="text" id="colorTextHeadingText" class="color-text-input" placeholder="#ffffff">
+          </div>
+
+          <div class="field-group">
+            <label for="colorMuted" style="font-size:12px;">Texto Esmaecido</label>
+            <input type="color" id="colorMuted" class="color-input">
+            <input type="text" id="colorMutedText" class="color-text-input" placeholder="#a3a6c7">
+          </div>
+
+          <div class="field-group">
+            <label for="colorButtonText" style="font-size:12px;">Texto dos Botões</label>
+            <input type="color" id="colorButtonText" class="color-input">
+            <input type="text" id="colorButtonTextText" class="color-text-input" placeholder="#ffffff">
+          </div>
+        </div>
+      </div>
+
+      <!-- CORES DE STATUS -->
+      <div class="section-block" style="margin-bottom:16px;">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">
+          🚦 Cores de Status
+        </div>
+        
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+          <div class="field-group">
+            <label for="colorSuccess" style="font-size:12px;">Sucesso</label>
+            <input type="color" id="colorSuccess" class="color-input">
+            <input type="text" id="colorSuccessText" class="color-text-input" placeholder="#36d399">
+          </div>
+
+          <div class="field-group">
+            <label for="colorWarn" style="font-size:12px;">Aviso</label>
+            <input type="color" id="colorWarn" class="color-input">
+            <input type="text" id="colorWarnText" class="color-text-input" placeholder="#ffd36a">
+          </div>
+
+          <div class="field-group">
+            <label for="colorDanger" style="font-size:12px;">Erro</label>
+            <input type="color" id="colorDanger" class="color-input">
+            <input type="text" id="colorDangerText" class="color-text-input" placeholder="#ff5e7a">
+          </div>
+        </div>
+      </div>
+
+      <!-- NOME DO TEMA -->
+      <div class="field-group" style="margin-bottom:16px;">
+        <label for="customThemeName">Nome do seu tema personalizado</label>
+        <input type="text" id="customThemeName" placeholder="Ex: Meu Tema Azul" style="max-width:400px;">
+      </div>
+
+      <!-- PREVIEW E AÇÕES -->
+      <div class="actions-row" style="margin-top:20px;">
+        <button class="btn-sm btn-success" onclick="salvarCoresPersonalizadas()">
+          💾 Salvar Cores Personalizadas
+        </button>
+        <button class="btn-sm btn-outline" onclick="carregarCoresAtuais()">
+          🔄 Recarregar Cores Atuais
+        </button>
+        <button class="btn-sm btn-warn" onclick="resetarParaPadrao()">
+          ⚠️ Restaurar Tema Original
+        </button>
+      </div>
+
+      <div id="colorSaveMsg" class="small-text" style="margin-top:12px;"></div>
+    </div>
+  </details>
+
+  <!-- HISTÓRICO DE TEMAS -->
+  <details style="margin-top:16px; padding:12px; background:rgba(70,194,255,0.08); border-radius:12px; border:1px solid rgba(70,194,255,0.35);">
+    <summary style="cursor:pointer; font-size:14px; font-weight:600; color:#46c2ff;">
+      📜 Histórico de Mudanças de Tema
+    </summary>
+    
+    <div style="margin-top:12px;">
+      <p class="small-text" style="margin-bottom:12px;">
+        Últimas 10 mudanças de tema (backup automático):
+      </p>
+      
+      <div class="table-wrapper">
+        <table class="table" id="themeHistoryTable">
+          <thead>
+            <tr>
+              <th>Data/Hora</th>
+              <th>Nome do Tema</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Preenchido dinamicamente -->
+          </tbody>
+        </table>
+      </div>
+
+      <button class="btn-sm btn-outline" onclick="carregarHistoricoTemas()" style="margin-top:12px; width:100%;">
+        🔄 Atualizar Histórico
+      </button>
+    </div>
+  </details>
+
+  <!-- EXPORTAR/IMPORTAR TEMA -->
+  <div class="actions-row" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-soft);">
+    <button class="btn-sm btn-outline" onclick="exportarTema()">
+      📥 Exportar Tema Atual (JSON)
+    </button>
+    <button class="btn-sm btn-outline" onclick="importarTema()">
+      📤 Importar Tema (JSON)
+    </button>
+  </div>
+  <input type="file" id="importThemeFile" accept=".json" style="display:none;" onchange="processarImportacaoTema(event)">
+</div>
+
+<!-- =====================================================
+     ESTILOS ADICIONAIS PARA COLOR PICKERS
+     ===================================================== -->
+
+<style>
+.color-input {
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  background: transparent;
+  padding: 4px;
+  transition: all 0.2s ease;
+}
+
+.color-input:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(125,103,255,0.2);
+}
+
+.color-text-input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(5,7,24,0.95);
+  color: #f5f5ff;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+}
+
+.preset-card {
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.1);
+  background: rgba(15,20,45,0.6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.preset-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.preset-card.active {
+  border-color: var(--accent-soft);
+  background: rgba(125,103,255,0.15);
+  box-shadow: 0 0 0 3px rgba(125,103,255,0.3);
+}
+
+.preset-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.preset-colors {
+  display: flex;
+  gap: 4px;
+  height: 30px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.preset-color-bar {
+  flex: 1;
+  min-width: 20px;
+}
+
+.preset-description {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.preset-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+</style>
+
+<!-- =====================================================
+     JAVASCRIPT PARA GERENCIAMENTO DE CORES
+     Adicionar no final do <script> do admin.html
+     ===================================================== -->
+
+<script>
+// ========================================
+// GERENCIAMENTO DE CORES E TEMAS
+// ========================================
+
+let currentThemeId = 1;
+let presetsData = [];
+
+// Carregar paletas prontas
+async function carregarPresets() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('theme_presets')
+      .select('*')
+      .eq('is_active', true)
+      .order('id');
+
+    if (error) throw error;
+
+    presetsData = data || [];
+    renderizarPresets();
+  } catch (err) {
+    console.error('Erro ao carregar presets:', err);
+  }
+}
+
+// Renderizar cards de paletas
+function renderizarPresets() {
+  const container = document.getElementById('presetsContainer');
+  if (!container) return;
+
+  container.innerHTML = presetsData.map(preset => {
+    const colors = preset.colors;
+    const isActive = preset.preset_name === document.documentElement.style.getPropertyValue('--theme-name');
+
+    return `
+      <div class="preset-card ${isActive ? 'active' : ''}" onclick="aplicarPreset(${preset.id})">
+        ${isActive ? '<div class="preset-badge">✓ ATIVO</div>' : ''}
+        <div class="preset-name">${preset.preset_name}</div>
+        <div class="preset-colors">
+          <div class="preset-color-bar" style="background:${colors.accent}"></div>
+          <div class="preset-color-bar" style="background:${colors.accent_soft}"></div>
+          <div class="preset-color-bar" style="background:${colors.bg_main}"></div>
+          <div class="preset-color-bar" style="background:${colors.text_primary}"></div>
+        </div>
+        <div class="preset-description">${preset.preset_description || ''}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Aplicar preset
+async function aplicarPreset(presetId) {
+  try {
+    const { data, error } = await supabaseClient.rpc('apply_theme_preset', {
+      preset_id: presetId
+    });
+
+    if (error) throw error;
+
+    alert('✅ Tema aplicado com sucesso! Recarregue a página para ver as mudanças.');
+    location.reload();
+  } catch (err) {
+    console.error('Erro ao aplicar preset:', err);
+    alert('❌ Erro ao aplicar tema. Veja o console.');
+  }
+}
+
+// Carregar cores atuais no editor
+async function carregarCoresAtuais() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('theme_config')
+      .select('*')
+      .eq('id', 1)
+      .single();
+
+    if (error) throw error;
+
+    // Preencher inputs
+    document.getElementById('colorBgMain').value = hexFromAny(data.bg_main);
+    document.getElementById('colorBgMainText').value = data.bg_main;
+
+    document.getElementById('colorCardBg').value = hexFromAny(data.card_bg);
+    document.getElementById('colorCardBgText').value = data.card_bg;
+
+    document.getElementById('colorGradientStart').value = hexFromAny(data.bg_gradient_start);
+    document.getElementById('colorGradientStartText').value = data.bg_gradient_start;
+
+    document.getElementById('colorGradientEnd').value = hexFromAny(data.bg_gradient_end);
+    document.getElementById('colorGradientEndText').value = data.bg_gradient_end;
+
+    document.getElementById('colorAccent').value = hexFromAny(data.accent);
+    document.getElementById('colorAccentText').value = data.accent;
+
+    document.getElementById('colorAccentSoft').value = hexFromAny(data.accent_soft);
+    document.getElementById('colorAccentSoftText').value = data.accent_soft;
+
+    document.getElementById('colorTextPrimary').value = hexFromAny(data.text_primary);
+    document.getElementById('colorTextPrimaryText').value = data.text_primary;
+
+    document.getElementById('colorTextSecondary').value = hexFromAny(data.text_secondary);
+    document.getElementById('colorTextSecondaryText').value = data.text_secondary;
+
+    document.getElementById('colorTextHeading').value = hexFromAny(data.text_heading);
+    document.getElementById('colorTextHeadingText').value = data.text_heading;
+
+    document.getElementById('colorMuted').value = hexFromAny(data.muted);
+    document.getElementById('colorMutedText').value = data.muted;
+
+    document.getElementById('colorButtonText').value = hexFromAny(data.button_text);
+    document.getElementById('colorButtonTextText').value = data.button_text;
+
+    document.getElementById('colorSuccess').value = hexFromAny(data.success);
+    document.getElementById('colorSuccessText').value = data.success;
+
+    document.getElementById('colorWarn').value = hexFromAny(data.warn);
+    document.getElementById('colorWarnText').value = data.warn;
+
+    document.getElementById('colorDanger').value = hexFromAny(data.danger);
+    document.getElementById('colorDangerText').value = data.danger;
+
+    document.getElementById('customThemeName').value = data.theme_name || 'Tema Personalizado';
+
+    // Sincronizar mudanças do color picker com text input
+    sincronizarColorInputs();
+
+  } catch (err) {
+    console.error('Erro ao carregar cores:', err);
+  }
+}
+
+// Converter qualquer formato para hex (aproximado para rgba)
+function hexFromAny(color) {
+  if (!color) return '#000000';
+  if (color.startsWith('#')) return color;
+  if (color.startsWith('rgb')) {
+    // Extração básica - pode melhorar
+    const nums = color.match(/\d+/g);
+    if (nums && nums.length >= 3) {
+      const r = parseInt(nums[0]).toString(16).padStart(2, '0');
+      const g = parseInt(nums[1]).toString(16).padStart(2, '0');
+      const b = parseInt(nums[2]).toString(16).padStart(2, '0');
+      return `#${r}${g}${b}`;
+    }
+  }
+  return '#000000';
+}
+
+// Sincronizar color pickers com text inputs
+function sincronizarColorInputs() {
+  const pairs = [
+    ['colorBgMain', 'colorBgMainText'],
+    ['colorCardBg', 'colorCardBgText'],
+    ['colorGradientStart', 'colorGradientStartText'],
+    ['colorGradientEnd', 'colorGradientEndText'],
+    ['colorAccent', 'colorAccentText'],
+    ['colorAccentSoft', 'colorAccentSoftText'],
+    ['colorTextPrimary', 'colorTextPrimaryText'],
+    ['colorTextSecondary', 'colorTextSecondaryText'],
+    ['colorTextHeading', 'colorTextHeadingText'],
+    ['colorMuted', 'colorMutedText'],
+    ['colorButtonText', 'colorButtonTextText'],
+    ['colorSuccess', 'colorSuccessText'],
+    ['colorWarn', 'colorWarnText'],
+    ['colorDanger', 'colorDangerText']
+  ];
+
+  pairs.forEach(([pickerId, textId]) => {
+    const picker = document.getElementById(pickerId);
+    const text = document.getElementById(textId);
+
+    if (picker && text) {
+      picker.addEventListener('input', () => {
+        text.value = picker.value;
+      });
+
+      text.addEventListener('input', () => {
+        const val = text.value.trim();
+        if (val.startsWith('#') && val.length === 7) {
+          picker.value = val;
+        }
+      });
+    }
+  });
+}
+
+// Salvar cores personalizadas
+async function salvarCoresPersonalizadas() {
+  const msgEl = document.getElementById('colorSaveMsg');
+  msgEl.textContent = '⏳ Salvando...';
+  msgEl.style.color = 'var(--warn)';
+
+  try {
+    const { error } = await supabaseClient
+      .from('theme_config')
+      .update({
+        bg_main: document.getElementById('colorBgMainText').value,
+        card_bg: document.getElementById('colorCardBgText').value,
+        bg_gradient_start: document.getElementById('colorGradientStartText').value,
+        bg_gradient_end: document.getElementById('colorGradientEndText').value,
+        accent: document.getElementById('colorAccentText').value,
+        accent_soft: document.getElementById('colorAccentSoftText').value,
+        text_primary: document.getElementById('colorTextPrimaryText').value,
+        text_secondary: document.getElementById('colorTextSecondaryText').value,
+        text_heading: document.getElementById('colorTextHeadingText').value,
+        text_color: document.getElementById('colorTextPrimaryText').value,
+        muted: document.getElementById('colorMutedText').value,
+        button_text: document.getElementById('colorButtonTextText').value,
+        success: document.getElementById('colorSuccessText').value,
+        warn: document.getElementById('colorWarnText').value,
+        danger: document.getElementById('colorDangerText').value,
+        theme_name: document.getElementById('customThemeName').value || 'Tema Personalizado',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', 1);
+
+    if (error) throw error;
+
+    msgEl.textContent = '✅ Tema salvo! Recarregue a página para aplicar.';
+    msgEl.style.color = 'var(--success)';
+
+    setTimeout(() => {
+      if (confirm('Recarregar página agora para aplicar o novo tema?')) {
+        location.reload();
+      }
+    }, 1000);
+
+  } catch (err) {
+    console.error('Erro ao salvar cores:', err);
+    msgEl.textContent = '❌ Erro ao salvar. Veja o console.';
+    msgEl.style.color = 'var(--danger)';
+  }
+}
+
+// Resetar para tema padrão
+async function resetarParaPadrao() {
+  if (!confirm('⚠️ Tem certeza que deseja restaurar o tema original? Esta ação não pode ser desfeita.')) return;
+
+  try {
+    await aplicarPreset(1); // Preset ID 1 = tema original
+  } catch (err) {
+    console.error('Erro ao resetar:', err);
+    alert('❌ Erro ao resetar tema.');
+  }
+}
+
+// Carregar histórico de temas
+async function carregarHistoricoTemas() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('theme_config_history')
+      .select('*')
+      .order('changed_at', { ascending: false })
+      .limit(10);
+
+    if (error) throw error;
+
+    const tbody = document.querySelector('#themeHistoryTable tbody');
+    if (!tbody) return;
+
+    if (!data || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Nenhum histórico encontrado</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(item => {
+      const date = new Date(item.changed_at).toLocaleString('pt-BR');
+      return `
+        <tr>
+          <td>${date}</td>
+          <td>${item.theme_name || 'Sem nome'}</td>
+          <td>
+            <button class="btn-sm btn-outline" onclick='restaurarTemaDoHistorico(${JSON.stringify(item.theme_data)})'>
+              🔄 Restaurar
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+  } catch (err) {
+    console.error('Erro ao carregar histórico:', err);
+  }
+}
+
+// Restaurar tema do histórico
+async function restaurarTemaDoHistorico(themeData) {
+  if (!confirm('Restaurar este tema do histórico?')) return;
+
+  try {
+    const { error } = await supabaseClient
+      .from('theme_config')
+      .update({
+        ...themeData,
+        id: 1,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', 1);
+
+    if (error) throw error;
+
+    alert('✅ Tema restaurado! Recarregue a página.');
+    location.reload();
+  } catch (err) {
+    console.error('Erro ao restaurar:', err);
+    alert('❌ Erro ao restaurar tema.');
+  }
+}
+
+// Exportar tema atual
+async function exportarTema() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('theme_config')
+      .select('*')
+      .eq('id', 1)
+      .single();
+
+    if (error) throw error;
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tema-${data.theme_name || 'personalizado'}-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert('✅ Tema exportado com sucesso!');
+  } catch (err) {
+    console.error('Erro ao exportar:', err);
+    alert('❌ Erro ao exportar tema.');
+  }
+}
+
+// Importar tema
+function importarTema() {
+  document.getElementById('importThemeFile').click();
+}
+
+function processarImportacaoTema(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const themeData = JSON.parse(e.target.result);
+      
+      if (!confirm(`Importar tema "${themeData.theme_name || 'sem nome'}"? Isso substituirá o tema atual.`)) return;
+
+      delete themeData.id;
+      themeData.updated_at = new Date().toISOString();
+
+      const { error } = await supabaseClient
+        .from('theme_config')
+        .update(themeData)
+        .eq('id', 1);
+
+      if (error) throw error;
+
+      alert('✅ Tema importado! Recarregue a página.');
+      location.reload();
+    } catch (err) {
+      console.error('Erro ao importar:', err);
+      alert('❌ Erro ao importar tema. Arquivo inválido?');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Inicializar ao carregar painel
+window.carregarPresets = carregarPresets;
+window.aplicarPreset = aplicarPreset;
+window.carregarCoresAtuais = carregarCoresAtuais;
+window.salvarCoresPersonalizadas = salvarCoresPersonalizadas;
+window.resetarParaPadrao = resetarParaPadrao;
+window.carregarHistoricoTemas = carregarHistoricoTemas;
+window.restaurarTemaDoHistorico = restaurarTemaDoHistorico;
+window.exportarTema = exportarTema;
+window.importarTema = importarTema;
+window.processarImportacaoTema = processarImportacaoTema;
+</script>
+
 
       <div class="card">
         <h2>🔒 Segurança do painel</h2>
@@ -941,6 +1646,52 @@
       "https://qqxlmvmksgptjjnbzjtn.supabase.co",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
     );
+
+    // ==================== APLICAR CORES DO BANCO ====================
+    async function aplicarCoresDoTema() {
+      console.log('🎨 Sistema de cores iniciando...');
+      
+      try {
+        const { data, error } = await supabaseClient
+          .from('theme_config')
+          .select('*')
+          .eq('id', 1)
+          .single();
+
+        if (error) {
+          console.error('❌ Erro ao carregar tema:', error);
+          return;
+        }
+
+        if (!data) {
+          console.warn('⚠️ Nenhum tema encontrado no banco, usando padrão');
+          return;
+        }
+
+        console.log('📦 Tema recebido do banco:', data);
+
+        const root = document.documentElement;
+
+        // Aplicar TODAS as cores
+        if (data.bg_main) root.style.setProperty('--bg-main', data.bg_main, 'important');
+        if (data.card_bg) root.style.setProperty('--bg-card', data.card_bg, 'important');
+        if (data.bg_soft) root.style.setProperty('--bg-soft', data.bg_soft, 'important');
+        if (data.accent) root.style.setProperty('--accent', data.accent, 'important');
+        if (data.accent_soft) root.style.setProperty('--accent-soft', data.accent_soft, 'important');
+        if (data.text_primary) root.style.setProperty('--text', data.text_primary, 'important');
+        if (data.muted) root.style.setProperty('--muted', data.muted, 'important');
+        if (data.success) root.style.setProperty('--success', data.success, 'important');
+        if (data.warn) root.style.setProperty('--warn', data.warn, 'important');
+        if (data.danger) root.style.setProperty('--danger', data.danger, 'important');
+        if (data.border_soft) root.style.setProperty('--border-soft', data.border_soft, 'important');
+
+        console.log('✅ CORES APLICADAS! Tema:', data.theme_name || 'Padrão');
+
+      } catch (err) {
+        console.error('💥 Erro ao aplicar cores:', err);
+      }
+    }
+
 
     const SLOTS_TABLE = "horarios_disponiveis";
     const APPOINTMENTS_TABLE = "agendamentos";
@@ -1441,7 +2192,7 @@
         const dataHora = `${safeText(item.data_escolhida)} ${safeText(item.hora_escolhida)}`.trim();
         tdData.innerHTML = `
           <div style="font-weight:600;margin-bottom:4px;">${dataHora === "-" ? "-" : dataHora}</div>
-          <div class="small-text">Criado: ${item.criado_em ? new Date(item.criado_em).toLocaleString("pt-BR") : "-"}</div>
+          <div class="small-text">Criado: ${item.criado_em ? new Date(item.criado_em).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }) : "-"}</div>
         `;
 
         tdProc.textContent = safeText(item.procedimento);
@@ -1786,6 +2537,11 @@ Até amanhã! Será um prazer recebê-lo(a).`;
     async function initDashboard() {
       document.getElementById("statusPainel").textContent = "conectado";
       document.getElementById("statusPainel").className = "status-ok";
+
+      // CARREGAR CORES DO BANCO
+      await aplicarCoresDoTema();
+      await carregarPresets();
+      await carregarCoresAtuais();
 
       await renderSlots();
       await renderAppointments();

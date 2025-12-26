@@ -106,6 +106,31 @@
       }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (async function() {
+      console.log('🎨 [HUB] Carregando tema...');
+      try {
+        const supabase = window.supabase.createClient(
+          "https://qqxlmvmksgptjjnbzjtn.supabase.co",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
+        );
+        const { data } = await supabase.from('theme_config').select('*').eq('id', 1).single();
+        if (data) {
+          const root = document.documentElement;
+          if (data.bg_main) root.style.setProperty('--bg-main', data.bg_main, 'important');
+          if (data.card_bg) root.style.setProperty('--bg-card', data.card_bg, 'important');
+          if (data.accent) root.style.setProperty('--accent', data.accent, 'important');
+          if (data.accent_soft) root.style.setProperty('--accent-soft', data.accent_soft, 'important');
+          if (data.text_primary) root.style.setProperty('--text', data.text_primary, 'important');
+          if (data.muted) root.style.setProperty('--muted', data.muted, 'important');
+          console.log('✅ [HUB] Tema aplicado:', data.theme_name);
+        }
+      } catch (err) {
+        console.error('❌ [HUB] Erro:', err);
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -136,6 +161,48 @@
     </div>
 
   </div>
+
+  <!-- SCRIPT DE CARREGAMENTO DINÂMICO DE CORES -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Conectar ao Supabase
+    const supabase = window.supabase.createClient(
+      "https://qqxlmvmksgptjjnbzjtn.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
+    );
+
+    // Carregar cores personalizadas do banco
+    async function carregarCoresPersonalizadas() {
+      try {
+        const { data, error } = await supabase
+          .from('theme_config')
+          .select('*')
+          .eq('id', 1)
+          .single();
+
+        if (error || !data) {
+          console.log('Usando tema padrão');
+          return;
+        }
+
+        // Aplicar cores no document root
+        const root = document.documentElement;
+        if (data.accent) root.style.setProperty('--accent', data.accent);
+        if (data.accent_soft) root.style.setProperty('--accent-soft', data.accent_soft);
+        if (data.bg_main) root.style.setProperty('--bg-main', data.bg_main);
+        if (data.text_color) root.style.setProperty('--text', data.text_color);
+        if (data.muted) root.style.setProperty('--muted', data.muted);
+        if (data.border_soft) root.style.setProperty('--border-soft', data.border_soft);
+
+        console.log('✅ Tema carregado:', data.theme_name || 'Personalizado');
+      } catch (err) {
+        console.error('Erro ao carregar tema:', err);
+      }
+    }
+
+    // Executar ao carregar a página
+    carregarCoresPersonalizadas();
+  </script>
 
 </body>
 </html>

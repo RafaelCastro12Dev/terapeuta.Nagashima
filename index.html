@@ -8,6 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
 
   <style>
+        :root {
+      --bg-main: #050814;
+      --bg-card: rgba(10, 14, 32, 0.92);
+      --bg-soft: rgba(15, 20, 45, 0.92);
+      --accent: #7d67ff;
+      --accent-soft: #46c2ff;
+      --text: #f5f5ff;
+      --text-secondary: #d4d7ff;
+      --muted: #a3a6c7;
+      --border-soft: rgba(255, 255, 255, 0.08);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -20,8 +32,8 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      color: #f5f5f5;
-      background: #050814;
+      color: var(--text);
+      background: var(--bg-main);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -30,11 +42,11 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(circle at 10% 20%, rgba(124, 77, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 10% 20%, rgba(125, 103, 255, 0.35), transparent 55%),
         radial-gradient(circle at 80% 0%, rgba(0, 184, 255, 0.35), transparent 55%),
         radial-gradient(circle at 50% 100%, rgba(0, 255, 148, 0.20), transparent 60%),
         radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.08), transparent 55%);
-      background-color: #050814;
+      background-color: var(--bg-main);
       pointer-events: none;
       z-index: -2;
       animation: float-bg 18s ease-in-out infinite alternate;
@@ -93,7 +105,7 @@
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #9ba3ff;
+      color: var(--muted);
       margin-bottom: 12px;
       font-weight: 600;
     }
@@ -104,7 +116,7 @@
       font-weight: 800;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #f5f5ff;
+      color: var(--text);
       text-shadow: 0 0 18px rgba(111, 162, 255, 0.35);
     }
 
@@ -116,18 +128,18 @@
       margin-top: 20px;
       font-size: 15px;
       line-height: 1.7;
-      color: #c6caef;
+      color: var(--muted);
     }
 
     .bio-text {
       margin-top: 18px;
       font-size: 14px;
       line-height: 1.7;
-      color: #d4d7ff;
+      color: var(--text-secondary);
     }
 
     .bio-list b {
-      color: #ffffff;
+      color: var(--text);
       font-weight: 600;
     }
 
@@ -146,7 +158,7 @@
         0 14px 40px rgba(0,0,0,0.55),
         0 0 32px rgba(90, 158, 255, 0.60);
       object-fit: cover;
-      background: #02030a;
+      background: var(--bg-main);
     }
 
     .intro-button {
@@ -212,7 +224,7 @@
       background: rgba(100, 150, 255, 0.15);
       border: 1px solid rgba(100, 150, 255, 0.5);
       font-size: 14px;
-      color: #d4e0ff;
+      color: var(--text-secondary);
       margin-bottom: 20px;
       line-height: 1.6;
     }
@@ -227,12 +239,12 @@
       font-size: 24px;
       font-weight: 700;
       margin-bottom: 6px;
-      color: #f5f5ff;
+      color: var(--text);
     }
 
     .form-subtitle {
       font-size: 14px;
-      color: #c1c5f5;
+      color: var(--muted);
       margin-bottom: 24px;
       line-height: 1.6;
     }
@@ -263,7 +275,7 @@
       font-size: 15px;
       font-weight: 700;
       margin-bottom: 14px;
-      color: #f5f5ff;
+      color: var(--text);
       text-transform: uppercase;
       letter-spacing: 0.06em;
       padding-bottom: 10px;
@@ -282,7 +294,7 @@
       display: block;
       font-size: 14px;
       margin-bottom: 6px;
-      color: #e2e4ff;
+      color: var(--text-secondary);
       font-weight: 500;
     }
 
@@ -294,7 +306,7 @@ textarea {
       border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(5, 7, 24, 0.95);
-      color: #f5f5ff;
+      color: var(--text);
       font-size: 15px;
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
@@ -305,20 +317,20 @@ input[type="radio"] {
   width: auto;
   padding: 0;
   margin: 0;
-  accent-color: #7d67ff;
+  accent-color: var(--accent);
 }
 
 
     input::placeholder,
     textarea::placeholder {
-      color: #9094c7;
+      color: var(--muted);
       font-size: 13px;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #7d67ff;
+      border-color: var(--accent);
       box-shadow: 0 0 0 2px rgba(125,103,255,0.35);
       background: rgba(6, 10, 36, 0.98);
     }
@@ -352,7 +364,7 @@ input[type="radio"] {
 
     .helper {
       font-size: 13px;
-      color: #b4b7e5;
+      color: var(--muted);
       margin-top: 6px;
       line-height: 1.5;
     }
@@ -384,7 +396,7 @@ input[type="radio"] {
     .row.inline-options input[type="radio"],
     .row.inline-options input[type="checkbox"] {
       width: auto;
-      accent-color: #7d67ff;
+      accent-color: var(--accent);
       cursor: pointer;
     }
 
@@ -686,6 +698,53 @@ input[type="radio"] {
 }
 
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // ==================== CARREGAR CORES DO BANCO ====================
+    (async function aplicarCoresDoBanco() {
+      console.log('🎨 [INDEX] Carregando tema personalizado...');
+      
+      try {
+        const supabase = window.supabase.createClient(
+          "https://qqxlmvmksgptjjnbzjtn.supabase.co",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxeGxtdm1rc2dwdGpqbmJ6anRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NzA1NDQsImV4cCI6MjA3OTE0NjU0NH0.kKnIaothKFM7PRlkiUaN-wPPlnTq0HCjxOgB7-SMTSU"
+        );
+
+        const { data, error } = await supabase
+          .from('theme_config')
+          .select('*')
+          .eq('id', 1)
+          .single();
+
+        if (error || !data) {
+          console.log('⚠️ [INDEX] Usando tema padrão');
+          return;
+        }
+
+        console.log('📦 [INDEX] Tema carregado:', data.theme_name || 'Personalizado');
+
+        const root = document.documentElement;
+
+        // Aplicar todas as cores COM IMPORTANT
+        if (data.bg_main) root.style.setProperty('--bg-main', data.bg_main, 'important');
+        if (data.card_bg) root.style.setProperty('--bg-card', data.card_bg, 'important');
+        if (data.bg_soft) root.style.setProperty('--bg-soft', data.bg_soft, 'important');
+        if (data.accent) root.style.setProperty('--accent', data.accent, 'important');
+        if (data.accent_soft) root.style.setProperty('--accent-soft', data.accent_soft, 'important');
+        if (data.text_primary) root.style.setProperty('--text', data.text_primary, 'important');
+        if (data.text_secondary) root.style.setProperty('--text-secondary', data.text_secondary, 'important');
+        if (data.muted) root.style.setProperty('--muted', data.muted, 'important');
+        if (data.border_soft) root.style.setProperty('--border-soft', data.border_soft, 'important');
+        if (data.success) root.style.setProperty('--success', data.success, 'important');
+        if (data.danger) root.style.setProperty('--danger', data.danger, 'important');
+
+        console.log('✅ [INDEX] Tema aplicado com sucesso!');
+
+      } catch (err) {
+        console.error('❌ [INDEX] Erro ao carregar tema:', err);
+      }
+    })();
+  </script>
 </head>
 
 <body>
