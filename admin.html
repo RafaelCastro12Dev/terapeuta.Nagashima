@@ -421,7 +421,16 @@
 
     @media (max-width: 768px) {
       body { font-size: 15px; }
-      .admin-shell { align-items: flex-start; padding: 12px; }
+      .admin-shell {
+    min-height: 100vh;
+    min-height: 100dvh; /* Melhor suporte para mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 12px;
+  }
+
+
       .login-card { padding: 24px 18px; }
       .login-title { font-size: 18px; }
       .admin-layout { gap: 14px; padding: 0; }
@@ -484,7 +493,15 @@
     }
 
     @media (max-width: 480px) {
-      .admin-shell { padding: 8px; }
+     .admin-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+  }
+
       .admin-header-left h1 { font-size: 16px; }
       .card { padding: 16px 14px; }
       input, textarea, select { font-size: 16px; padding: 13px; }
@@ -539,6 +556,9 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
+.admin-shell {
+    min-height: -webkit-fill-available;
+  }
 
   .bg {
     position: absolute;
@@ -556,6 +576,48 @@
     font-size: 16px !important;  /* Previne zoom automático no iOS */
   }
 }
+
+
+    /* NOVOS ESTILOS PARA SEÇÃO TEXTOS DO SITE */
+    .text-config-group {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .text-config-group:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .text-config-group h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      color: var(--accent-soft);
+      font-weight: 600;
+    }
+    .text-config-field {
+      margin-bottom: 14px;
+    }
+    .text-config-field label {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .text-config-field .field-name {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .text-config-field .field-key {
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-family: monospace;
+    }
 
   </style>
 </head>
@@ -816,6 +878,204 @@
           5. Revise a mensagem e clique em enviar no WhatsApp
         </div>
       </div>
+
+      <!-- =====================================================
+           NOVA SEÇÃO: TEXTOS DO SITE
+           Adicionada para editar textos do site sem acessar o banco
+           ===================================================== -->
+      <div class="card">
+        <h2 class="section-title">📝 Textos do Site</h2>
+
+        <p class="small-text" style="margin-bottom:20px;">
+          Edite os textos exibidos no site sem precisar acessar o banco de dados manualmente.
+          As alterações entram em vigor imediatamente após salvar.
+        </p>
+
+        <!-- Grupo: Conteúdo Principal -->
+        <div class="text-config-group">
+          <h3>💰 Conteúdo Principal</h3>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Texto do Preço</span>
+              <span class="field-key">price_text</span>
+            </label>
+            <textarea id="txt_price_text" rows="4"></textarea>
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Orientações Gerais</span>
+              <span class="field-key">guidelines_text</span>
+            </label>
+            <textarea id="txt_guidelines_text" placeholder="Instruções e orientações para o paciente..." style="min-height:120px;"></textarea>
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Termos e Condições</span>
+              <span class="field-key">terms_text</span>
+            </label>
+            <textarea id="txt_terms_text" placeholder="Termos de uso e política de privacidade..." style="min-height:120px;"></textarea>
+          </div>
+        </div>
+
+        <!-- Grupo: Labels do Formulário -->
+        <div class="text-config-group">
+          <h3>🏷️ Labels do Formulário</h3>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Tolerância à Pressão</span>
+              <span class="field-key">label_toleranciaPressao</span>
+            </label>
+            <input type="text" id="txt_label_toleranciaPressao" placeholder="Ex: Qual sua tolerância à pressão durante o procedimento?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Queixa Principal</span>
+              <span class="field-key">label_queixa</span>
+            </label>
+            <input type="text" id="txt_label_queixa" placeholder="Ex: Descreva sua queixa principal">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Tempo de Dor</span>
+              <span class="field-key">label_tempoDor</span>
+            </label>
+            <input type="text" id="txt_label_tempoDor" placeholder="Ex: Há quanto tempo sente essa dor?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Histórico</span>
+              <span class="field-key">label_historico</span>
+            </label>
+            <input type="text" id="txt_label_historico" placeholder="Ex: Histórico médico relevante">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Histórico de Lesões</span>
+              <span class="field-key">label_historicoLesao</span>
+            </label>
+            <input type="text" id="txt_label_historicoLesao" placeholder="Ex: Possui histórico de lesões?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Resultado de Ajuda Anterior</span>
+              <span class="field-key">label_resultadoAjuda</span>
+            </label>
+            <input type="text" id="txt_label_resultadoAjuda" placeholder="Ex: Já buscou ajuda profissional? Houve melhora?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Detalhe da Alergia</span>
+              <span class="field-key">label_detalheAlergia</span>
+            </label>
+            <input type="text" id="txt_label_detalheAlergia" placeholder="Ex: Especifique a alergia">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Outra Comorbidade</span>
+              <span class="field-key">label_comorbidadeOutra</span>
+            </label>
+            <input type="text" id="txt_label_comorbidadeOutra" placeholder="Ex: Especifique outra comorbidade">
+          </div>
+        </div>
+
+        <!-- Grupo: Perguntas do Formulário -->
+        <div class="text-config-group">
+          <h3>❓ Perguntas do Formulário</h3>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Já buscou ajuda profissional?</span>
+              <span class="field-key">q_ajudaProfissional</span>
+            </label>
+            <input type="text" id="txt_q_ajudaProfissional" placeholder="Ex: Você já buscou ajuda profissional para esse problema?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Possui comorbidades?</span>
+              <span class="field-key">q_comorbidades</span>
+            </label>
+            <input type="text" id="txt_q_comorbidades" placeholder="Ex: Possui alguma das seguintes condições?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Tem alergia?</span>
+              <span class="field-key">q_temAlergia</span>
+            </label>
+            <input type="text" id="txt_q_temAlergia" placeholder="Ex: Você possui alguma alergia?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Usa prótese?</span>
+              <span class="field-key">q_usaProtese</span>
+            </label>
+            <input type="text" id="txt_q_usaProtese" placeholder="Ex: Você utiliza alguma prótese?">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Usa medicação contínua?</span>
+              <span class="field-key">q_usaMedicacao</span>
+            </label>
+            <input type="text" id="txt_q_usaMedicacao" placeholder="Ex: Faz uso de medicação contínua?">
+          </div>
+        </div>
+
+        <!-- Grupo: Placeholders -->
+        <div class="text-config-group">
+          <h3>💬 Placeholders (Textos de Exemplo)</h3>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Detalhe da Prótese</span>
+              <span class="field-key">ph_detalheProtese</span>
+            </label>
+            <input type="text" id="txt_ph_detalheProtese" placeholder="Ex: Descreva qual prótese utiliza">
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Detalhe da Medicação</span>
+              <span class="field-key">ph_detalheMedicacao</span>
+            </label>
+            <input type="text" id="txt_ph_detalheMedicacao" placeholder="Ex: Liste os medicamentos que utiliza">
+          </div>
+        </div>
+
+        <!-- Botão de Salvar -->
+        <div class="actions-row" style="border-top:1px solid var(--border-soft); padding-top:20px;">
+          <button class="btn-sm btn-success" onclick="salvarTextosSite()" style="flex:1;">
+            💾 Salvar Alterações
+          </button>
+          <button class="btn-sm btn-outline" onclick="carregarTextosSite()">
+            🔄 Recarregar
+          </button>
+        </div>
+
+        <div id="textosSiteMsg" class="small-text" style="margin-top:12px;"></div>
+
+        <div class="small-text" style="margin-top:16px; padding:12px; background:rgba(70,194,255,0.08); border-radius:10px; border:1px solid rgba(70,194,255,0.35);">
+          <b>ℹ️ Como funciona:</b><br>
+          • Edite os campos acima com os textos desejados<br>
+          • Clique em "Salvar Alterações" para aplicar no site<br>
+          • Se uma key ainda não existir no banco, ela será criada automaticamente<br>
+          • As mudanças aparecem instantaneamente no site após salvar
+        </div>
+      </div>
+
  
 <!-- =====================================================
      SEÇÃO DE GERENCIAMENTO DE CORES E TEMAS
@@ -1726,6 +1986,10 @@ window.processarImportacaoTema = processarImportacaoTema;
       if (data === true) {
         sessionStorage.setItem("adminLogged", "true");
         sessionStorage.setItem("adminUser", user);
+        sessionStorage.setItem("adminPass", pass);
+         sessionStorage.setItem("adminPass", pass);
+        currentAdminUser = user;
+        currentAdminPass = pass;
 
         document.getElementById("loginView").style.display = "none";
         document.getElementById("adminView").style.display = "flex";
@@ -2533,6 +2797,120 @@ Até amanhã! Será um prazer recebê-lo(a).`;
       alert(`✅ WhatsApp aberto para ${nome}!\n\nRevise a mensagem e clique em enviar.`);
     }
 
+
+    // ===============================================
+    // NOVA FUNCIONALIDADE: TEXTOS DO SITE
+    // ===============================================
+    
+    // Credenciais do admin (armazenadas após login)
+    let currentAdminUser = '';
+    let currentAdminPass = '';
+
+    // Lista de keys que serão gerenciadas
+    const SITE_CONFIG_KEYS = [
+      'price_text',
+      'guidelines_text',
+      'terms_text',
+      'label_toleranciaPressao',
+      'label_queixa',
+      'label_tempoDor',
+      'label_historico',
+      'label_historicoLesao',
+      'label_resultadoAjuda',
+      'label_detalheAlergia',
+      'label_comorbidadeOutra',
+      'q_ajudaProfissional',
+      'q_comorbidades',
+      'q_temAlergia',
+      'q_usaProtese',
+      'q_usaMedicacao',
+      'ph_detalheProtese',
+      'ph_detalheMedicacao'
+    ];
+
+    async function carregarTextosSite() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('site_config')
+          .select('key, value')
+          .in('key', SITE_CONFIG_KEYS);
+
+        if (error) throw error;
+
+        // Preencher campos
+        SITE_CONFIG_KEYS.forEach(key => {
+          const inputEl = document.getElementById(`txt_${key}`);
+          if (inputEl) {
+            const item = data ? data.find(d => d.key === key) : null;
+            inputEl.value = item ? (item.value || '') : '';
+          }
+        });
+
+        mostrarMensagemTextosSite('✅ Textos carregados do banco.', 'success');
+      } catch (err) {
+        console.error('Erro carregarTextosSite:', err);
+        mostrarMensagemTextosSite('⚠️ Erro ao carregar textos.', 'error');
+      }
+    }
+
+    async function salvarTextosSite() {
+      try {
+        // Coletar valores
+        const items = [];
+        SITE_CONFIG_KEYS.forEach(key => {
+          const inputEl = document.getElementById(`txt_${key}`);
+          if (inputEl) {
+            items.push({
+              key: key,
+              value: inputEl.value.trim()
+            });
+          }
+        });
+
+        // Chamar RPC segura
+        const { data, error } = await supabaseClient.rpc('set_site_config_bulk', {
+          p_username: currentAdminUser || sessionStorage.getItem("adminUser"),
+          p_password: currentAdminPass || sessionStorage.getItem("adminPass"),
+
+          p_items: items
+        });
+
+        if (error) throw error;
+
+        if (data === true) {
+          mostrarMensagemTextosSite('✅ Textos salvos com sucesso!', 'success');
+        } else {
+          mostrarMensagemTextosSite('❌ Falha na autenticação. Faça login novamente.', 'error');
+        }
+      } catch (err) {
+        console.error('Erro salvarTextosSite:', err);
+        mostrarMensagemTextosSite('⚠️ Erro ao salvar textos.', 'error');
+      }
+    }
+
+    function mostrarMensagemTextosSite(msg, type) {
+      const el = document.getElementById('textosSiteMsg');
+      if (!el) return;
+      
+      el.textContent = msg;
+      
+      if (type === 'success') {
+        el.style.color = 'var(--success)';
+      } else if (type === 'error') {
+        el.style.color = 'var(--danger)';
+      } else {
+        el.style.color = 'var(--muted)';
+      }
+
+      setTimeout(() => {
+        el.textContent = '';
+      }, 5000);
+    }
+
+    // Exportar funções para window
+    window.carregarTextosSite = carregarTextosSite;
+    window.salvarTextosSite = salvarTextosSite;
+
     // ==================== INIT ====================
     async function initDashboard() {
       document.getElementById("statusPainel").textContent = "conectado";
@@ -2541,6 +2919,7 @@ Até amanhã! Será um prazer recebê-lo(a).`;
       // CARREGAR CORES DO BANCO
       await aplicarCoresDoTema();
       await carregarPresets();
+      await carregarTextosSite();
       await carregarCoresAtuais();
 
       await renderSlots();
