@@ -918,6 +918,30 @@
             </label>
             <textarea id="txt_terms_text" placeholder="Termos de uso e política de privacidade..." style="min-height:120px;"></textarea>
           </div>
+
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Endereço do Atendimento (texto)</span>
+              <span class="field-key">address_text</span>
+            </label>
+            <input type="text" id="txt_address_text" placeholder="Ex: Rua X, 123 - Bairro - Cidade/UF">
+            <div class="small-text" style="margin-top:6px; opacity:.85;">
+              Este texto aparece no site (em “Endereço” e também abaixo do mapa, quando configurado).
+            </div>
+          </div>
+
+          <div class="text-config-field">
+            <label>
+              <span class="field-name">Mapa (consulta do Google Maps)</span>
+              <span class="field-key">map_query</span>
+            </label>
+            <input type="text" id="txt_map_query" placeholder="Ex: Rua X, 123, Cidade UF">
+            <div class="small-text" style="margin-top:6px; opacity:.85;">
+              Dica: use um endereço “limpo” para o Maps localizar com precisão (sem emojis e sem textos extras).
+            </div>
+          </div>
+
         </div>
 
         <!-- Grupo: Labels do Formulário -->
@@ -2811,6 +2835,8 @@ Até amanhã! Será um prazer recebê-lo(a).`;
       'price_text',
       'guidelines_text',
       'terms_text',
+      'address_text',
+      'map_query',
       'label_toleranciaPressao',
       'label_queixa',
       'label_tempoDor',

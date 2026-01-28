@@ -1124,7 +1124,7 @@ input[type="radio"] {
               <div class="section-title">Local do atendimento</div>
 
               <div class="map-container">
-                <iframe
+                <iframe id="map_iframe"
                   src="https://www.google.com/maps?q=Rua%20José%20Aparecido%20Marchi,%20330%20B%20-%20Pedreira%20SP&output=embed&z=16"
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -1132,7 +1132,7 @@ input[type="radio"] {
                 </iframe>
               </div>
               
-              <div class="helper" style="margin-top: 10px;">
+              <div class="helper" id="cfg_map_address_helper" style="margin-top: 10px;">
                 Rua José Aparecido Marchi, 330 B – Vale Verde 1 – Pedreira/SP
               </div>
             </div>
@@ -1850,7 +1850,9 @@ PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
             'q_usaProtese',
             'ph_detalheProtese',
             'q_usaMedicacao',
-            'ph_detalheMedicacao'
+            'ph_detalheMedicacao',
+            'address_text',
+            'map_query'
           ]);
 
         if (error) {
@@ -1875,6 +1877,24 @@ PRONTUÁRIO COMPLETO REGISTRADO NO PAINEL ADMINISTRATIVO.
           const el = document.getElementById("cfg_guidelines_text");
           if (el) el.textContent = cfg.guidelines_text;
         }
+
+// ==================== ENDEREÇO + MAPA (ADMIN) ====================
+// address_text: texto exibido no site
+// map_query: string de busca para o Google Maps (pode ser igual ao address_text)
+if (cfg.address_text) {
+  const addressEl = document.getElementById("cfg_address_text");
+  if (addressEl) addressEl.textContent = cfg.address_text;
+
+  const mapHelper = document.getElementById("cfg_map_address_helper");
+  if (mapHelper) mapHelper.textContent = cfg.address_text;
+}
+
+// Atualiza o iframe do mapa (prioriza map_query; fallback: address_text)
+const mapIframe = document.getElementById("map_iframe");
+const query = (cfg.map_query || cfg.address_text || "").trim();
+if (mapIframe && query) {
+  mapIframe.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed&z=16`;
+}
 
         // ========== HELPERS PARA LABELS E PLACEHOLDERS (FORMULÁRIO) ==========
         function setLabelFor(forId, key) {
